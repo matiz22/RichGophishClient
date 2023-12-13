@@ -7,7 +7,7 @@ plugins {
 group = "com.matiz22.richgophishclient"
 version = "1.0.0"
 application {
-    mainClass.set("com.matiz22.richgophishclient.ApplicationKt")
+    mainClass.set("com.matiz22.richgophishclient.Application.kt")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["development"] ?: "false"}")
 }
 
@@ -18,4 +18,7 @@ dependencies {
     implementation(libs.ktor.server.netty)
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
+    implementation(libs.ktor.server.resources)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 }
