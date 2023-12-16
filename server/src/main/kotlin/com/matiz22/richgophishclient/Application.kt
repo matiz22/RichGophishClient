@@ -3,6 +3,10 @@ package com.matiz22.richgophishclient
 import Greeting
 import SERVER_PORT
 import auth.model.User
+import com.matiz22.richgophishclient.dao.UserDao
+import com.matiz22.richgophishclient.dao.UserDaoImpl
+import com.matiz22.richgophishclient.model.DatabaseSingleton
+import com.matiz22.richgophishclient.plugins.configureUserRoutes
 
 
 import io.ktor.serialization.kotlinx.json.*
@@ -21,19 +25,13 @@ fun main() {
 }
 
 fun Application.module() {
-    install(ContentNegotiation){
+    val userDao: UserDao = UserDaoImpl()
+    DatabaseSingleton.init()
+    install(ContentNegotiation) {
         json()
     }
     routing {
-        post("/") {
-            val user = call.receive<User>()
-            println(user)
-
-        }
-        get("/") {
-            val user = User("Test")
-            //val file = File("uploads/${user.id}.txt")
-            call.respond(user)
-        }
+        configureUserRoutes(userDao)
     }
+
 }

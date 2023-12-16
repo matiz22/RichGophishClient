@@ -3,8 +3,7 @@ package auth.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User(
-    val id: Long,
+data class EmailCredentials(
     val email: String,
-    val password: String,
+    val password: String
 )
