@@ -1,6 +1,6 @@
 package com.matiz22.richgophishclient.dao
 
-import auth.model.User
+import auth.model.user.User
 
 interface UserDao {
     suspend fun logUserByEmail(email: String, password: String): User?
