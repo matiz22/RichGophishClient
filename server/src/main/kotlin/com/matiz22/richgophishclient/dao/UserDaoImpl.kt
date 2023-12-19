@@ -1,6 +1,6 @@
 package com.matiz22.richgophishclient.dao
 
-import auth.model.user.User
+import auth.domain.model.User
 import com.matiz22.richgophishclient.model.DatabaseSingleton.dbQuery
 import com.matiz22.richgophishclient.model.UserConfigTable
 import com.matiz22.richgophishclient.model.UserTable

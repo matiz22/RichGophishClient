@@ -1,7 +1,7 @@
 package com.matiz22.richgophishclient.plugins
 
-import auth.model.config_gophish.CreateGophishConfig
-import auth.model.config_gophish.EditGophishConfig
+import configs.domain.model.CreateGophishConfig
+import configs.domain.model.EditGophishConfig
 import com.matiz22.richgophishclient.dao.UserConfigDao
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call

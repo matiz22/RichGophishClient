@@ -1,9 +1,10 @@
-package auth.model.config_gophish
+package configs.domain.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateGophishConfig(
+data class GophishConfig(
+    val id: Long,
     val userId: Long,
     val url: String,
     val apiKey: String

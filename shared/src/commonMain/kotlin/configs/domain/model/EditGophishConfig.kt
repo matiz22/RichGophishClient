@@ -1,4 +1,4 @@
-package auth.model.config_gophish
+package configs.domain.model
 
 import kotlinx.serialization.Serializable
 

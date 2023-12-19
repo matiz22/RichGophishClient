@@ -1,8 +1,8 @@
 package com.matiz22.richgophishclient.dao
 
-import auth.model.config_gophish.CreateGophishConfig
-import auth.model.config_gophish.EditGophishConfig
-import auth.model.config_gophish.GophishConfig
+import configs.domain.model.CreateGophishConfig
+import configs.domain.model.EditGophishConfig
+import configs.domain.model.GophishConfig
 
 interface UserConfigDao {
     suspend fun createConfig(

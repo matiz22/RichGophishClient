@@ -1,7 +1,7 @@
 package com.matiz22.richgophishclient.plugins
 
-import auth.model.user.EmailCredentials
-import auth.model.user.IdCredentials
+import auth.domain.model.EmailCredentials
+import auth.domain.model.IdCredentials
 import com.matiz22.richgophishclient.dao.UserDao
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
