@@ -26,4 +26,5 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.h2)
     implementation(libs.jbcrypt)
+    implementation(libs.ktor.server.cors)
 }
