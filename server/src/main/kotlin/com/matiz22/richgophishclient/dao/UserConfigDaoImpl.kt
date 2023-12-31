@@ -18,6 +18,7 @@ class UserConfigDaoImpl : UserConfigDao {
         id = row[UserConfigTable.id],
         userId = row[UserConfigTable.userId],
         url = row[UserConfigTable.url],
+        name = row[UserConfigTable.name],
         apiKey = row[UserConfigTable.apiKey]
     )
 
@@ -25,6 +26,7 @@ class UserConfigDaoImpl : UserConfigDao {
         dbQuery {
             val toBeInserted = UserConfigTable.insert {
                 it[UserConfigTable.userId] = createGophishConfig.userId
+                it[UserConfigTable.name] =createGophishConfig.name
                 it[UserConfigTable.url] = createGophishConfig.url
                 it[UserConfigTable.apiKey] = createGophishConfig.apiKey
             }
@@ -38,6 +40,9 @@ class UserConfigDaoImpl : UserConfigDao {
             }
             if (editGophishConfig.url != null) {
                 it[url] = editGophishConfig.url!!
+            }
+            if (editGophishConfig.name != null) {
+                it[name] = editGophishConfig.name!!
             }
         } == 1
     }
