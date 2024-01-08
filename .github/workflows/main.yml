@@ -1,0 +1,32 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - master  # or main, or whichever branch you want to deploy from
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout your repository
+    - uses: actions/checkout@v2
+
+    # Build and push Docker image
+    - name: Build and Push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        tags: matiz22/richgophishapi:latest
+        push: true
+        # Add other build-push-action parameters if needed
+
+    # Deploy to Azure
+    - name: Deploy to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: RichGophishClient
+        slot-name: production  # If you are using deployment slots
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./app
