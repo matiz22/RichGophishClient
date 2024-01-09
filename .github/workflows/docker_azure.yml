@@ -3,7 +3,7 @@ name: Deploy to Azure
 on:
   push:
     branches:
-      - master  # or main, or whichever branch you want to deploy from
+      - master 
     paths:
       - 'server/**'
 
@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    # Checkout your repository
     - uses: actions/checkout@v2
     - name: Docker Hub Login
       uses: docker/login-action@v1
@@ -20,7 +19,10 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      # Build and push Docker image
+    - name: 'Create env file'
+      run: |
+        echo "${{ secrets.ENV_FILE }}" > .env
+
     - name: Build and Push Docker image
       uses: docker/build-push-action@v2
       with:
@@ -28,13 +30,12 @@ jobs:
         file: ./Dockerfile
         tags: matiz22/richgophishapi:latest
         push: true
-        # Add other build-push-action parameters if needed
 
-    # Deploy to Azure
+
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v2
       with:
         app-name: richgophishapi
-        slot-name: production  # If you are using deployment slots
+        slot-name: production
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ./
