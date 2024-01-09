@@ -8,7 +8,7 @@ group = "com.matiz22.richgophishclient"
 version = "1.0.0"
 application {
     mainClass.set("com.matiz22.richgophishclient.Application.kt")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["development"] ?: "false"}")
+    //applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["development"] ?: "false"}")
 }
 
 dependencies {
