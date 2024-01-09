@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master  # or main, or whichever branch you want to deploy from
+    paths:
+      - 'server/**'
 
 jobs:
   build-and-deploy:
