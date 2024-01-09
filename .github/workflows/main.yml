@@ -32,7 +32,7 @@ jobs:
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v2
       with:
-        app-name: RichGophishClient
+        app-name: richgophishapi
         slot-name: production  # If you are using deployment slots
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ./app
+        package: ./
