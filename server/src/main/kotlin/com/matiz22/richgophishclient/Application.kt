@@ -32,21 +32,6 @@ fun Application.module() {
     val userDao: UserDao = UserDaoImpl()
     val userConfigDao: UserConfigDao = UserConfigDaoImpl()
     DatabaseSingleton.init()
-
-
-
-    install(CORS) {
-        //for testing with angular
-        allowHost("0.0.0.0:4200")
-        allowHost("client-host:4200")
-        allowMethod(HttpMethod.Post)
-        allowMethod(HttpMethod.Delete)
-        allowHeader(HttpHeaders.ContentType)
-        allowSameOrigin = true
-
-        allowXHttpMethodOverride()
-        anyHost()
-    }
     install(ContentNegotiation) {
         json()
     }
