@@ -18,7 +18,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: ./server/Dockerfile
+        file: ./Dockerfile
         tags: matiz22/richgophishapi:latest
         push: true
         # Add other build-push-action parameters if needed
