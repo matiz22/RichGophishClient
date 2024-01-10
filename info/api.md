@@ -56,3 +56,4 @@ The GitHub Actions workflow also deploys the updated Docker image to your Azure 
 
 ### Testing
 Feel free to clone this repository and test the API with your Azure or Docker credentials. Ensure that the API key is correctly set in your environment or in the .env file.
+Example deploy [here](https://richgophishapi.azurewebsites.net/). Sometimes it goes off when azure is updating App Service .
