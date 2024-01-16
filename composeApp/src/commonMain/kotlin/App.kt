@@ -13,12 +13,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import auth.domain.model.IdCredentials
+import home.di.UserComponent
+import home.di.initKoin
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun App() {
+    initKoin()
     MaterialTheme {
         var greetingText by remember { mutableStateOf("Hello World!") }
         var showImage by remember { mutableStateOf(false) }
@@ -35,6 +39,10 @@ fun App() {
                     null
                 )
             }
+        }
+        LaunchedEffect(Unit){
+            val userRepository = UserComponent().userComponent
+            println(userRepository.getUserById(IdCredentials(1L,"securepassword")))
         }
     }
 }
