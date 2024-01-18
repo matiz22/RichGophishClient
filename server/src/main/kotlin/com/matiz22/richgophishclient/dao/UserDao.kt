@@ -11,7 +11,7 @@ interface UserDao {
         password: String
     ): User? //Return Id of created User
 
-    suspend fun deleteUser(id: Long): Boolean
+    suspend fun deleteUser(id: Long?): Boolean
 
     suspend fun checkIfExist(email: String): Boolean
 }

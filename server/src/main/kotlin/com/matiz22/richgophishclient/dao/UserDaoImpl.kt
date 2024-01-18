@@ -58,9 +58,15 @@ class UserDaoImpl : UserDao {
         toBeInserted.resultedValues?.singleOrNull()?.let(::resultRowUser)
     }
 
-    override suspend fun deleteUser(id: Long): Boolean = dbQuery {
-        UserConfigTable.deleteWhere { UserConfigTable.userId eq id }
-        UserTable.deleteWhere { UserTable.id eq id } > 0
+    override suspend fun deleteUser(id: Long?): Boolean {
+        if (id == null) {
+           return false
+        }
+        return dbQuery {
+            val userConfigDeleteCount = UserConfigTable.deleteWhere { UserConfigTable.userId eq id }
+            val userDeleteCount = UserTable.deleteWhere { UserTable.id eq id }
+            userConfigDeleteCount + userDeleteCount > 0
+        }
     }
 
     override suspend fun checkIfExist(email: String): Boolean = dbQuery {

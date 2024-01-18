@@ -8,6 +8,7 @@ import com.matiz22.richgophishclient.dao.UserDaoImpl
 import com.matiz22.richgophishclient.model.DatabaseSingleton
 import com.matiz22.richgophishclient.plugins.configureUserConfigs
 import com.matiz22.richgophishclient.plugins.configureUserRoutes
+import io.github.cdimascio.dotenv.dotenv
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
@@ -37,7 +38,14 @@ fun Application.module() {
     }
     intercept(ApplicationCallPipeline.Plugins) {
         val apiKeyHeader = call.request.headers["X-Api-Key"]
-        val expectedApiKey = System.getenv("API_KEY") ?: "test"
+        val expectedApiKey = try {
+            dotenv {
+                directory = "./"
+                filename = ".env"
+            }.get("API_KEY")
+        }catch (e: Exception){
+            "test"
+        }
         if (apiKeyHeader != expectedApiKey) {
             call.respond(status = HttpStatusCode.Unauthorized, "Invalid api key")
             finish()

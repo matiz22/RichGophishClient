@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import auth.domain.model.EmailCredentials
 import auth.domain.model.IdCredentials
 import home.di.UserComponent
 import home.di.initKoin
@@ -41,8 +42,12 @@ fun App() {
             }
         }
         LaunchedEffect(Unit){
+
             val userRepository = UserComponent().userComponent
+            val new  =  userRepository.createUser(EmailCredentials("omit1@gmail.com", "cos"))
+            println(new)
             println(userRepository.getUserById(IdCredentials(1L,"securepassword")))
+            println(userRepository.deleteUser(new.user?.id!!))
         }
     }
 }

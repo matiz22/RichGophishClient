@@ -27,4 +27,5 @@ dependencies {
     implementation(libs.h2)
     implementation(libs.jbcrypt)
     implementation(libs.ktor.server.cors)
+    implementation(libs.dotenv.kotlin)
 }

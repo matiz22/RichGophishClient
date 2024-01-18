@@ -54,8 +54,8 @@ fun Route.configureUserRoutes(userDao: UserDao) {
             }
         }
         delete("/deleteUser") {
-            val id = call.receive<Long>()
-            val deleted = userDao.deleteUser(id)
+            val id = call.receive<Map<String, Long>>()
+            val deleted = userDao.deleteUser(id.get("id"))
             if (deleted) {
                 call.respond("Deleted")
             } else {
