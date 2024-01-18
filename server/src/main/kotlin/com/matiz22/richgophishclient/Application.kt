@@ -47,7 +47,7 @@ fun Application.module() {
             "test"
         }
         if (apiKeyHeader != expectedApiKey) {
-            call.respond(status = HttpStatusCode.Unauthorized, "Invalid api key")
+            call.respond(status = HttpStatusCode.Unauthorized, "Invalid api key in header")
             finish()
         }
     }
