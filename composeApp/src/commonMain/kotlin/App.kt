@@ -1,4 +1,3 @@
-
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -9,12 +8,15 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stac
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import config.presentation.screen.ConfigScreen
 import navigation.RootComponent
+import ui.ColorClassResolver
 
 
 @Composable
 fun App(root: RootComponent) {
 
-    MaterialTheme {
+    MaterialTheme(
+        colorScheme = ColorClassResolver.provideColorScheme()
+    ) {
         val childStack by root.childStack.subscribeAsState()
         Children(
             stack = childStack,
