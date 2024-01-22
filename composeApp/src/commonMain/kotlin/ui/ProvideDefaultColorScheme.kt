@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 interface ProvideDefaultColorScheme {
     @Composable
     fun provideColorScheme(
-        useDarkTheme: Boolean = isSystemInDarkTheme(),
+        useDarkTheme: Boolean,
     ): ColorScheme {
         return if (!useDarkTheme) {
             LightColors
