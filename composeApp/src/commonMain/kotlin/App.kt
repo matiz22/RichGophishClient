@@ -8,14 +8,14 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stac
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import config.presentation.screen.ConfigScreen
 import navigation.RootComponent
-import ui.ColorClassResolver
+import ui.SchemeResolver
 
 
 @Composable
 fun App(root: RootComponent) {
 
     MaterialTheme(
-        colorScheme = ColorClassResolver.provideColorScheme()
+        colorScheme = SchemeResolver.provideColorScheme()
     ) {
         val childStack by root.childStack.subscribeAsState()
         Children(
