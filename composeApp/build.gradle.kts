@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
+    id("io.github.skeptick.libres")
 }
 
 kotlin {
@@ -98,7 +99,6 @@ android {
 compose.desktop {
     application {
         mainClass = "MainKt"
-
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.matiz22.richgophishclient"
@@ -108,4 +108,9 @@ compose.desktop {
             )
         }
     }
+}
+libres {
+    generatedClassName = "Res"
+    generateNamedArguments = true
+    camelCaseNamesForAppleFramework = false
 }

@@ -3,6 +3,7 @@ decompose = "2.2.2-compose-experimental"
 dotenvKotlin = "6.4.1"
 exposedCore = "0.41.1"
 exposedDao = "0.41.1"
+libres = "1.2.2"
 h2 = "2.1.214"
 jbcrypt = "0.4"
 koinCore = "3.5.3"
@@ -38,6 +39,7 @@ dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "d
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposedCore" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposedDao" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposedDao" }
+libres = { module = "io.github.skeptick.libres:gradle-plugin", version.ref = "libres" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
 jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
