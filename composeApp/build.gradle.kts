@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.libres)
 }
 
 kotlin {
@@ -51,6 +52,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.decompose)
             implementation(libs.decompose.jetbrains)
+            implementation(libs.libres)
         }
     }
 }
@@ -107,4 +109,10 @@ compose.desktop {
         }
     }
 }
+libres {
+    generatedClassName = "AppRes"
+    generateNamedArguments = true
+    baseLocaleLanguageCode = "en"
+}
+
 

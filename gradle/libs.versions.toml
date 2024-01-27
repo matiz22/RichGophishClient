@@ -30,6 +30,8 @@ kotlinx-coroutines = "1.7.3"
 build-konfig = "0.15.1"
 extensionsComposeJetbrains = "2.2.2-compose-experimental"  #for some reason 2.2.2 couldn't be resolved
 material3 = "1.1.2"
+libres = "1.2.2"
+
 
 [libraries]
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
@@ -72,6 +74,7 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 
 
 [plugins]
@@ -83,3 +86,4 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 yshrsmz-BuildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig" }
+libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
