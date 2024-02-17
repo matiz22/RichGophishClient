@@ -10,6 +10,6 @@ import auth.presentation.composables.InputField
 @Composable
 fun PrevInputField() {
     MaterialTheme {
-        InputField(Modifier, "test", {}, supportingText = "Test")
+        InputField(Modifier, "test", {})
     }
 }

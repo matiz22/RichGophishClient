@@ -22,20 +22,23 @@ fun InputField(
     isPassword: Boolean = false,
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
-    supportingText: String = ""
 ) {
     OutlinedTextField(
         modifier = modifier,
         value = text,
         onValueChange = onValueChange,
         shape = RoundedCornerShape(24.dp),
-        isError = errorMessage == null,
+        isError = errorMessage != null,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
             imeAction = imeAction
         ),
         placeholder = { Text(hintText) },
-        supportingText = { Text(supportingText)}
+        supportingText = {
+            Text(
+                text = errorMessage ?: ""
+            )
+        }
     )
 }

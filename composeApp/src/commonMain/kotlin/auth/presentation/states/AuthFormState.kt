@@ -1,10 +1,10 @@
 package auth.presentation.states
 
 data class AuthFormState(
-    val isNewUser:Boolean = true,
-    val email:String = "",
-    val emailError:String? = null,
-    val password:String = "",
-    val passwordError:String? = null ,
+    var isNewUser:Boolean = true,
+    var email:String = "",
+    var emailError:String? = null,
+    var password:String = "",
+    var passwordError:String? = null,
     val otherErrors:String? = null
 )
