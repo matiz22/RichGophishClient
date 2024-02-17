@@ -1,4 +1,4 @@
-package home.data
+package home.data.remote
 
 import com.matiz22.richgophishclient.BuildKonfig
 import io.ktor.client.HttpClient

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name ="email_pattern_error">This is not an email address</string>
+
+    <string name="password_length_error">Password must greater than 15 characters length</string>
+</resources>

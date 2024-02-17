@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     kotlin("plugin.serialization") version "1.9.21"
     alias(libs.plugins.yshrsmz.buildKonfig)
+    alias(libs.plugins.libres)
 }
 
 buildkonfig {
@@ -46,6 +47,7 @@ kotlin {
             implementation(libs.ktor.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)
+            implementation(libs.libres)
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.okhttp)
@@ -71,3 +73,9 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }
+libres {
+    generatedClassName = "SharedRes"
+    generateNamedArguments = true
+    baseLocaleLanguageCode = "en"
+}
+

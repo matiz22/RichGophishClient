@@ -30,8 +30,15 @@ fun App(root: RootComponent) {
                 animation = stackAnimation(slide())
             ) { child ->
                 when (val instance = child.instance) {
-                    is RootComponent.Child.AuthScreen -> AuthScreen(instance.component)
-                    is RootComponent.Child.ConfigScreen -> ConfigScreen(instance.component)
+
+                    is RootComponent.Child.AuthScreen -> {
+                        val userState = instance.component.authFormState
+                        AuthScreen(instance.component)
+                    }
+
+                    is RootComponent.Child.ConfigScreen -> {
+                        ConfigScreen(instance.component)
+                    }
                 }
             }
         }
