@@ -1,49 +1,49 @@
 package auth.presentation.components
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import auth.domain.model.User
 import auth.presentation.events.AuthEvent
 import auth.presentation.states.AuthFormState
 import com.arkivanov.decompose.ComponentContext
+import home.di.UserKoinComponent
 import home.di.ValidatorsComponent
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+
 
 class AuthScreenComponent(
-    componentContext: ComponentContext, private val onNavigate: () -> Unit
+    componentContext: ComponentContext,
+    mainCoroutineContext: CoroutineContext,
+    private val navigateToConfig: (User) -> Unit
 ) : ComponentContext by componentContext {
 
     private val validateEmail = ValidatorsComponent().emailValidator
     private val validatePassword = ValidatorsComponent().passwordValidator
 
-    private val _authFormState = MutableStateFlow(
-        AuthFormState()
-    )
-    val authFormState = _authFormState.asStateFlow()
+    private val userRepository = UserKoinComponent().userRepository
+
+    var authFormState by mutableStateOf(AuthFormState())
+
+    private val scope = CoroutineScope(mainCoroutineContext + SupervisorJob())
 
     fun onEvent(event: AuthEvent) {
         when (event) {
             is AuthEvent.EmailChanged -> {
-                _authFormState.update {
-                    it.copy(
-                        email = event.email
-                    )
-                }
+                authFormState = authFormState.copy(email = event.email)
             }
 
             is AuthEvent.PasswordChanged -> {
-                _authFormState.update {
-                    it.copy(
-                        password = event.password
-                    )
-                }
+                authFormState = authFormState.copy(password = event.password)
             }
 
-            is AuthEvent.isNewUserChanged -> {
-                _authFormState.update {
-                    it.copy(
-                        isNewUser = event.isNewUserBool
-                    )
-                }
+            is AuthEvent.IsNewUserChanged -> {
+                authFormState = authFormState.copy(isNewUser = event.isNewUserBool)
             }
 
             is AuthEvent.Submit -> validateForm()
@@ -51,8 +51,8 @@ class AuthScreenComponent(
     }
 
     private fun validateForm() {
-        val emailResult = validateEmail.execute(authFormState.value.email)
-        val passwordResult = validatePassword.execute(authFormState.value.password)
+        val emailResult = validateEmail.execute(authFormState.email)
+        val passwordResult = validatePassword.execute(authFormState.password)
 
         val isCorrect = listOf(
             emailResult,
@@ -62,11 +62,22 @@ class AuthScreenComponent(
         }
 
         if (!isCorrect) {
-            _authFormState.update {
-                it.copy(
-                    emailError = emailResult.errorMessage,
-                    passwordError = passwordResult.errorMessage
-                )
+            authFormState = authFormState.copy(emailError = emailResult.errorMessage)
+            authFormState = authFormState.copy(passwordError = passwordResult.errorMessage)
+            return
+        } else {
+            scope.launch(Dispatchers.IO) {
+                val result = if (authFormState.isNewUser) {
+                    userRepository.createUser(authFormState.toEmailCredentials())
+                } else {
+                    userRepository.getUserByEmail(authFormState.toEmailCredentials())
+                }
+                if (result.user != null) {
+                    navigateToConfig(result.user!!)
+                } else {
+                    authFormState =
+                        authFormState.copy(otherErrors = result.error ?: "Something went wrong")
+                }
             }
         }
     }

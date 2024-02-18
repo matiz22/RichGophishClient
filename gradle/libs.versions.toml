@@ -8,6 +8,7 @@ jbcrypt = "0.4"
 koinCore = "3.5.3"
 kotlinxSerializationJson = "1.6.2"
 ktor = "2.3.6"
+essenty-lifecycle = "2.0.0-dev04"
 logback = "1.4.13"
 compose = "1.6.0"
 compose-plugin = "1.5.11"
@@ -52,6 +53,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
+essenty-lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty-lifecycle" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }

@@ -4,10 +4,10 @@ import auth.presentation.components.AuthScreenComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.push
-
-
+import com.arkivanov.decompose.router.stack.replaceAll
 import config.presentation.components.ConfigScreenComponent
+import kotlinx.coroutines.Dispatchers
+
 
 class RootComponent(
     componentContext: ComponentContext
@@ -31,14 +31,20 @@ class RootComponent(
             is ScreenConfiguration.AuthScreen -> Child.AuthScreen(
                 AuthScreenComponent(
                     componentContext = context,
-                    onNavigate = {
-                        navigation.push(ScreenConfiguration.ConfigScreen)
+                    mainCoroutineContext = Dispatchers.Main,
+                    navigateToConfig = { user ->
+                        navigation.replaceAll(
+                            ScreenConfiguration.ConfigScreen(user)
+                        )
                     }
                 )
             )
 
             is ScreenConfiguration.ConfigScreen -> Child.ConfigScreen(
-                ConfigScreenComponent(context)
+                ConfigScreenComponent(
+                    componentContext = context,
+                    user = config.user
+                )
             )
         }
     }

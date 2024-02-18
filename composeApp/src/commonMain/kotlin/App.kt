@@ -3,9 +3,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import auth.presentation.components.AuthScreenComponent
 import auth.presentation.screen.AuthScreen
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
@@ -33,12 +35,12 @@ fun App(root: RootComponent) {
                 when (val instance = child.instance) {
 
                     is RootComponent.Child.AuthScreen -> {
-                        val userState = instance.component.authFormState.collectAsState()
+                        val userState = instance.component.authFormState
                         AuthScreen(
-                            email = userState.value.email,
-                            emailError = userState.value.emailError,
-                            password = userState.value.password,
-                            passwordError = userState.value.passwordError,
+                            email = userState.email,
+                            emailError = userState.emailError,
+                            password = userState.password,
+                            passwordError = userState.passwordError,
                             onEvent = {
                                 instance.component.onEvent(it)
                             }

@@ -4,6 +4,6 @@ import auth.domain.repository.UserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class UserComponent: KoinComponent {
+class UserKoinComponent: KoinComponent {
     val userRepository by inject<UserRepository>()
 }
