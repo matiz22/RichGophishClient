@@ -5,12 +5,18 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import home.di.initKoin
 import navigation.RootComponent
+import utils.runOnUiThread
 
 fun main() = application {
     initKoin()
-    val root = remember {
-        RootComponent(DefaultComponentContext(LifecycleRegistry()))
+    val lifecycle = LifecycleRegistry()
+
+    val root = runOnUiThread {
+        RootComponent(
+            componentContext = DefaultComponentContext(lifecycle = lifecycle),
+        )
     }
+
     Window(
         onCloseRequest = ::exitApplication
     ) {
