@@ -3,4 +3,8 @@
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="submit_button">Submit</string>
+    <string name="nav_to_login">Have you been already registered?</string>
+    <string name="nav_to_register">You haven't created a user</string>
+    <string name="home_page">Home</string>
+    <string name="extend_sidebar">Extend Sidebar</string>
 </resources>

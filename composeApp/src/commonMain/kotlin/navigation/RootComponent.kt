@@ -1,11 +1,11 @@
 package navigation
 
-import auth.presentation.components.AuthScreenComponent
+import auth.presentation.components.AuthComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceAll
-import config.presentation.components.ConfigScreenComponent
+import config.presentation.components.ConfigComponent
 import kotlinx.coroutines.Dispatchers
 
 
@@ -29,19 +29,17 @@ class RootComponent(
     ): Child {
         return when (config) {
             is ScreenConfiguration.AuthScreen -> Child.AuthScreen(
-                AuthScreenComponent(
+                AuthComponent(
                     componentContext = context,
                     mainCoroutineContext = Dispatchers.Main,
                     navigateToConfig = { user ->
-                        navigation.replaceAll(
-                            ScreenConfiguration.ConfigScreen(user)
-                        )
+                        navigation.replaceAll(ScreenConfiguration.ConfigScreen(user = user))
                     }
                 )
             )
 
             is ScreenConfiguration.ConfigScreen -> Child.ConfigScreen(
-                ConfigScreenComponent(
+                ConfigComponent(
                     componentContext = context,
                     user = config.user
                 )
@@ -50,8 +48,8 @@ class RootComponent(
     }
 
     sealed class Child {
-        data class AuthScreen(val component: AuthScreenComponent) : Child()
-        data class ConfigScreen(val component: ConfigScreenComponent) : Child()
+        data class AuthScreen(val component: AuthComponent) : Child()
+        data class ConfigScreen(val component: ConfigComponent) : Child()
     }
 
 }

@@ -1,11 +1,11 @@
 package auth.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,14 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import auth.presentation.components.AuthScreenComponent
 import auth.presentation.composables.InputField
 import auth.presentation.events.AuthEvent
 import com.matiz22.richgophishclient.AppRes
 
 
 @Composable
-fun AuthScreen(
+fun RegistrationScreen(
     email: String,
     emailError: String?,
     password: String,
@@ -56,6 +55,19 @@ fun AuthScreen(
                 isPassword = true,
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password
+            )
+        }
+
+        item {
+            OutlinedButton(
+                onClick = {
+                    onEvent(AuthEvent.IsNewUserChanged)
+                },
+                content = {
+                    Text(
+                        text = AppRes.string.nav_to_login,
+                    )
+                }
             )
         }
 

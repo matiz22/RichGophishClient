@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import config.presentation.navigation.ConfigScreensConfiguration
 
 
-class ConfigScreenComponent(
+class ConfigComponent(
     componentContext: ComponentContext,
     val user: User
 ) : ComponentContext by componentContext {
@@ -36,6 +36,6 @@ class ConfigScreenComponent(
 
     sealed class Child {
         data class ListOfConfigsScreenChild(val component: ListOfConfigsComponent) : Child()
-
+        data class HomeOfConfigsScreenChild(val component: HomeOfConfigsComponent) : Child()
     }
 }

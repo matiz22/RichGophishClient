@@ -1,10 +1,9 @@
 package ui
 
-import DarkColors
-import LightColors
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
+import theme.DarkColors
+import theme.LightColors
 
 interface ProvideDefaultColorScheme {
     @Composable
