@@ -1,5 +1,8 @@
 package root.presentation.composables
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -12,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.matiz22.richgophishclient.AppRes
 
@@ -22,7 +26,6 @@ fun AppScaffold(
     content: (@Composable () -> Unit)? = null,
     sideBarContent: (@Composable () -> Unit)? = null
 ) {
-    //TODO add bottom bar to
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -53,9 +56,11 @@ fun AppScaffold(
                 }
             )
         }
-    ) {
+    ) { paddingValues ->
         if (content != null) {
-            content()
+            Box(modifier = Modifier.fillMaxSize().padding(paddingValues = paddingValues)) {
+                content()
+            }
         }
     }
 }

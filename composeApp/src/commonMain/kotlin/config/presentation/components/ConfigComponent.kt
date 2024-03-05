@@ -5,6 +5,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import config.presentation.navigation.ConfigScreensConfiguration
+import configs.domain.model.GophishConfig
 
 
 class ConfigComponent(
@@ -12,11 +13,11 @@ class ConfigComponent(
     val user: User
 ) : ComponentContext by componentContext {
 
-    private val navigation = StackNavigation<ConfigScreensConfiguration>()
+    val navigation = StackNavigation<ConfigScreensConfiguration>()
     val childStack = childStack(
         source = navigation,
         serializer = ConfigScreensConfiguration.serializer(),
-        initialConfiguration = ConfigScreensConfiguration.ListOfConfigsScreen(user),
+        initialConfiguration = ConfigScreensConfiguration.ListOfConfigsConfiguration(user),
         handleBackButton = true,
         childFactory = ::createChild
     )
@@ -26,9 +27,16 @@ class ConfigComponent(
         context: ComponentContext
     ): Child {
         return when (config) {
-            is ConfigScreensConfiguration.ListOfConfigsScreen -> Child.ListOfConfigsScreenChild(
+            is ConfigScreensConfiguration.ListOfConfigsConfiguration -> Child.ListOfConfigsScreenChild(
                 component = ListOfConfigsComponent(
                     componentContext = context
+                )
+            )
+
+            is ConfigScreensConfiguration.HomeOfConfigConfiguration -> Child.HomeOfConfigScreenChild(
+                component = HomeOfConfigComponent(
+                    componentContext = context,
+                    config = config.gophishConfig
                 )
             )
         }
@@ -36,6 +44,6 @@ class ConfigComponent(
 
     sealed class Child {
         data class ListOfConfigsScreenChild(val component: ListOfConfigsComponent) : Child()
-        data class HomeOfConfigsScreenChild(val component: HomeOfConfigsComponent) : Child()
+        data class HomeOfConfigScreenChild(val component: HomeOfConfigComponent) : Child()
     }
 }

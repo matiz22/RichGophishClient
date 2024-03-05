@@ -9,6 +9,6 @@ import config.presentation.screen.ListOfConfigsScreen
 @Composable
 fun PrevListOfConfigs(){
     MaterialTheme {
-        ListOfConfigsScreen()
+        ListOfConfigsScreen({})
     }
 }
