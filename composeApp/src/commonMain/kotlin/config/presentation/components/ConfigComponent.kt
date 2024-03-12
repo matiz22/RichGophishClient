@@ -29,7 +29,8 @@ class ConfigComponent(
         return when (config) {
             is ConfigScreensConfiguration.ListOfConfigsConfiguration -> Child.ListOfConfigsScreenChild(
                 component = ListOfConfigsComponent(
-                    componentContext = context
+                    componentContext = context,
+                    user = config.user
                 )
             )
 

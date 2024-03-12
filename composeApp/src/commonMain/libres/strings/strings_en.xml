@@ -7,4 +7,5 @@
     <string name="nav_to_register">You haven't created a user</string>
     <string name="home_page">Home</string>
     <string name="extend_sidebar">Extend Sidebar</string>
+    <string name="successful_operation">Operation went successfully</string>
 </resources>

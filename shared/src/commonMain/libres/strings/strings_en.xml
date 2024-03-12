@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name ="email_pattern_error">This is not an email address</string>
-
+    <string name="email_pattern_error">This is not an email address</string>
     <string name="password_length_error">Password must greater than 15 characters length</string>
+    <string name="deletion_error">Deletion went wrong</string>
+    <string name="creation_error">Creation went wrong</string>
+    <string name="editing_error">Editing went wrong</string>
 </resources>

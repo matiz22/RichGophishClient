@@ -13,8 +13,9 @@ import io.ktor.http.isSuccess
 
 
 class UserApi(private val mainClient: HttpClient) {
+    private val ROUTE = "/user"
     suspend fun fetchUserById(idCredentials: IdCredentials): UserOrError {
-        val request = mainClient.post("/user/userById") {
+        val request = mainClient.post("${ROUTE}/userById") {
             setBody(idCredentials)
         }
         return if (request.status.isSuccess()) {
@@ -25,7 +26,7 @@ class UserApi(private val mainClient: HttpClient) {
     }
 
     suspend fun fetchUserByEmail(emailCredentials: EmailCredentials): UserOrError {
-        val request = mainClient.post("/user/userByEmail") {
+        val request = mainClient.post("${ROUTE}/userByEmail") {
             setBody(emailCredentials)
         }
         return if (request.status.isSuccess()) {
@@ -36,7 +37,7 @@ class UserApi(private val mainClient: HttpClient) {
     }
 
     suspend fun createUser(emailCredentials: EmailCredentials): UserOrError {
-        val request = mainClient.post("/user/createUser") {
+        val request = mainClient.post("${ROUTE}/createUser") {
             setBody(emailCredentials)
         }
         return if (request.status.isSuccess()) {
@@ -47,7 +48,7 @@ class UserApi(private val mainClient: HttpClient) {
     }
 
     suspend fun deleteUser(id: Long): Boolean =
-        mainClient.delete("/user/deleteUser") {
+        mainClient.delete("${ROUTE}/deleteUser") {
             setBody(mapOf("id" to id))
         }.status.isSuccess()
 

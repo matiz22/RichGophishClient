@@ -2,6 +2,7 @@ package home.data.remote
 
 import com.matiz22.richgophishclient.BuildKonfig
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpPlainText
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.headers

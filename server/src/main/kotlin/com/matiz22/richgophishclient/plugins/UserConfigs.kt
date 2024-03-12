@@ -35,9 +35,14 @@ fun Route.configureUserConfigs(userConfigDao: UserConfigDao) {
             }
         }
         get("/user") {
-            val body = call.receive<Long>()
-            val configs = userConfigDao.getConfigsForUser(body)
-            call.respond(HttpStatusCode.OK, message = configs)
+            val body = call.receive<Map<String, Long>>()
+            val userId = body["userId"]
+            if (userId != null) {
+                val configs = userConfigDao.getConfigsForUser(userId)
+                call.respond(HttpStatusCode.OK, message = configs)
+            } else {
+                call.respond(HttpStatusCode.BadRequest, "Invalid JSON format: 'userId' is missing")
+            }
         }
         delete {
             val body = call.receive<Long>()
