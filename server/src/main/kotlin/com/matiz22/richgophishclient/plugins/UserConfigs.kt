@@ -3,6 +3,7 @@ package com.matiz22.richgophishclient.plugins
 import configs.domain.model.CreateGophishConfig
 import configs.domain.model.EditGophishConfig
 import com.matiz22.richgophishclient.dao.UserConfigDao
+import configs.domain.model.ConfigUserIdRequest
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.request.receive
@@ -35,14 +36,9 @@ fun Route.configureUserConfigs(userConfigDao: UserConfigDao) {
             }
         }
         get("/user") {
-            val body = call.receive<Map<String, Long>>()
-            val userId = body["userId"]
-            if (userId != null) {
-                val configs = userConfigDao.getConfigsForUser(userId)
-                call.respond(HttpStatusCode.OK, message = configs)
-            } else {
-                call.respond(HttpStatusCode.BadRequest, "Invalid JSON format: 'userId' is missing")
-            }
+            val body = call.receive<ConfigUserIdRequest>()
+            val configs = userConfigDao.getConfigsForUser(body.userId)
+            call.respond(HttpStatusCode.OK, message = configs)
         }
         delete {
             val body = call.receive<Long>()

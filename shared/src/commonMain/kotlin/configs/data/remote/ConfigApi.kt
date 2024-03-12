@@ -1,6 +1,7 @@
 package configs.data.remote
 
 import com.matiz22.richgophishclient.shared.SharedRes
+import configs.domain.model.ConfigUserIdRequest
 import configs.domain.model.ConfigsOrError
 import configs.domain.model.CreateGophishConfig
 import configs.domain.model.EditGophishConfig
@@ -22,8 +23,7 @@ class ConfigApi(private val mainClient: HttpClient) {
 
     suspend fun fetchConfigs(id: Long): ConfigsOrError {
         val request = mainClient.get("${ROUTE}/user") {
-            contentType(ContentType.Text.Plain)
-            setBody(id.toString())
+            setBody(ConfigUserIdRequest(id))
         }
         println(request.bodyAsText())
         println(request.status)
