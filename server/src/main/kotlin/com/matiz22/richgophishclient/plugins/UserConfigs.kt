@@ -35,10 +35,14 @@ fun Route.configureUserConfigs(userConfigDao: UserConfigDao) {
                 call.respond(HttpStatusCode.NotModified)
             }
         }
-        get("/user") {
+        post("/user") {
             val body = call.receive<ConfigUserIdRequest>()
-            val configs = userConfigDao.getConfigsForUser(body.userId)
-            call.respond(HttpStatusCode.OK, message = configs)
+            if (body is ConfigUserIdRequest) {
+                val configs = userConfigDao.getConfigsForUser(body.userId)
+                call.respond(HttpStatusCode.OK, message = configs)
+            } else {
+                call.respond(HttpStatusCode.BadRequest, "Invalid JSON format: 'userId' is missing")
+            }
         }
         delete {
             val body = call.receive<Long>()
