@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
@@ -21,7 +22,7 @@ import root.presentation.composables.AppScaffold
 @Composable
 fun ConfigScreen(component: ConfigComponent) {
     val childStack by component.childStack.subscribeAsState()
-    val snackbarHostState by mutableStateOf(SnackbarHostState())
+    val snackbarHostState = remember { SnackbarHostState() }
     AppScaffold(
         title = AppRes.string.home_page,
         snackbarHostState = snackbarHostState,

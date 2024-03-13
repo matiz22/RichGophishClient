@@ -21,9 +21,7 @@ fun ListOfConfigsScreen(
     configsOrError: ConfigsOrError,
     onEvent: (ListOfConfigsEvent) -> Unit
 ) {
-    Button(onClick = {onEvent(ListOfConfigsEvent.AddConfig)}){
 
-    }
     if (configsOrError.configs != null) {
         LazyVerticalGrid(
             contentPadding = PaddingValues(4.dp),
@@ -31,6 +29,11 @@ fun ListOfConfigsScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
+            item {
+                Button(onClick = {onEvent(ListOfConfigsEvent.AddConfig)}){
+
+                }
+            }
             items(configsOrError.configs!!) { config ->
                 ConfigItem(gophishConfig = config)
             }

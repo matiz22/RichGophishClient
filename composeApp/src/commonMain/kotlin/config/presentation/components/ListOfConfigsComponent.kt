@@ -12,15 +12,18 @@ import configs.di.ConfigKoinComponent
 import configs.domain.model.ConfigsOrError
 import home.domain.model.ApiCallResult
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ListOfConfigsComponent(
     componentContext: ComponentContext,
@@ -42,8 +45,12 @@ class ListOfConfigsComponent(
     fun onEvent(listOfConfigsEvent: ListOfConfigsEvent) {
         when (listOfConfigsEvent) {
             is ListOfConfigsEvent.AddConfig -> {
-                addConfig()
-                updateConfigs()
+                scope.launch {
+                    val addResult = addConfig().await()
+                    if (addResult.successful) {
+                        updateConfigs()
+                    }
+                }
             }
         }
     }
@@ -60,14 +67,17 @@ class ListOfConfigsComponent(
         }
     }
 
-    private fun addConfig() {
-        scope.launch {
+    private fun addConfig(): Deferred<ApiCallResult> {
+        return scope.async {
             val result = configRepository.createConfig(
                 createGophishConfig = configFormState.toCreateGophishConfig(
                     user.id
                 )
             )
-            _apiCallResult.send(result)
+            withContext(Dispatchers.Main) {
+                _apiCallResult.send(result)
+            }
+            result
         }
     }
 

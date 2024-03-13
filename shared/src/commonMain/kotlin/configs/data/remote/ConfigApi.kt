@@ -22,14 +22,9 @@ class ConfigApi(private val mainClient: HttpClient) {
     private val ROUTE = "/configs"
 
     suspend fun fetchConfigs(id: Long): ConfigsOrError {
-        println(ConfigUserIdRequest(id))
         val request = mainClient.post("${ROUTE}/user") {
             setBody(ConfigUserIdRequest(id))
         }
-        println(request.call.request.url)
-        println(request.bodyAsText())
-        println(request.status.value)
-        println(request.call.body<Any?>().toString())
         return if (request.status.isSuccess()) {
             ConfigsOrError(configs = request.body())
         } else {
