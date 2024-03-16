@@ -5,7 +5,6 @@ import home.data.validators.EmailValidator
 import home.domain.model.ValidationResult
 
 class ValidateEmail {
-
     fun execute(email: String): ValidationResult {
         return if (EmailValidator.isValidEmailPattern(email)) {
             ValidationResult(successful = true)

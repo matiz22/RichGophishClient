@@ -7,6 +7,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -20,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.matiz22.richgophishclient.AppRes
+import config.presentation.states.FloatingActionButtonState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,7 +30,8 @@ fun AppScaffold(
     title: String,
     content: @Composable() (() -> Unit)? = null,
     sideBarContent: @Composable() (() -> Unit)? = null,
-    snackbarHostState: SnackbarHostState? = null
+    snackbarHostState: SnackbarHostState? = null,
+    floatingActionButtonState: FloatingActionButtonState?
 ) {
     Scaffold(
         topBar = {
@@ -59,6 +63,22 @@ fun AppScaffold(
                 }
             )
         },
+        floatingActionButton = {
+            if (floatingActionButtonState != null) {
+                FloatingActionButton(
+                    onClick = {
+                        floatingActionButtonState.action()
+                    },
+                    content = {
+                        Icon(
+                            imageVector = floatingActionButtonState.icon,
+                            contentDescription = null
+                        )
+                    }
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
         snackbarHost = {
             if (snackbarHostState != null) {
                 SnackbarHost(hostState = snackbarHostState)

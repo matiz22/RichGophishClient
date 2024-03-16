@@ -5,4 +5,7 @@
     <string name="deletion_error">Deletion went wrong</string>
     <string name="creation_error">Creation went wrong</string>
     <string name="editing_error">Editing went wrong</string>
+    <string name="wrong_url_pattern">Wrong Url pattern</string>
+    <string name="name_length_error">Name cannot be empty</string>
+    <string name="api_key_length_error">Name cannot be empty</string>
 </resources>

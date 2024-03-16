@@ -14,10 +14,10 @@ fun PrevListOfConfigs() {
         0, "CorpoXXX", 0, "https://github.com/matiz22", "TOP SECRET KEY"
     )
     MaterialTheme {
-        ListOfConfigsScreen(
-            ConfigsOrError(
-                configs = listOf(gophishConfig, gophishConfig),
-            ), {}
-        )
+//        ListOfConfigsScreen(
+//            ConfigsOrError(
+//                configs = listOf(gophishConfig, gophishConfig),
+//            ), {}, {}, configFormState
+//        )
     }
 }

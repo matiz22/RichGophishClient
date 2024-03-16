@@ -5,7 +5,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import config.presentation.composables.ConfigItem
 import configs.domain.model.GophishConfig
-import java.io.ObjectInputFilter.Config
 
 @Preview
 @Composable
@@ -14,7 +13,7 @@ private fun prevConfItem() {
         val gophishConfig = GophishConfig(
             0, "CorpoXXX", 0, "https://github.com/matiz22", "TOP SECRET KEY"
         )
-        ConfigItem(gophishConfig = gophishConfig)
+        ConfigItem(gophishConfig = gophishConfig, onMenuClick = {}, onClick = {  })
     }
 
 }

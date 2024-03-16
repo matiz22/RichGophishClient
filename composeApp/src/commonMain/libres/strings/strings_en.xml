@@ -8,4 +8,13 @@
     <string name="home_page">Home</string>
     <string name="extend_sidebar">Extend Sidebar</string>
     <string name="successful_operation">Operation went successfully</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="name_hint">Name</string>
+    <string name="url_hint">URL</string>
+    <string name="api_key_hint">Api Key</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_config">Add config</string>
+    <string name="edit_config">Edit config</string>
+    <string name="api_call_failed">Failed to make request</string>
 </resources>
