@@ -1,24 +1,23 @@
 package home.data.remote
 
-import com.matiz22.richgophishclient.BuildKonfig
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.headers
 import io.ktor.http.ContentType
+import io.ktor.http.append
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 
-
-val mainClient = HttpClient {
+fun provideGophishHttpClient(host: String, apiKey: String) = HttpClient {
     install(ContentNegotiation) { json() }
     defaultRequest {
         url {
-            host = BuildKonfig.MAIN_API_HOST
+            this.host = host
         }
         contentType(ContentType.Application.Json)
         headers {
-            append("X-Api-Key", BuildKonfig.MAIN_API_KEY)
+            append("Authorization", apiKey)
         }
     }
 }

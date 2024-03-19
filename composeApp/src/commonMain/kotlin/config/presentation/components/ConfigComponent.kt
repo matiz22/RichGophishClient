@@ -24,10 +24,10 @@ class ConfigComponent(
     val user: User
 ) : ComponentContext by componentContext {
 
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     init {
-        lifecycle.doOnDestroy { scope.cancel() }
+        lifecycle.doOnDestroy { coroutineScope.cancel() }
     }
 
     val navigation = StackNavigation<ConfigScreensConfiguration>()
@@ -44,7 +44,7 @@ class ConfigComponent(
     fun onEvent(scaffoldEvents: ScaffoldEvents){
         when (scaffoldEvents){
             is ScaffoldEvents.ShowSnackBar -> {
-                scope.launch {
+                coroutineScope.launch {
                     snackbarHostState.showSnackbar(scaffoldEvents.message)
                 }
             }

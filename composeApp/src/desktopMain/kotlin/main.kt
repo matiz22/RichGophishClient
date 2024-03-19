@@ -2,7 +2,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import home.di.initKoin
+import root.di.initKoin
 import navigation.RootComponent
 import utils.runOnUiThread
 

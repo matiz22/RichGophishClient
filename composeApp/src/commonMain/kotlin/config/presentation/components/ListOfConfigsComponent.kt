@@ -93,8 +93,8 @@ class ListOfConfigsComponent(
                 if (configFormState.isShown) {
                     configFormState = ConfigFormState()
                 } else {
-                    if (listOfConfigsEvent.gophishConfig != null) {
-                        configFormState = configFormState.copy(
+                    configFormState = if (listOfConfigsEvent.gophishConfig != null) {
+                        configFormState.copy(
                             isShown = true,
                             id = listOfConfigsEvent.gophishConfig.id,
                             name = listOfConfigsEvent.gophishConfig.name,
@@ -103,7 +103,7 @@ class ListOfConfigsComponent(
                             mode = ConfigDialogMode.EDIT
                         )
                     } else {
-                        configFormState = configFormState.copy(isShown = true)
+                        configFormState.copy(isShown = true)
                     }
                 }
             }

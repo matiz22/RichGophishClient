@@ -5,10 +5,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun HomeOfConfigScreen(previous: () -> Unit) {
+fun HomeOfConfigScreen() {
     Button(
         onClick = {
-            previous()
+
         },
         content = {
             Text("heeere")

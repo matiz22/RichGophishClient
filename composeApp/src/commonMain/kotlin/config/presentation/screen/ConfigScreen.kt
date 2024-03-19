@@ -83,9 +83,7 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     }
 
                     is ConfigComponent.Child.HomeOfConfigScreenChild -> {
-                        HomeOfConfigScreen(previous = {
-                            configComponent.navigation.pop()
-                        })
+                        HomeOfConfigScreen()
                     }
                 }
             }
