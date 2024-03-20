@@ -14,6 +14,7 @@ import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 
 class CampaignApi(
@@ -25,6 +26,7 @@ class CampaignApi(
 
     suspend fun getCampaigns(): DataOrError<List<Campaign>> {
         val request = httpClient.get(ROUTE)
+        println(request.bodyAsText())
         return if (request.status.isSuccess()) {
             DataOrError<List<Campaign>>(data = request.body())
         } else {
