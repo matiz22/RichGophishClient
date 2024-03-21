@@ -25,6 +25,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -43,7 +44,7 @@ class ListOfConfigsComponent(
     private val apiKeyValidator = ValidateConfigKoinComponent().validateApiKey
 
     private val _configs = MutableStateFlow<ConfigsOrError>(ConfigsOrError())
-    val configs: StateFlow<ConfigsOrError> = _configs
+    val configs: StateFlow<ConfigsOrError> = _configs.asStateFlow()
 
     private val _apiCallResult = Channel<ApiCallResult>()
     val apiCallResult = _apiCallResult.receiveAsFlow()

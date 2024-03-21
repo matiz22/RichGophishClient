@@ -17,4 +17,11 @@
     <string name="add_config">Add config</string>
     <string name="edit_config">Edit config</string>
     <string name="api_call_failed">Failed to make request</string>
+    <string name="campaign_stats_total">Total: ${total}</string>
+    <string name="campaign_stats_sent">Sent: ${sent}</string>
+    <string name="campaign_stats_opened">Opened: ${opened}</string>
+    <string name="campaign_stats_clicked">Clicked: ${clicked}</string>
+    <string name="campaign_stats_submitted_data">Submitted Data: ${submitted}</string>
+    <string name="campaign_stats_email_reported">Email Reported: $reported</string>
+    <string name="campaign_stats_error">Error: ${error}</string>
 </resources>

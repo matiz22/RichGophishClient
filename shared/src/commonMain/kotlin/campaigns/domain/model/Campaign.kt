@@ -1,6 +1,6 @@
 package campaigns.domain.model
 
-import Template
+import template.domain.model.Template
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import page.domain.model.Page
@@ -10,7 +10,7 @@ import timeline.domain.model.Timeline
 
 @Serializable
 data class Campaign(
-    val id: Int,
+    val id: Long,
     val name: String,
     @SerialName("created_date")
     val createdDate: String,

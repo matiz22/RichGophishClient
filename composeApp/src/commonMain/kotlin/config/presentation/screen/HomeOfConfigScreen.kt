@@ -1,17 +1,12 @@
 package config.presentation.screen
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import campaigns.domain.model.CampaignStats
+import gophish.presentation.composables.SummaryCard
 
 @Composable
-fun HomeOfConfigScreen() {
-    Button(
-        onClick = {
-
-        },
-        content = {
-            Text("heeere")
-        }
+fun HomeOfConfigScreen(summary: CampaignStats) {
+    SummaryCard(
+        summary = summary
     )
 }

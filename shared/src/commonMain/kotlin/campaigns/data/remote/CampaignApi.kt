@@ -15,18 +15,24 @@ import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.appendPathSegments
+import io.ktor.http.encodedPath
 import io.ktor.http.isSuccess
+import io.ktor.http.path
 
 class CampaignApi(
     private val host: String,
-    private val apiKey: String
+    apiKey: String
 ) {
     private val ROUTE = "api/campaigns/"
-    private val httpClient = provideGophishHttpClient(host = host, apiKey = apiKey)
+    private val httpClient = provideGophishHttpClient(apiKey = apiKey)
 
     suspend fun getCampaigns(): DataOrError<List<Campaign>> {
-        val request = httpClient.get(ROUTE)
-        println(request.bodyAsText())
+        val request = httpClient.get(host){
+            url{
+                path(ROUTE)
+            }
+        }
         return if (request.status.isSuccess()) {
             DataOrError<List<Campaign>>(data = request.body())
         } else {
@@ -36,7 +42,11 @@ class CampaignApi(
     }
 
     suspend fun getCampaign(id: Long): DataOrError<Campaign> {
-        val request = httpClient.get(ROUTE + id.toString())
+        val request = httpClient.get(host){
+            url{
+                path("$ROUTE$id")
+            }
+        }
         return if (request.status.isSuccess()) {
             DataOrError<Campaign>(data = request.body())
         } else {
@@ -61,7 +71,11 @@ class CampaignApi(
     }
 
     suspend fun getCampaignResult(id: Long): DataOrError<CampaignResult> {
-        val request = httpClient.get("$ROUTE$id/results")
+        val request = httpClient.get(host){
+            url{
+                path("$ROUTE$id/results")
+            }
+        }
         return if (request.status.isSuccess()) {
             DataOrError<CampaignResult>(data = request.body())
         } else {
@@ -71,7 +85,11 @@ class CampaignApi(
     }
 
     suspend fun getCampaignSummary(id: Long): DataOrError<CampaignSummary> {
-        val request = httpClient.get("$ROUTE$id/summary")
+        val request = httpClient.get(host){
+            url{
+                path("$ROUTE$id/summary")
+            }
+        }
         return if (request.status.isSuccess()) {
             DataOrError<CampaignSummary>(data = request.body())
         } else {
@@ -81,7 +99,11 @@ class CampaignApi(
     }
 
     suspend fun deleteCampaign(id: Long): ApiCallResult {
-        val request = httpClient.delete(ROUTE + id.toString())
+        val request = httpClient.delete(host){
+            url{
+                path("$ROUTE$id")
+            }
+        }
         return if (request.status.isSuccess()) {
             ApiCallResult(successful = true)
         } else {
@@ -94,7 +116,11 @@ class CampaignApi(
     }
 
     suspend fun completeCampaign(id: Long): ApiCallResult {
-        val request = httpClient.get("$ROUTE$id/complete")
+        val request = httpClient.get(host){
+            url{
+                path("$ROUTE$id/complete")
+            }
+        }
         return if (request.status.isSuccess()) {
             ApiCallResult(successful = true)
         } else {

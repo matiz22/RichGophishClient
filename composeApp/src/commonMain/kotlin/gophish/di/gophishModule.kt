@@ -8,7 +8,10 @@ import org.koin.dsl.module
 fun campaignModule() = module {
     scope<HomeOfConfigComponent> {
         scoped<CampaignRepository> { params ->
-            CampaignRepositoryImpl(host = params[0], apiKey = params[1])
+            CampaignRepositoryImpl(
+                host = params[0],
+                apiKey = params[1]
+            ) // params passed in injected val
         }
     }
 }

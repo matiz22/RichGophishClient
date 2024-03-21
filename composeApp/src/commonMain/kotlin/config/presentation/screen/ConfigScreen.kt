@@ -2,6 +2,7 @@ package config.presentation.screen
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -77,13 +78,33 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                                 configComponent.navigation.pushNew(
                                     ConfigScreensConfiguration.HomeOfConfigConfiguration(
                                         config
-                                    ), onComplete = { configComponent.onEvent(ScaffoldEvents.UpdateFloatingActionButton(null))})
+                                    ),
+                                    onComplete = {
+                                        configComponent.onEvent(
+                                            ScaffoldEvents.UpdateFloatingActionButton(null)
+                                        )
+                                    })
                             }
                         )
                     }
 
                     is ConfigComponent.Child.HomeOfConfigScreenChild -> {
-                        HomeOfConfigScreen()
+                        val summary = instance.component.stats
+                        LaunchedEffect(Unit) {
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateFloatingActionButton(
+                                    FloatingActionButtonState(
+                                        action = {
+                                            configComponent.navigation.pop()
+                                        },
+                                        icon = Icons.Default.ArrowBack
+                                    )
+                                )
+                            )
+                        }
+                        HomeOfConfigScreen(
+                            summary = summary,
+                        )
                     }
                 }
             }

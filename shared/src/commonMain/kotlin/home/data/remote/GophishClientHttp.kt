@@ -8,16 +8,19 @@ import io.ktor.http.ContentType
 import io.ktor.http.append
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
-fun provideGophishHttpClient(host: String, apiKey: String) = HttpClient {
-    install(ContentNegotiation) { json() }
+fun provideGophishHttpClient(apiKey: String) = HttpClient {
+    install(ContentNegotiation) {
+        json(Json {
+            ignoreUnknownKeys = true
+        })
+    }
+
     defaultRequest {
-        url {
-            this.host = host
-        }
         contentType(ContentType.Application.Json)
         headers {
-            append("Authorization", apiKey)
+            append("Authorization","Bearer $apiKey" )
         }
     }
 }

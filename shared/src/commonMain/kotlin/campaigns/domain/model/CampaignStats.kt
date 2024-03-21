@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CampaignStats(
-    val total: Int,
-    val sent: Int,
-    val opened: Int,
-    val clicked: Int,
+    val total: Int = 0,
+    val sent: Int= 0,
+    val opened: Int = 0,
+    val clicked: Int = 0,
     @SerialName("submitted_data")
-    val submittedData: Int,
+    val submittedData: Int = 0,
     @SerialName("email_reported")
-    val emailReported: Int,
-    val error: Int
+    val emailReported: Int = 0,
+    val error: Int = 0
 )
