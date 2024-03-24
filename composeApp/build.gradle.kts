@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.libres)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.essenty.lifecycle)
+            implementation("io.github.thechance101:chart:Beta-0.0.5")
 
         }
     }

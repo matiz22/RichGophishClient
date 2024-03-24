@@ -22,6 +22,6 @@
     <string name="campaign_stats_opened">Opened: ${opened}</string>
     <string name="campaign_stats_clicked">Clicked: ${clicked}</string>
     <string name="campaign_stats_submitted_data">Submitted Data: ${submitted}</string>
-    <string name="campaign_stats_email_reported">Email Reported: $reported</string>
+    <string name="campaign_stats_email_reported">Email Reported: ${reported}</string>
     <string name="campaign_stats_error">Error: ${error}</string>
 </resources>

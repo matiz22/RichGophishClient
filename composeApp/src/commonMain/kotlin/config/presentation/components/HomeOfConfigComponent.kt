@@ -40,7 +40,7 @@ class HomeOfConfigComponent(
     private val _campaigns = MutableStateFlow<DataOrError<List<Campaign>>>(DataOrError())
     val campaigns: StateFlow<DataOrError<List<Campaign>>> = _campaigns.asStateFlow()
 
-    var stats by mutableStateOf(CampaignStats())
+    var stats by mutableStateOf<CampaignStats?>(CampaignStats())
 
     init {
         coroutineScope.launch {
@@ -50,20 +50,23 @@ class HomeOfConfigComponent(
 
     private fun updateCampaigns() {
         coroutineScope.launch {
-            stats = CampaignStats()
             _campaigns.emit(campaignRepository.getCampaigns())
             campaigns.value.data?.forEach { campaign ->
                 val summary = campaignRepository.getCampaignSummary(campaign.id)
                 if (summary.data != null) {
-                    stats = stats.copy(
-                        total = stats.total + summary.data!!.stats.total,
-                        sent = stats.sent + summary.data!!.stats.sent,
-                        opened = stats.opened + summary.data!!.stats.opened,
-                        clicked = stats.clicked + summary.data!!.stats.clicked,
-                        submittedData = stats.submittedData + summary.data!!.stats.submittedData,
-                        emailReported = stats.emailReported + summary.data!!.stats.emailReported,
-                        error = stats.error + summary.data!!.stats.error
-                    )
+                    stats = if (stats == null) {
+                        summary.data!!.stats
+                    } else {
+                        stats?.copy(
+                            total = stats?.total!! + summary.data!!.stats.total,
+                            sent = stats?.sent!! + summary.data!!.stats.sent,
+                            opened = stats?.opened!! + summary.data!!.stats.opened,
+                            clicked = stats?.clicked!! + summary.data!!.stats.clicked,
+                            submittedData = stats?.submittedData!! + summary.data!!.stats.submittedData,
+                            emailReported = stats?.emailReported!! + summary.data!!.stats.emailReported,
+                            error = stats?.error!! + summary.data!!.stats.error
+                        )
+                    }
                 }
             }
         }
