@@ -6,7 +6,6 @@ import campaigns.domain.model.CampaignResult
 import campaigns.domain.model.CampaignSummary
 import campaigns.domain.model.CreateCampaign
 import campaigns.domain.model.DataOrError
-import home.data.remote.provideGophishHttpClient
 import home.domain.model.ApiCallResult
 import home.domain.model.GophishCallResult
 import io.ktor.client.call.body
@@ -14,21 +13,17 @@ import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsText
-import io.ktor.http.appendPathSegments
-import io.ktor.http.encodedPath
 import io.ktor.http.isSuccess
 import io.ktor.http.path
 
 class CampaignApi(
-    private val host: String,
-    apiKey: String
+    private val gophishHttpRequester: GophishHttpRequester
 ) {
     private val ROUTE = "api/campaigns/"
-    private val httpClient = provideGophishHttpClient(apiKey = apiKey)
+
 
     suspend fun getCampaigns(): DataOrError<List<Campaign>> {
-        val request = httpClient.get(host){
+        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host){
             url{
                 path(ROUTE)
             }
@@ -42,7 +37,7 @@ class CampaignApi(
     }
 
     suspend fun getCampaign(id: Long): DataOrError<Campaign> {
-        val request = httpClient.get(host){
+        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host){
             url{
                 path("$ROUTE$id")
             }
@@ -56,7 +51,10 @@ class CampaignApi(
     }
 
     suspend fun createCampaign(createCampaign: CreateCampaign): ApiCallResult {
-        val request = httpClient.post(ROUTE) {
+        val request = gophishHttpRequester.httpClient.post(gophishHttpRequester.host) {
+            url {
+                path(ROUTE)
+            }
             setBody(createCampaign)
         }
         return if (request.status.isSuccess()) {
@@ -71,7 +69,7 @@ class CampaignApi(
     }
 
     suspend fun getCampaignResult(id: Long): DataOrError<CampaignResult> {
-        val request = httpClient.get(host){
+        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host){
             url{
                 path("$ROUTE$id/results")
             }
@@ -85,7 +83,7 @@ class CampaignApi(
     }
 
     suspend fun getCampaignSummary(id: Long): DataOrError<CampaignSummary> {
-        val request = httpClient.get(host){
+        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host){
             url{
                 path("$ROUTE$id/summary")
             }
@@ -99,7 +97,7 @@ class CampaignApi(
     }
 
     suspend fun deleteCampaign(id: Long): ApiCallResult {
-        val request = httpClient.delete(host){
+        val request = gophishHttpRequester.httpClient.delete(gophishHttpRequester.host){
             url{
                 path("$ROUTE$id")
             }
@@ -116,7 +114,7 @@ class CampaignApi(
     }
 
     suspend fun completeCampaign(id: Long): ApiCallResult {
-        val request = httpClient.get(host){
+        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host){
             url{
                 path("$ROUTE$id/complete")
             }

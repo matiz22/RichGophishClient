@@ -3,9 +3,9 @@ package config.presentation.components
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import campaigns.data.remote.GophishHttpRequester
 import campaigns.domain.model.Campaign
 import campaigns.domain.model.CampaignStats
-import campaigns.domain.model.CampaignSummary
 import campaigns.domain.model.DataOrError
 import campaigns.domain.repository.CampaignRepository
 import com.arkivanov.decompose.ComponentContext
@@ -32,25 +32,26 @@ import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.createScope
 import org.koin.core.component.inject
 import org.koin.core.parameter.parameterSetOf
+import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 
 class HomeOfConfigComponent(
     componentContext: ComponentContext,
     config: GophishConfig
 ) : KoinScopeComponent, ComponentContext by componentContext {
-    override val scope: Scope by lazy { createScope(this) }
+    override val scope: Scope by lazy { getKoin().createScope("campaignComponent", named("campaignScope")) }
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private val campaignRepository: CampaignRepository by inject {
-        parameterSetOf(
-            config.url,
-            config.apiKey
-        )
+    private val campaignRepository: CampaignRepository by inject{
+        parameterSetOf(config.url, config.apiKey)
     }
     private val _campaigns = MutableStateFlow<DataOrError<List<Campaign>>>(DataOrError())
     val campaigns: StateFlow<DataOrError<List<Campaign>>> = _campaigns.asStateFlow()
 
     private val _apiCallResult = Channel<ApiCallResult>()
     val apiCallResult = _apiCallResult.receiveAsFlow()
+
+    private val _pickedCampaignChannel = Channel<Campaign>()
+    val pickedCampaignChannel = _pickedCampaignChannel.receiveAsFlow()
 
     var stats by mutableStateOf<CampaignStats?>(null)
 
@@ -81,7 +82,14 @@ class HomeOfConfigComponent(
                 pickingCampaign = false
             }
 
-            is HomeOfConfigEvent.PickCampaign -> TODO()
+            is HomeOfConfigEvent.PickCampaign -> {
+                coroutineScope.launch {
+                    withContext(Dispatchers.Main){
+                        _pickedCampaignChannel.send(homeOfConfigEvent.campaign)
+                    }
+                }
+
+            }
             is HomeOfConfigEvent.ShowCampaigns -> {
                 pickingCampaign = true
             }

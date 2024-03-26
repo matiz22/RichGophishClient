@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
@@ -37,7 +35,7 @@ import ui.SummaryChartColor
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SummaryCard(
+fun StatsCard(
     modifier: Modifier = Modifier,
     title: String? = null,
     stats: CampaignStats?
@@ -81,16 +79,15 @@ fun SummaryCard(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 if (stats != null) {
-                    val total = PieChartData(
-                        data = stats.total.toDouble(),
-                        color = Color.Gray,
-                        partName = AppRes.string.campaign_stats_total.format(stats.total.toString())
-                    )
-
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
                         pieChartData = listOf(
-                            total,
+                            PieChartData(
+                                data = stats.total.toDouble() - stats.sent.toDouble() ,
+                                color = Color.Gray,
+                                partName = AppRes.string.campaign_stats_total.format(stats.total.toString())
+                            ),
+
                             PieChartData(
                                 data = stats.sent.toDouble(),
                                 color = SummaryChartColor.SentSummaryChartColor.color,
@@ -102,7 +99,11 @@ fun SummaryCard(
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
                         pieChartData = listOf(
-                            total,
+                            PieChartData(
+                                data = stats.total.toDouble() - stats.opened.toDouble() ,
+                                color = Color.Gray,
+                                partName = AppRes.string.campaign_stats_total.format(stats.total.toString())
+                            ),
                             PieChartData(
                                 data = stats.opened.toDouble(),
                                 color = SummaryChartColor.OpenedSummaryChartColor.color,
@@ -114,7 +115,11 @@ fun SummaryCard(
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
                         pieChartData = listOf(
-                            total,
+                            PieChartData(
+                                data = stats.total.toDouble() - stats.clicked.toDouble() ,
+                                color = Color.Gray,
+                                partName = AppRes.string.campaign_stats_total.format(stats.total.toString())
+                            ),
                             PieChartData(
                                 data = stats.clicked.toDouble(),
                                 color = SummaryChartColor.ClickedLinkColorSummary.color,
@@ -126,7 +131,11 @@ fun SummaryCard(
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
                         pieChartData = listOf(
-                            total,
+                            PieChartData(
+                                data = stats.total.toDouble() - stats.submittedData.toDouble() ,
+                                color = Color.Gray,
+                                partName = AppRes.string.campaign_stats_total.format(stats.total.toString())
+                            ),
                             PieChartData(
                                 data = stats.submittedData.toDouble(),
                                 color = SummaryChartColor.SubmittedDataColorSummary.color,
@@ -138,7 +147,11 @@ fun SummaryCard(
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
                         pieChartData = listOf(
-                            total,
+                            PieChartData(
+                                data = stats.total.toDouble() - stats.emailReported.toDouble() ,
+                                color = Color.Gray,
+                                partName = AppRes.string.campaign_stats_total.format(stats.total.toString())
+                            ),
                             PieChartData(
                                 data = stats.emailReported.toDouble(),
                                 color = SummaryChartColor.EmailReportedColorSummary.color,
@@ -150,7 +163,11 @@ fun SummaryCard(
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
                         pieChartData = listOf(
-                            total,
+                            PieChartData(
+                                data = stats.total.toDouble() - stats.error.toDouble() ,
+                                color = Color.Gray,
+                                partName = AppRes.string.campaign_stats_total.format(stats.total.toString())
+                            ),
                             PieChartData(
                                 data = stats.error.toDouble(),
                                 color = Color.Red,

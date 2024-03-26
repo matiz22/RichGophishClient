@@ -20,6 +20,7 @@ import config.presentation.events.ListOfConfigsEvent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
+import gophish.presentation.screens.CampaignDetailsScreen
 import root.presentation.composables.AppScaffold
 
 
@@ -93,6 +94,7 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                         val campaignsOrError by instance.component.campaigns.collectAsState()
                         val apiCallResultChannel = instance.component.apiCallResult
                         val pickingCampaign = instance.component.pickingCampaign
+                        val pickedCampaign = instance.component.pickedCampaignChannel
                         LaunchedEffect(apiCallResultChannel) {
                             apiCallResultChannel.collect { result ->
                                 if (result.successful) {
@@ -120,11 +122,29 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                                 )
                             )
                         }
+                        LaunchedEffect(pickedCampaign) {
+                            pickedCampaign.collect { campaign ->
+                                configComponent.navigation.pushNew(
+                                    ConfigScreensConfiguration.CampaignDetailsConfiguration(
+                                        campaign
+                                    )
+                                )
+                            }
+                        }
                         HomeOfConfigScreen(
                             pickingCampaign = pickingCampaign,
                             summary = summary,
                             campaigns = campaignsOrError,
                             onEvent = instance.component::onEvent
+                        )
+                    }
+
+                    is ConfigComponent.Child.CampaignDetailsChild -> {
+                        val campaign by instance.component.campaign.collectAsState()
+                        val campaignSummary by instance.component.campaignSummary.collectAsState()
+                        CampaignDetailsScreen(
+                            campaign = campaign,
+                            campaignSummary = campaignSummary
                         )
                     }
                 }

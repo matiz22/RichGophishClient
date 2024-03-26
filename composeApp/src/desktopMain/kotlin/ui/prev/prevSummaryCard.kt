@@ -3,7 +3,7 @@ package ui.prev
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
 import campaigns.domain.model.CampaignStats
-import gophish.presentation.composables.SummaryCard
+import gophish.presentation.composables.StatsCard
 
 @Preview
 @Composable
@@ -17,5 +17,5 @@ fun prevSummaryCard() {
         emailReported = 5,
         error = 2
     )
-    SummaryCard(stats = summary)
+    StatsCard(stats = summary)
 }

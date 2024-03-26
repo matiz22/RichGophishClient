@@ -2,15 +2,9 @@ package config.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import campaigns.domain.model.Campaign
 import campaigns.domain.model.CampaignStats
@@ -20,7 +14,7 @@ import config.presentation.composables.MenuItemPosition
 import config.presentation.domain.MenuItem
 import config.presentation.events.HomeOfConfigEvent
 import gophish.presentation.composables.ChooseCampaignDialog
-import gophish.presentation.composables.SummaryCard
+import gophish.presentation.composables.StatsCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +22,7 @@ fun HomeOfConfigScreen(
     campaigns: DataOrError<List<Campaign>>,
     summary: CampaignStats?,
     onEvent: (HomeOfConfigEvent) -> Unit,
-    pickingCampaign: Boolean
+    pickingCampaign: Boolean,
 ) {
     if (campaigns.data != null) {
         if (pickingCampaign) {
@@ -42,7 +36,7 @@ fun HomeOfConfigScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
-                SummaryCard(
+                StatsCard(
                     title = AppRes.string.all_configs_title,
                     stats = summary
                 )
@@ -50,7 +44,7 @@ fun HomeOfConfigScreen(
             item {
                 MenuItemPosition(
                     menuItem = MenuItem(
-                        title = AppRes.string.all_configs_title,
+                        title = AppRes.string.option_campaigns,
                         action = { onEvent(HomeOfConfigEvent.ShowCampaigns) }
                     )
                 )

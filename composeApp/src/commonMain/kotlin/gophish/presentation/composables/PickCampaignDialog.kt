@@ -38,8 +38,11 @@ fun ChooseCampaignDialog(
                 items(campaigns) { campaign ->
                     CampaignItem(
                         campaign = campaign,
-                        onClick = {
+                        onDeleteClick = {
                             onEvent(HomeOfConfigEvent.DeleteCampaign(campaign.id))
+                        },
+                        onClick = {
+                            onEvent(HomeOfConfigEvent.PickCampaign(campaign))
                         }
                     )
                 }

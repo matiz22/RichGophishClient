@@ -12,7 +12,7 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
-import gophish.components.CampaignComponent
+import gophish.components.CampaignDetailsComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -74,12 +74,19 @@ class ConfigComponent(
                     config = config.gophishConfig
                 )
             )
+
+            is ConfigScreensConfiguration.CampaignDetailsConfiguration -> Child.CampaignDetailsChild(
+                component = CampaignDetailsComponent(
+                    componentContext = context,
+                    selectedCampaign = config.campaign
+                )
+            )
         }
     }
 
     sealed class Child {
         data class ListOfConfigsScreenChild(val component: ListOfConfigsComponent) : Child()
         data class HomeOfConfigScreenChild(val component: HomeOfConfigComponent) : Child()
-        data class CampaignDetailsChild(val component: CampaignComponent) : Child()
+        data class CampaignDetailsChild(val component: CampaignDetailsComponent) : Child()
     }
 }

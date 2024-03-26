@@ -28,7 +28,7 @@
     <string name="expand_all_configs">Expand all charts</string>
     <string name="show_campaigns">Show Campaigns</string>
     <string name="option_dashboard">Dashboard</string>
-    <string name="option_campaigns">Campaigns</string>
+    <string name="option_campaigns">Campaign</string>
     <string name="option_users_and_groups">Users &amp; Groups</string>
     <string name="option_email_templates">Email Templates</string>
     <string name="option_landing_pages">Landing Pages</string>
@@ -38,4 +38,17 @@
     <string name="option_webhooks">Webhooks (Admin)</string>
     <string name="option_user_guide">User Guide</string>
     <string name="option_api_documentation">API Documentation</string>
+    <string name="campaign_stats">Campaign Stats</string>
+    <string name="campaign_id">ID</string>
+    <string name="campaign_name">Name</string>
+    <string name="campaign_created_date">Created Date</string>
+    <string name="campaign_launch_date">Launch Date</string>
+    <string name="campaign_send_by_date">Send By Date</string>
+    <string name="campaign_completed_date">Completed Date</string>
+    <string name="campaign_template">Template</string>
+    <string name="campaign_page">Page</string>
+    <string name="campaign_status">Status</string>
+    <string name="campaign_results">Results</string>
+    <string name="campaign_timeline">Timeline (optional)</string>  <string name="campaign_smtp">SMTP</string>
+    <string name="campaign_url">URL</string>
 </resources>
