@@ -42,7 +42,11 @@ fun ListOfConfigsScreen(
                     it.id
                 }
             ) { config ->
-                ConfigItem(gophishConfig = config, onMenuClick = onEvent, onClick = navigate)
+                ConfigItem(
+                    gophishConfig = config,
+                    onMenuClick = onEvent,
+                    onClick = navigate
+                )
             }
         }
     }

@@ -9,15 +9,25 @@ import campaigns.domain.model.CampaignSummary
 import campaigns.domain.model.DataOrError
 import campaigns.domain.repository.CampaignRepository
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
+import config.presentation.events.HomeOfConfigEvent
 import configs.domain.model.GophishConfig
+import home.domain.model.ApiCallResult
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.createScope
 import org.koin.core.component.inject
@@ -36,15 +46,45 @@ class HomeOfConfigComponent(
             config.apiKey
         )
     }
-
     private val _campaigns = MutableStateFlow<DataOrError<List<Campaign>>>(DataOrError())
     val campaigns: StateFlow<DataOrError<List<Campaign>>> = _campaigns.asStateFlow()
 
-    var stats by mutableStateOf<CampaignStats?>(CampaignStats())
+    private val _apiCallResult = Channel<ApiCallResult>()
+    val apiCallResult = _apiCallResult.receiveAsFlow()
+
+    var stats by mutableStateOf<CampaignStats?>(null)
+
+    var pickingCampaign by mutableStateOf<Boolean>(false)
 
     init {
+        lifecycle.doOnDestroy {
+            scope.close()
+            coroutineScope.cancel()
+        }
         coroutineScope.launch {
             updateCampaigns()
+        }
+    }
+
+    fun onEvent(homeOfConfigEvent: HomeOfConfigEvent) {
+        when (homeOfConfigEvent) {
+            is HomeOfConfigEvent.DeleteCampaign -> {
+                coroutineScope.launch {
+                    val isCorrect = deleteCampaign(homeOfConfigEvent.id).await()
+                    if (isCorrect.successful) {
+                        updateCampaigns()
+                    }
+                }
+            }
+
+            is HomeOfConfigEvent.HideCampaigns -> {
+                pickingCampaign = false
+            }
+
+            is HomeOfConfigEvent.PickCampaign -> TODO()
+            is HomeOfConfigEvent.ShowCampaigns -> {
+                pickingCampaign = true
+            }
         }
     }
 
@@ -69,6 +109,18 @@ class HomeOfConfigComponent(
                     }
                 }
             }
+        }
+    }
+
+    private fun deleteCampaign(id: Long): Deferred<ApiCallResult> {
+        return coroutineScope.async {
+            val result = campaignRepository.deleteCampaign(id)
+            withContext(Dispatchers.Main) {
+                runBlocking {
+                    _apiCallResult.send(result)
+                }
+            }
+            result
         }
     }
 }

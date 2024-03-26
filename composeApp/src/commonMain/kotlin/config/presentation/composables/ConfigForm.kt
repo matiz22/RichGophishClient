@@ -90,5 +90,4 @@ fun ConfigForm(configFormState: ConfigFormState, onEvent: (ListOfConfigsEvent) -
             }
         }
     )
-
 }

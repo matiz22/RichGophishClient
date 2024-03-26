@@ -48,6 +48,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)
             implementation(libs.libres)
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.okhttp)

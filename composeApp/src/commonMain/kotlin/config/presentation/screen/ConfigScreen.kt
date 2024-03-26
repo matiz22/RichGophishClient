@@ -90,6 +90,24 @@ fun ConfigScreen(configComponent: ConfigComponent) {
 
                     is ConfigComponent.Child.HomeOfConfigScreenChild -> {
                         val summary = instance.component.stats
+                        val campaignsOrError by instance.component.campaigns.collectAsState()
+                        val apiCallResultChannel = instance.component.apiCallResult
+                        val pickingCampaign = instance.component.pickingCampaign
+                        LaunchedEffect(apiCallResultChannel) {
+                            apiCallResultChannel.collect { result ->
+                                if (result.successful) {
+                                    configComponent.onEvent(
+                                        ScaffoldEvents.ShowSnackBar(
+                                            message = AppRes.string.successful_operation
+                                        )
+                                    )
+                                } else {
+                                    if (result.errorMessage != null) configComponent.onEvent(
+                                        ScaffoldEvents.ShowSnackBar(message = result.errorMessage!!)
+                                    )
+                                }
+                            }
+                        }
                         LaunchedEffect(Unit) {
                             configComponent.onEvent(
                                 ScaffoldEvents.UpdateFloatingActionButton(
@@ -103,7 +121,10 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                             )
                         }
                         HomeOfConfigScreen(
+                            pickingCampaign = pickingCampaign,
                             summary = summary,
+                            campaigns = campaignsOrError,
+                            onEvent = instance.component::onEvent
                         )
                     }
                 }
