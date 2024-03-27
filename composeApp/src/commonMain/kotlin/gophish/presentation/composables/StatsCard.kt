@@ -75,12 +75,14 @@ fun StatsCard(
             visible = isExpanded
         ) {
             FlowRow(
-                modifier = Modifier.fillMaxWidth().padding(4.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 if (stats != null) {
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
+                        descriptionStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
+                        textRatioStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
                         pieChartData = listOf(
                             PieChartData(
                                 data = stats.total.toDouble() - stats.sent.toDouble() ,
@@ -98,6 +100,8 @@ fun StatsCard(
 
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
+                        descriptionStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
+                        textRatioStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
                         pieChartData = listOf(
                             PieChartData(
                                 data = stats.total.toDouble() - stats.opened.toDouble() ,
@@ -114,6 +118,8 @@ fun StatsCard(
 
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
+                        descriptionStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
+                        textRatioStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
                         pieChartData = listOf(
                             PieChartData(
                                 data = stats.total.toDouble() - stats.clicked.toDouble() ,
@@ -130,6 +136,8 @@ fun StatsCard(
 
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
+                        descriptionStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
+                        textRatioStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
                         pieChartData = listOf(
                             PieChartData(
                                 data = stats.total.toDouble() - stats.submittedData.toDouble() ,
@@ -146,6 +154,8 @@ fun StatsCard(
 
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
+                        descriptionStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
+                        textRatioStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
                         pieChartData = listOf(
                             PieChartData(
                                 data = stats.total.toDouble() - stats.emailReported.toDouble() ,
@@ -162,6 +172,8 @@ fun StatsCard(
 
                     PieChart(
                         modifier = Modifier.size(width = 400.dp, height = 500.dp),
+                        descriptionStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
+                        textRatioStyle = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onBackground),
                         pieChartData = listOf(
                             PieChartData(
                                 data = stats.total.toDouble() - stats.error.toDouble() ,
