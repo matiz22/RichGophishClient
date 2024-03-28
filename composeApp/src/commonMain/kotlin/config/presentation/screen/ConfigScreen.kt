@@ -142,9 +142,12 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     is ConfigComponent.Child.CampaignDetailsChild -> {
                         val campaign by instance.component.campaign.collectAsState()
                         val campaignSummary by instance.component.campaignSummary.collectAsState()
+                        val pageState = instance.component.pageState
                         CampaignDetailsScreen(
                             campaign = campaign,
-                            campaignSummary = campaignSummary
+                            campaignSummary = campaignSummary,
+                            pageState = pageState,
+                            onEvent = instance.component::onEvent
                         )
                     }
                 }

@@ -1,11 +1,14 @@
 package gophish.presentation.composables
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,23 +22,34 @@ fun ResultItem(
     modifier: Modifier = Modifier,
     result: Result
 ) {
-    OutlinedCard(
+    Row(
         modifier = modifier
     ) {
-        Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-            Box(modifier = Modifier.weight(1f)){
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier.fillMaxSize().weight(1f)
+                    .border(1.dp, MaterialTheme.colorScheme.onBackground),
+                contentAlignment = Alignment.Center
+            ) {
                 Text(text = result.firstName)
             }
-            Box(modifier = Modifier.weight(1f)){
+            Box(
+                modifier = Modifier.fillMaxSize().weight(1f)
+                    .border(1.dp, MaterialTheme.colorScheme.onBackground),
+                contentAlignment = Alignment.Center
+            ) {
                 Text(text = result.lastName)
             }
-            Box(modifier = Modifier.weight(1f)){
+            Box(
+                modifier = Modifier.fillMaxSize().weight(2f).border(1.dp, MaterialTheme.colorScheme.onBackground),
+                contentAlignment = Alignment.Center
+            ) {
                 Text(text = result.email)
             }
             Box(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.fillMaxSize().weight(1f).border(1.dp, MaterialTheme.colorScheme.onBackground),
                 contentAlignment = Alignment.Center
-            ){
+            ) {
                 Text(text = result.status)
             }
         }
