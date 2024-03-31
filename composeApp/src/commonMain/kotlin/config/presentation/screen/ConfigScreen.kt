@@ -143,11 +143,13 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                         val campaign by instance.component.campaign.collectAsState()
                         val campaignSummary by instance.component.campaignSummary.collectAsState()
                         val pageState = instance.component.pageState
+                        val searchText by instance.component.searchText.collectAsState()
                         CampaignDetailsScreen(
                             campaign = campaign,
                             campaignSummary = campaignSummary,
                             pageState = pageState,
-                            onEvent = instance.component::onEvent
+                            onEvent = instance.component::onEvent,
+                            searchText = searchText
                         )
                     }
                 }

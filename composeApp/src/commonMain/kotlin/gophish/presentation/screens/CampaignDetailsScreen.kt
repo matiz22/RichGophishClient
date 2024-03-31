@@ -20,7 +20,8 @@ fun CampaignDetailsScreen(
     campaign: DataOrError<Campaign>,
     campaignSummary: DataOrError<CampaignSummary>,
     pageState: PageState,
-    onEvent: (CampaignDetailsEvent) -> Unit
+    onEvent: (CampaignDetailsEvent) -> Unit,
+    searchText: String
 ) {
     if (campaign.data != null)
         LazyColumn(
@@ -40,7 +41,8 @@ fun CampaignDetailsScreen(
                 ResultTab(
                     results = campaign.data!!.results,
                     pageState = pageState,
-                    onClick = onEvent
+                    onClick = onEvent,
+                    searchText = searchText
                 )
             }
         }
