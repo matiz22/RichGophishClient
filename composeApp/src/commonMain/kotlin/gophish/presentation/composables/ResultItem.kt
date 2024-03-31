@@ -22,7 +22,7 @@ fun ResultItem(
     modifier: Modifier = Modifier,
     result: Result
 ) {
-    Row(
+   OutlinedCard(
         modifier = modifier
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
