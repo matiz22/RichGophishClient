@@ -52,4 +52,6 @@
     <string name="campaign_timeline">Timeline (optional)</string>  <string name="campaign_smtp">SMTP</string>
     <string name="campaign_url">URL</string>
     <string name="search">Search</string>
+    <string name="timeline_header">Timeline for ${user}</string>
+    <string name="email_timeline_header">Email: ${email}</string>
 </resources>

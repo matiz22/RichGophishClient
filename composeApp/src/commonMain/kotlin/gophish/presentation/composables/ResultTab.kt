@@ -3,7 +3,6 @@ package gophish.presentation.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -67,7 +66,8 @@ fun ResultTab(
             ).forEach { result ->
                 ResultItem(
                     modifier = Modifier.padding(4.dp),
-                    result = result
+                    result = result,
+                    onClick = onClick
                 )
             }
         }

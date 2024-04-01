@@ -2,7 +2,6 @@ package gophish.components
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import campaigns.domain.model.Campaign
 import campaigns.domain.model.CampaignSummary
@@ -10,10 +9,10 @@ import campaigns.domain.model.DataOrError
 import campaigns.domain.repository.CampaignRepository
 import com.arkivanov.decompose.ComponentContext
 import gophish.events.CampaignDetailsEvent
+import gophish.presentation.domain.PickedUserForDetails
 import gophish.presentation.state.PageState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,12 +20,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.inject
 import org.koin.core.scope.Scope
+import result.domain.model.Result
+import timeline.domain.model.Timeline
 
 class CampaignDetailsComponent(
     componentContext: ComponentContext,
@@ -68,6 +68,8 @@ class CampaignDetailsComponent(
     private val _campaignSummary = MutableStateFlow<DataOrError<CampaignSummary>>(DataOrError())
     val campaignSummary: StateFlow<DataOrError<CampaignSummary>> = _campaignSummary.asStateFlow()
 
+    var pickedUserForDetails by mutableStateOf<List<PickedUserForDetails>>(emptyList())
+
     private val campaignRepository by inject<CampaignRepository>()
 
     var pageState by mutableStateOf(PageState(maxPage = 0))
@@ -94,6 +96,14 @@ class CampaignDetailsComponent(
                 _searchText.value = campaignDetailsEvent.text
                 pageState = pageState.copy(currentPage = 1)
             }
+
+            is CampaignDetailsEvent.DeleteResult -> {
+                deleteResultToDetailsInfo(campaignDetailsEvent.result)
+            }
+
+            is CampaignDetailsEvent.PickResult -> {
+                pickResultToDetailsInfo(campaignDetailsEvent.result)
+            }
         }
     }
 
@@ -103,7 +113,7 @@ class CampaignDetailsComponent(
 
     private fun updateData() {
         updateCampaign()
-        updateCampaignStats()
+        updateCampaignSummary()
     }
 
     private fun updateCampaign() {
@@ -128,10 +138,28 @@ class CampaignDetailsComponent(
         }
     }
 
-    private fun updateCampaignStats() {
+    private fun updateCampaignSummary() {
         coroutineScope.launch {
             val result = campaignRepository.getCampaignSummary(selectedCampaign.id)
             _campaignSummary.emit(result)
+        }
+    }
+
+    private fun pickResultToDetailsInfo(result: Result) {
+        val matchedTimelines = _campaign.value.data?.timeline?.filter {
+            it.email == result.email
+        }
+        if (matchedTimelines != null) {
+            pickedUserForDetails = pickedUserForDetails + PickedUserForDetails(
+                result = result,
+                timelines = matchedTimelines
+            )
+        }
+    }
+
+    private fun deleteResultToDetailsInfo(result: Result) {
+        pickedUserForDetails = pickedUserForDetails.filterNot {
+            it.result.id == result.id
         }
     }
 
