@@ -34,7 +34,7 @@ fun ResultTab(
     OutlinedCard(modifier = modifier) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(4.dp),
+                modifier = Modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -65,7 +65,6 @@ fun ResultTab(
                 toIndex = min(startIndex + PageState.itemsPerPage, results.size)
             ).forEach { result ->
                 ResultItem(
-                    modifier = Modifier.padding(4.dp),
                     result = result,
                     onClick = onClick
                 )

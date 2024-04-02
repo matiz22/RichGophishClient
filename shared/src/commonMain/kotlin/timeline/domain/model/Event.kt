@@ -11,6 +11,8 @@ data class Event(
 ) {
     @Serializable
     data class Payload(
+        val email: List<String>? = null,
+        val password: List<String>? = null,
         val rid: List<String>
     )
 

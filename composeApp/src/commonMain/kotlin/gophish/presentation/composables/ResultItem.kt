@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -29,31 +30,27 @@ fun ResultItem(
             onClick(CampaignDetailsEvent.PickResult(result))
         }
     ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
             Box(
-                modifier = Modifier.fillMaxSize().weight(1f)
-                    .border(1.dp, MaterialTheme.colorScheme.onBackground),
+                modifier = Modifier.fillMaxSize().weight(1f),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = result.firstName)
             }
             Box(
-                modifier = Modifier.fillMaxSize().weight(1f)
-                    .border(1.dp, MaterialTheme.colorScheme.onBackground),
+                modifier = Modifier.fillMaxSize().weight(1f),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = result.lastName)
             }
             Box(
-                modifier = Modifier.fillMaxSize().weight(2f)
-                    .border(1.dp, MaterialTheme.colorScheme.onBackground),
+                modifier = Modifier.fillMaxSize().weight(2f),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = result.email)
             }
             Box(
-                modifier = Modifier.fillMaxSize().weight(1f)
-                    .border(1.dp, MaterialTheme.colorScheme.onBackground),
+                modifier = Modifier.fillMaxSize().weight(1f),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = result.status)

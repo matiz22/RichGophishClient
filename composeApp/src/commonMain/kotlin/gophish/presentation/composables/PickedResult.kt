@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
@@ -41,13 +42,13 @@ fun PickedResult(
                             "${pickedUserForDetails.result.firstName} " +
                                     pickedUserForDetails.result.lastName
                         ),
-                        style = MaterialTheme.typography.headlineMedium
+                        style = MaterialTheme.typography.labelLarge
                     )
                     Text(
                         text = AppRes.string.email_timeline_header.format(
                             pickedUserForDetails.result.email
                         ),
-                        style = MaterialTheme.typography.headlineMedium
+                        style = MaterialTheme.typography.labelLarge
                     )
                 }
                 IconButton(
@@ -60,7 +61,9 @@ fun PickedResult(
                 }
             }
             pickedUserForDetails.timelines.forEach {
-                TimelineEvent(it)
+                TimelineEvent(
+                    timeline = it
+                )
             }
 
         }

@@ -1,10 +1,14 @@
 package gophish.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import campaigns.domain.model.Campaign
 import campaigns.domain.model.CampaignSummary
@@ -15,10 +19,10 @@ import gophish.presentation.composables.DetailsCard
 import gophish.presentation.composables.PickedResult
 import gophish.presentation.composables.ResultTab
 import gophish.presentation.composables.StatsCard
-import gophish.presentation.composables.TimelineEvent
 import gophish.presentation.domain.PickedUserForDetails
 import gophish.presentation.state.PageState
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CampaignDetailsScreen(
     campaign: DataOrError<Campaign>,
@@ -28,9 +32,9 @@ fun CampaignDetailsScreen(
     searchText: String,
     pickedUserForDetails: List<PickedUserForDetails>
 ) {
-    if (campaign.data != null)
+    if (campaign.data != null) {
         LazyColumn(
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(4.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
@@ -50,12 +54,22 @@ fun CampaignDetailsScreen(
                     searchText = searchText
                 )
             }
-            items(items = pickedUserForDetails){
-                PickedResult(
-                    pickedUserForDetails = it,
-                    onClick = onEvent
-                )
+            item {
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    pickedUserForDetails.forEach {
+                        PickedResult(
+                            modifier = Modifier.width(500.dp),
+                            pickedUserForDetails = it,
+                            onClick = onEvent
+                        )
+                    }
+                }
             }
         }
+    }
 }
 
