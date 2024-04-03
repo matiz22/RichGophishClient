@@ -13,6 +13,7 @@ import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
 import gophish.components.CampaignDetailsComponent
+import gophish.components.EmailTemplatesComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -81,6 +82,12 @@ class ConfigComponent(
                     selectedCampaign = config.campaign
                 )
             )
+
+            is ConfigScreensConfiguration.EmailTemplateConfiguration -> Child.EmailTemplatesChild(
+                component = EmailTemplatesComponent(
+                    componentContext = context
+                )
+            )
         }
     }
 
@@ -88,5 +95,6 @@ class ConfigComponent(
         data class ListOfConfigsScreenChild(val component: ListOfConfigsComponent) : Child()
         data class HomeOfConfigScreenChild(val component: HomeOfConfigComponent) : Child()
         data class CampaignDetailsChild(val component: CampaignDetailsComponent) : Child()
+        data class EmailTemplatesChild(val component: EmailTemplatesComponent) : Child()
     }
 }

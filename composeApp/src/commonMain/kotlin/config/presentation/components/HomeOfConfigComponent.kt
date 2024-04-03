@@ -39,7 +39,9 @@ class HomeOfConfigComponent(
     componentContext: ComponentContext,
     config: GophishConfig
 ) : KoinScopeComponent, ComponentContext by componentContext {
-    override val scope: Scope by lazy { getKoin().createScope("campaignComponent", named("campaignScope")) }
+    override val scope: Scope by lazy {
+        getKoin().createScope("gophishComponents", named("gophishScope"))
+    }
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private val campaignRepository: CampaignRepository by inject{
         parameterSetOf(config.url, config.apiKey)

@@ -8,6 +8,7 @@ import campaigns.domain.model.CampaignSummary
 import campaigns.domain.model.DataOrError
 import campaigns.domain.repository.CampaignRepository
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.doOnDestroy
 import gophish.events.CampaignDetailsEvent
 import gophish.presentation.domain.PickedUserForDetails
 import gophish.presentation.state.PageState
@@ -15,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +34,7 @@ class CampaignDetailsComponent(
     componentContext: ComponentContext,
     private val selectedCampaign: Campaign
 ) : KoinScopeComponent, ComponentContext by componentContext {
-    override val scope: Scope by lazy { getKoin().getScope("campaignComponent") }
+    override val scope: Scope by lazy { getKoin().getScope("gophishComponents") }
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
@@ -108,6 +110,7 @@ class CampaignDetailsComponent(
     }
 
     init {
+        lifecycle.doOnDestroy { coroutineScope.cancel() }
         updateData()
     }
 
@@ -134,7 +137,6 @@ class CampaignDetailsComponent(
                 return@launch
             }
             _campaign.emit(result.copy())
-
         }
     }
 

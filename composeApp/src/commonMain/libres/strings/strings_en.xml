@@ -49,9 +49,14 @@
     <string name="campaign_page">Page</string>
     <string name="campaign_status">Status</string>
     <string name="campaign_results">Results</string>
-    <string name="campaign_timeline">Timeline (optional)</string>  <string name="campaign_smtp">SMTP</string>
+    <string name="campaign_timeline">Timeline (optional)</string>
+    <string name="campaign_smtp">SMTP</string>
     <string name="campaign_url">URL</string>
     <string name="search">Search</string>
     <string name="timeline_header">Timeline for ${user}</string>
     <string name="email_timeline_header">Email: ${email}</string>
+    <string name="expand_all_events">Expand all events</string>
+    <string name="passed_email">Email: ${email}</string>
+    <string name="passed_password">Password: ${password}</string>
+    <string name="show_passed_credential">Show passed credentials</string>
 </resources>

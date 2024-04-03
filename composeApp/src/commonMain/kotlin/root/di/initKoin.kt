@@ -2,7 +2,7 @@ package root.di
 
 import configs.di.configModule
 import configs.di.validateConfigModule
-import gophish.di.campaignModule
+import gophish.di.gophishModule
 import home.di.userModule
 import home.di.validateModule
 import org.koin.core.context.startKoin
@@ -15,7 +15,7 @@ fun initKoin() = startKoin {
             validateModule(),
             configModule(),
             validateConfigModule(),
-            campaignModule()
+            gophishModule()
         )
     )
 }

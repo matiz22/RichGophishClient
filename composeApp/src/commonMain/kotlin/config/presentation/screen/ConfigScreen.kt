@@ -1,12 +1,16 @@
 package config.presentation.screen
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
@@ -15,6 +19,9 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.matiz22.richgophishclient.AppRes
+import com.multiplatform.webview.web.WebView
+import com.multiplatform.webview.web.rememberWebViewState
+import com.multiplatform.webview.web.rememberWebViewStateWithHTMLData
 import config.presentation.components.ConfigComponent
 import config.presentation.events.ListOfConfigsEvent
 import config.presentation.events.ScaffoldEvents
@@ -135,7 +142,10 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                             pickingCampaign = pickingCampaign,
                             summary = summary,
                             campaigns = campaignsOrError,
-                            onEvent = instance.component::onEvent
+                            onEvent = instance.component::onEvent,
+                            navigate = {configuration ->
+                                configComponent.navigation.pushNew(configuration)
+                            }
                         )
                     }
 
@@ -153,6 +163,24 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                             searchText = searchText,
                             pickedUserForDetails = pickedUserForDetails
                         )
+                    }
+
+                    is ConfigComponent.Child.EmailTemplatesChild -> {
+                        val webViewState = rememberWebViewStateWithHTMLData(data ="<!DOCTYPE html>\n" +
+                                "<html>\n" +
+                                "    <head>\n" +
+                                "        <title>Example</title>\n" +
+                                "    </head>\n" +
+                                "    <body>\n" +
+                                "        <p>This is an example of a simple HTML page with one paragraph.</p>\n" +
+                                "    </body>\n" +
+                                "</html>" )
+                        Column(Modifier.fillMaxSize()) {
+                            WebView(
+                                state = webViewState,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
                     }
                 }
             }

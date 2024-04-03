@@ -13,6 +13,7 @@ import com.matiz22.richgophishclient.AppRes
 import config.presentation.composables.MenuItemPosition
 import config.presentation.domain.MenuItem
 import config.presentation.events.HomeOfConfigEvent
+import config.presentation.navigation.ConfigScreensConfiguration
 import gophish.presentation.composables.ChooseCampaignDialog
 import gophish.presentation.composables.StatsCard
 
@@ -23,6 +24,7 @@ fun HomeOfConfigScreen(
     summary: CampaignStats?,
     onEvent: (HomeOfConfigEvent) -> Unit,
     pickingCampaign: Boolean,
+    navigate: (ConfigScreensConfiguration) -> Unit,
 ) {
     if (campaigns.data != null) {
         if (pickingCampaign) {
@@ -61,7 +63,7 @@ fun HomeOfConfigScreen(
                 MenuItemPosition(
                     menuItem = MenuItem(
                         title = AppRes.string.option_email_templates,
-                        action = { onEvent(HomeOfConfigEvent.ShowCampaigns) }
+                        action = { navigate(ConfigScreensConfiguration.EmailTemplateConfiguration) }
                     )
                 )
             }

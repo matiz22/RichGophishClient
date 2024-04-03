@@ -57,6 +57,8 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.essenty.lifecycle)
             implementation("io.github.thechance101:chart:Beta-0.0.5")
+            api("io.github.kevinnzou:compose-webview-multiplatform:1.9.2")
+
         }
     }
 }
@@ -92,8 +94,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
@@ -110,6 +112,16 @@ compose.desktop {
             jvmArgs(
                 "-Dapple.awt.application.appearance=system"
             )
+        }
+        jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+        jvmArgs("--add-opens", "java.desktop/java.awt.peer=ALL-UNNAMED") // recommended but not necessary
+
+        if (System.getProperty("os.name").contains("Mac")) {
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED")
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
+        }
+        buildTypes.release.proguard {
+            configurationFiles.from("compose-desktop.pro")
         }
     }
 }
