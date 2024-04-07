@@ -28,6 +28,7 @@ fun ApplicationScope.HtmlViewerWindow(windowState: HtmlViewerWindowState) {
         LaunchedEffect(Unit) {
             withContext(Dispatchers.IO) {
                 KCEF.init(builder = {
+                    release("jbr-release-17.0.10b1087.23")
                     installDir(File("kcef-bundle"))
                     progress {
                         onDownloading {
@@ -37,8 +38,10 @@ fun ApplicationScope.HtmlViewerWindow(windowState: HtmlViewerWindowState) {
                             initialized = true
                         }
                     }
+                    args("disable-gpu")
                     settings {
                         cachePath = File("cache").absolutePath
+                        commandLineArgsDisabled = true
                     }
                 }, onError = {
                     it?.printStackTrace()

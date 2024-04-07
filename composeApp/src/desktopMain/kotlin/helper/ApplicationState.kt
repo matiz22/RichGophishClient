@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 
 class ApplicationState {
     val htmlWindows = mutableStateListOf<HtmlViewerWindowState>()
-    fun openNewEmailWindow(title: String, data:String) {
+    fun openNewHTMLWindow(title: String, data:String) {
         htmlWindows += htmlViewerWindowState(
             title = title,
             data = data
@@ -21,7 +21,7 @@ class ApplicationState {
     ) = HtmlViewerWindowState(
         title = title,
         data = data,
-        openNewWindow = ::openNewEmailWindow,
+        openNewWindow = ::openNewHTMLWindow,
         exit = ::exit,
         close = htmlWindows::remove
     )

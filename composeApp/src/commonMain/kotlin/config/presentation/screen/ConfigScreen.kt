@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +30,7 @@ import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
 import gophish.presentation.screens.CampaignDetailsScreen
 import root.presentation.composables.AppScaffold
+import root.presentation.openHTML
 
 
 @OptIn(ExperimentalDecomposeApi::class)
@@ -143,7 +145,7 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                             summary = summary,
                             campaigns = campaignsOrError,
                             onEvent = instance.component::onEvent,
-                            navigate = {configuration ->
+                            navigate = { configuration ->
                                 configComponent.navigation.pushNew(configuration)
                             }
                         )
@@ -166,20 +168,33 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     }
 
                     is ConfigComponent.Child.EmailTemplatesChild -> {
-                        val webViewState = rememberWebViewStateWithHTMLData(data ="<!DOCTYPE html>\n" +
-                                "<html>\n" +
-                                "    <head>\n" +
-                                "        <title>Example</title>\n" +
-                                "    </head>\n" +
-                                "    <body>\n" +
-                                "        <p>This is an example of a simple HTML page with one paragraph.</p>\n" +
-                                "    </body>\n" +
-                                "</html>" )
+                        val webViewState = rememberWebViewStateWithHTMLData(
+                            data = "<!DOCTYPE html>\n" +
+                                    "<html>\n" +
+                                    "    <head>\n" +
+                                    "        <title>Example</title>\n" +
+                                    "    </head>\n" +
+                                    "    <body>\n" +
+                                    "        <p>This is an example of a simple HTML page with one paragraph.</p>\n" +
+                                    "    </body>\n" +
+                                    "</html>"
+                        )
                         Column(Modifier.fillMaxSize()) {
-                            WebView(
-                                state = webViewState,
-                                modifier = Modifier.fillMaxSize()
-                            )
+                            Button(onClick = {
+                                openHTML(
+                                    "Test", "<!DOCTYPE html>\n" +
+                                            "<html>\n" +
+                                            "    <head>\n" +
+                                            "        <title>Example</title>\n" +
+                                            "    </head>\n" +
+                                            "    <body>\n" +
+                                            "        <p>This is an example of a simple HTML page with one paragraph.</p>\n" +
+                                            "    </body>\n" +
+                                            "</html>"
+                                )
+                            }) {
+
+                            }
                         }
                     }
                 }
