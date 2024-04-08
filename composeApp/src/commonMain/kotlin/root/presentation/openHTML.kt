@@ -1,3 +1,5 @@
 package root.presentation
 
-expect fun openHTML(title:String, data:String)
+import config.presentation.navigation.ConfigScreensConfiguration
+
+expect fun openHTML(title: String, data: String, navigate: ((ConfigScreensConfiguration)-> Unit)?)

@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import root.presentation.components.HtmlViewerComponent
 
 
 class ConfigComponent(
@@ -88,6 +89,14 @@ class ConfigComponent(
                     componentContext = context
                 )
             )
+
+            is ConfigScreensConfiguration.HtmlViewerConfiguration -> Child.HtmlViewerChild(
+                component = HtmlViewerComponent(
+                    componentContext = context,
+                    title = config.title,
+                    data = config.data
+                )
+            )
         }
     }
 
@@ -96,5 +105,6 @@ class ConfigComponent(
         data class HomeOfConfigScreenChild(val component: HomeOfConfigComponent) : Child()
         data class CampaignDetailsChild(val component: CampaignDetailsComponent) : Child()
         data class EmailTemplatesChild(val component: EmailTemplatesComponent) : Child()
+        data class HtmlViewerChild(val component: HtmlViewerComponent): Child()
     }
 }

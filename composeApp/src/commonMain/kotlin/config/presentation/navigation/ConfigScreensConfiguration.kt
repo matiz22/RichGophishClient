@@ -17,4 +17,6 @@ sealed class ConfigScreensConfiguration {
     data class CampaignDetailsConfiguration(val campaign: Campaign) : ConfigScreensConfiguration()
     @Serializable
     data object EmailTemplateConfiguration : ConfigScreensConfiguration()
+    @Serializable
+    data class HtmlViewerConfiguration(val title: String, val data:String): ConfigScreensConfiguration()
 }

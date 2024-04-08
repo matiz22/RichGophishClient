@@ -31,6 +31,7 @@ import config.presentation.states.FloatingActionButtonState
 import gophish.presentation.screens.CampaignDetailsScreen
 import root.presentation.composables.AppScaffold
 import root.presentation.openHTML
+import root.presentation.screens.HtmlViewerScreen
 
 
 @OptIn(ExperimentalDecomposeApi::class)
@@ -168,34 +169,13 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     }
 
                     is ConfigComponent.Child.EmailTemplatesChild -> {
-                        val webViewState = rememberWebViewStateWithHTMLData(
-                            data = "<!DOCTYPE html>\n" +
-                                    "<html>\n" +
-                                    "    <head>\n" +
-                                    "        <title>Example</title>\n" +
-                                    "    </head>\n" +
-                                    "    <body>\n" +
-                                    "        <p>This is an example of a simple HTML page with one paragraph.</p>\n" +
-                                    "    </body>\n" +
-                                    "</html>"
-                        )
-                        Column(Modifier.fillMaxSize()) {
-                            Button(onClick = {
-                                openHTML(
-                                    "Test", "<!DOCTYPE html>\n" +
-                                            "<html>\n" +
-                                            "    <head>\n" +
-                                            "        <title>Example</title>\n" +
-                                            "    </head>\n" +
-                                            "    <body>\n" +
-                                            "        <p>This is an example of a simple HTML page with one paragraph.</p>\n" +
-                                            "    </body>\n" +
-                                            "</html>"
-                                )
-                            }) {
 
-                            }
-                        }
+                    }
+
+                    is ConfigComponent.Child.HtmlViewerChild -> {
+                        val webViewState =
+                            rememberWebViewStateWithHTMLData(data = instance.component.data)
+                        HtmlViewerScreen(webViewState)
                     }
                 }
             }
