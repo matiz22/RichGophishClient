@@ -1,19 +1,81 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop, Server.
 
-* `/server` is for the Ktor server application.
+# RichGophishClient
 
-* `/shared` is for the code that will be shared between all targets in the project.
-  The most important subfolder is `commonMain`. If preferred, you can add code to the platform-specific folders here too.
+RichGophishClient (not yet 🤥) is a Kotlin Multiplatform (KMM) application designed for all platforms without web support. It features a simple Ktor server facilitating Gophish multi-tenancy. This application enables users to manage multiple credentials within a SQLite database. The shared folder contains model repositories and other components crucial for the Compose Multiplatform app. Additionally, it integrates an AI-powered email generation system via the Ollama API, enhancing email campaign effectiveness and personalization.
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+## Features
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+Features
+- Multi-Tenancy: RichGophishClient allows for the efficient management of multiple Gophish instances within a single application.
+- AI-Powered Email Generation: The integration of the Ollama API enables the generation of personalized and effective emails, enhancing user experience and campaign effectiveness. IN PROGRESS
+- Some ui charts from compose library :)
+## Installation
+
+To try out RichGophishClient, follow these steps:
+- Clone repo
+```bash
+git clone https://github.com/matiz22/RichGophishClient.git
+```
+- Navigate to the project directory:
+```bash
+cd RichGophishClient
+```
+- Build the server JAR:
+```bash
+./gradlew :server:build
+```
+- Set up the server environment:
+
+The server requires an environment variable to pass the API_KEY, which is used for authorization. Ensure you have the API key ready.
+
+Example:
+```bash
+export API_KEY=your_api_key_here
+```
+- Ensure access to a Gophish instance:
+
+RichGophishClient requires access to a Gophish instance to display data. Ensure you have access to a Gophish instance and know its URL.
+
+- Configure client properties
+Create or modify the local.properties file in the client directory. This file should contain the necessary configurations for the client to connect to the server and the Ollama API.
+
+Example local.properties:
+```gradlew
+main.api.host=192.168.0.26:8080      # Location of the server JAR
+main.api.key=test3                     # API_KEY obtained from environment
+ollama.api.host=192.168.0.26:11434     # Location of the Ollama API
+```
+- Then build composeApp for your machine or use android studio to run. You can also run server through Android studio.
+
+Example
+```bash
+./gradlew :composeApp:run
+```
+#### Installation files will be in releases on github in the future when app will be mostly finished
+## Tech Stack
+
+### Core Libraries
+
+- [**Decompose:**](https://github.com/arkivanov/Decompose) Provides utilities for composing reusable UI components.
+- [**Dotenv Kotlin:**](https://github.com/cdimascio/dotenv-kotlin) Loads environment variables from a file.
+- [**Exposed:**](https://github.com/JetBrains/Exposed) ORM library for Kotlin.
+
+### Persistence
+
+- **H2:** Embedded relational database.
 
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+### Security
+
+- **Jbcrypt:** Password hashing library.
+
+
+### Dependency Management
+
+- **Koin** Dependency injection framework for Kotlin.
+
+
+### Useful Libraries
+
+- [**Libres:**](https://github.com/Skeptick/libres) Collection of utilities for Kotlin projects.
+- [**Yshrsmz-BuildKonfig:**](https://github.com/yshrsmz/BuildKonfig) Library for managing project configurations.
