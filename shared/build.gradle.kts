@@ -20,6 +20,18 @@ buildkonfig {
             com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             "MAIN_API_HOST", ((gradleLocalProperties(rootDir).getProperty("main.api.host") ?: ""))
         )
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "OLLAMA_API_HOST", ((gradleLocalProperties(rootDir).getProperty("ollama.api.host") ?: ""))
+        )
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "OLLAMA_EMAIL_MODEL", ((gradleLocalProperties(rootDir).getProperty("ollama.email.model") ?: ""))
+        )
+        buildConfigField(
+            com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            "OLLAMA_PAGE_MODEL", ((gradleLocalProperties(rootDir).getProperty("ollama.page.model") ?: ""))
+        )
     }
 
 }

@@ -31,4 +31,5 @@
         If you want include images rely on your known links or put placeholder file.
 
         Return only one Email in html</string>
+    <string name="email_prompt_error">Email prompt went wrong</string>
 </resources>
