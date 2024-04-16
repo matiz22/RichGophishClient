@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.matiz22.richgophishclient.AppRes
-import gophish.events.CampaignDetailsEvent
+import gophish.presentation.events.CampaignDetailsEvent
 import gophish.presentation.state.PageState
 import result.domain.model.Result
 import kotlin.math.min

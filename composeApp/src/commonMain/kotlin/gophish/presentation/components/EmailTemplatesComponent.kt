@@ -1,4 +1,4 @@
-package gophish.components
+package gophish.presentation.components
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,7 @@ import campaigns.domain.repository.CampaignRepository
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import gophish.domain.model.CreateTemplateForm
-import gophish.events.EmailTemplatesEvent
+import gophish.presentation.events.EmailTemplatesEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -59,6 +59,10 @@ class EmailTemplatesComponent(
             is EmailTemplatesEvent.ChangeFormVisibility -> {
                 createTemplateForm =
                     createTemplateForm.copy(isShownDialog = !createTemplateForm.isShownDialog)
+            }
+
+            is EmailTemplatesEvent.ChangeFormMode -> {
+                createTemplateForm = createTemplateForm.copy(isHTML = !createTemplateForm.isHTML)
             }
         }
     }

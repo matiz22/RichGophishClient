@@ -1,4 +1,4 @@
-package gophish.components
+package gophish.presentation.components
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,7 +9,7 @@ import campaigns.domain.model.DataOrError
 import campaigns.domain.repository.CampaignRepository
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
-import gophish.events.CampaignDetailsEvent
+import gophish.presentation.events.CampaignDetailsEvent
 import gophish.presentation.domain.PickedUserForDetails
 import gophish.presentation.state.PageState
 import kotlinx.coroutines.CoroutineScope

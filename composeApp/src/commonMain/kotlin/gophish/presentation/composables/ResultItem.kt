@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import gophish.events.CampaignDetailsEvent
+import gophish.presentation.events.CampaignDetailsEvent
 import result.domain.model.Result
 
 @OptIn(ExperimentalMaterial3Api::class)

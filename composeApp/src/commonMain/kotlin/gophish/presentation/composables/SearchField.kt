@@ -4,7 +4,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import gophish.events.CampaignDetailsEvent
+import gophish.presentation.events.CampaignDetailsEvent
 
 @Composable
 fun SearchField(

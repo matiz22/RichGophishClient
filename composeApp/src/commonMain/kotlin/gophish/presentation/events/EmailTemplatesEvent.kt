@@ -1,4 +1,4 @@
-package gophish.events
+package gophish.presentation.events
 
 sealed class EmailTemplatesEvent {
     data class UpdateName(val name: String) : EmailTemplatesEvent()
@@ -6,4 +6,5 @@ sealed class EmailTemplatesEvent {
     data class UpdateText(val text: String) : EmailTemplatesEvent()
     data class UpdateHtml(val html: String) : EmailTemplatesEvent()
     data object ChangeFormVisibility : EmailTemplatesEvent()
+    data object ChangeFormMode : EmailTemplatesEvent()
 }

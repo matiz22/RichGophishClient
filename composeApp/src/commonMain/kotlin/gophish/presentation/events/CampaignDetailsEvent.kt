@@ -1,4 +1,4 @@
-package gophish.events
+package gophish.presentation.events
 
 import result.domain.model.Result
 

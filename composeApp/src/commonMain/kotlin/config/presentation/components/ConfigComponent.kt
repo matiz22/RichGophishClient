@@ -12,8 +12,8 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
-import gophish.components.CampaignDetailsComponent
-import gophish.components.EmailTemplatesComponent
+import gophish.presentation.components.CampaignDetailsComponent
+import gophish.presentation.components.EmailTemplatesComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

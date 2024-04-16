@@ -14,7 +14,7 @@ import campaigns.domain.model.Campaign
 import campaigns.domain.model.CampaignSummary
 import campaigns.domain.model.DataOrError
 import com.matiz22.richgophishclient.AppRes
-import gophish.events.CampaignDetailsEvent
+import gophish.presentation.events.CampaignDetailsEvent
 import gophish.presentation.composables.DetailsCard
 import gophish.presentation.composables.PickedResult
 import gophish.presentation.composables.ResultTab

@@ -59,4 +59,9 @@
     <string name="passed_email">Email: ${email}</string>
     <string name="passed_password">Password: ${password}</string>
     <string name="show_passed_credential">Show passed credentials</string>
+    <string name="template_name">Template Name:</string>
+    <string name="template_envelope_sender">Envelope sender:</string>
+    <string name="template_modified_date">Last modification:</string>
+    <string name="html_mode">HTML</string>
+    <string name="text_mode">Text</string>
 </resources>
