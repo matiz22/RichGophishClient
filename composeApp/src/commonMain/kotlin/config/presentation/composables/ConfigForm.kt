@@ -44,7 +44,8 @@ fun ConfigForm(configFormState: ConfigFormState, onEvent: (ListOfConfigsEvent) -
                             onEvent(ListOfConfigsEvent.OnNameUpdate(it))
                         },
                         hintText = AppRes.string.name_hint,
-                        errorMessage = configFormState.nameError
+                        errorMessage = configFormState.nameError,
+                        minLines = 20
                     )
                     InputField(
                         text = configFormState.url,
@@ -52,7 +53,8 @@ fun ConfigForm(configFormState: ConfigFormState, onEvent: (ListOfConfigsEvent) -
                             onEvent(ListOfConfigsEvent.OnUrlUpdate(it))
                         },
                         hintText = AppRes.string.url_hint,
-                        errorMessage = configFormState.urlError
+                        errorMessage = configFormState.urlError,
+                        minLines = 20
                     )
                     InputField(
                         text = configFormState.apiKey,
@@ -60,7 +62,8 @@ fun ConfigForm(configFormState: ConfigFormState, onEvent: (ListOfConfigsEvent) -
                             onEvent(ListOfConfigsEvent.OnApiKeyUpdate(it))
                         },
                         hintText = AppRes.string.api_key_hint,
-                        errorMessage = configFormState.apiKeyError
+                        errorMessage = configFormState.apiKeyError,
+                        minLines = 20
                     )
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)

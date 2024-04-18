@@ -22,6 +22,8 @@ fun InputField(
     isPassword: Boolean = false,
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
+    minLines: Int = 1,
+    singleLine: Boolean = true
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -39,6 +41,8 @@ fun InputField(
             Text(
                 text = errorMessage ?: ""
             )
-        }
+        },
+        minLines = minLines,
+        singleLine = singleLine
     )
 }

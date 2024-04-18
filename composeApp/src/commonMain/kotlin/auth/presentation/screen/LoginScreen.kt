@@ -40,6 +40,7 @@ fun LoginScreen(
                 },
                 hintText = AppRes.string.email_hint,
                 errorMessage = emailError,
+                minLines = 20,
             )
         }
 
@@ -53,7 +54,8 @@ fun LoginScreen(
                 errorMessage = passwordError,
                 isPassword = true,
                 imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Password
+                keyboardType = KeyboardType.Password,
+                minLines = 20
             )
         }
 

@@ -64,4 +64,6 @@
     <string name="template_modified_date">Last modification:</string>
     <string name="html_mode">HTML</string>
     <string name="text_mode">Text</string>
+    <string name="add_template">Add template</string>
+    <string name="generate_email">Generate email</string>
 </resources>

@@ -21,11 +21,9 @@ import config.presentation.events.ListOfConfigsEvent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
-import gophish.presentation.events.EmailTemplatesEvent
 import gophish.presentation.screens.CampaignDetailsScreen
-import gophish.presentation.screens.EmailTemplatesScreen
+import gophish.presentation.screens.EmailTemplatesScreens
 import root.presentation.composables.AppScaffold
-import root.presentation.openHTML
 import root.presentation.screens.HtmlViewerScreen
 
 
@@ -164,37 +162,9 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     }
 
                     is ConfigComponent.Child.EmailTemplatesChild -> {
-                        val templates by instance.component.templates.collectAsState()
-                        val createForm = instance.component.createTemplateForm
-                        LaunchedEffect(Unit) {
-                            configComponent.onEvent(
-                                ScaffoldEvents.UpdateFloatingActionButton(
-                                    FloatingActionButtonState(
-                                        action = {
-                                            instance.component.onEvent(EmailTemplatesEvent.ChangeFormVisibility)
-                                        },
-                                        icon = Icons.Default.Add
-                                    )
-                                )
-                            )
-                        }
-                        EmailTemplatesScreen(
-                            templates = templates,
-                            form = createForm,
-                            navigateToDetails = { template ->
-                                openHTML(
-                                    title = template.name,
-                                    data = template.html,
-                                    navigate = {
-                                        configComponent.navigation.pushNew(
-                                            ConfigScreensConfiguration.HtmlViewerConfiguration(
-                                                title = template.name,
-                                                data = template.html
-                                            )
-                                        )
-                                    }
-                                )
-                            }
+                        EmailTemplatesScreens(
+                            emailComponent = instance.component,
+                            configComponent = configComponent
                         )
                     }
 

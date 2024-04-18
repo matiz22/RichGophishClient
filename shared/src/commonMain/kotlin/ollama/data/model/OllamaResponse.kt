@@ -16,8 +16,8 @@ data class OllamaResponse(
     val totalDuration: Long,
     @SerialName("load_duration")
     val loadDuration: Long,
-    @SerialName("prompt_eval_count")
-    val promptEvalCount: Int,
+//    @SerialName("prompt_eval_count")
+//    val promptEvalCount: Int,
     @SerialName("prompt_eval_duration")
     val promptEvalDuration: Int,
     @SerialName("eval_count")

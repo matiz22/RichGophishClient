@@ -58,7 +58,6 @@ kotlin {
             implementation(libs.essenty.lifecycle)
             implementation("io.github.thechance101:chart:Beta-0.0.5")
             api("io.github.kevinnzou:compose-webview-multiplatform:1.9.2")
-
         }
     }
 }

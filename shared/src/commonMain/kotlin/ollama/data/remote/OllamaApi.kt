@@ -5,6 +5,7 @@ import com.matiz22.richgophishclient.BuildKonfig
 import com.matiz22.richgophishclient.shared.SharedRes
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.headers
@@ -22,8 +23,13 @@ import ollama.data.model.OllamaResponse
 class OllamaApi {
 
     private val ollamaRequester = HttpClient {
+        install(HttpTimeout) {
+            requestTimeoutMillis = 1_000_000L
+            socketTimeoutMillis = 1_000_000L
+        }
         install(ContentNegotiation) {
             json(Json {
+                encodeDefaults = true
                 ignoreUnknownKeys = true
             })
         }
@@ -42,12 +48,12 @@ class OllamaApi {
             setBody(
                 OllamaRequest(
                     model = BuildKonfig.OLLAMA_EMAIL_MODEL,
-                    prompt = SharedRes.string.email_prompt.format(topic)
+                    prompt = SharedRes.string.email_prompt.format(topic),
                 )
             )
         }
         return if (request.status.isSuccess()) {
-            DataOrError(
+            DataOrError<OllamaResponse>(
                 data = request.body()
             )
         } else {
