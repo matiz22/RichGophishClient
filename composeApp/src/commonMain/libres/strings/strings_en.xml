@@ -66,4 +66,7 @@
     <string name="text_mode">Text</string>
     <string name="add_template">Add template</string>
     <string name="generate_email">Generate email</string>
+    <string name="preview">Preview</string>
+    <string name="email_topic">Email topic:</string>
+    <string name="text_hint">Text:</string>
 </resources>

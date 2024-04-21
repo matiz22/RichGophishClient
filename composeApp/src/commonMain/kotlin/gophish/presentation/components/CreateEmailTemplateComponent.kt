@@ -1,5 +1,6 @@
 package gophish.presentation.components
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,11 +8,15 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import gophish.domain.model.CreateTemplateForm
 import gophish.presentation.events.CreateEmailTemplatesEvent
+import home.domain.model.ApiCallResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import ollama.domain.repository.OllamaRepository
 import org.koin.core.component.KoinScopeComponent
@@ -22,33 +27,42 @@ import org.koin.core.scope.Scope
 
 class CreateEmailTemplateComponent(
     componentContext: ComponentContext
-) : KoinScopeComponent, ComponentContext by componentContext  {
-    override val scope: Scope by lazy { getKoin().getOrCreateScope("ollamaComponents", named("ollamaScope")) }
+) : KoinScopeComponent, ComponentContext by componentContext {
+    override val scope: Scope by lazy {
+        getKoin().getOrCreateScope(
+            "ollamaComponents",
+            named("ollamaScope")
+        )
+    }
     private val ollamaRepository by inject<OllamaRepository>()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    var createTemplateForm by mutableStateOf(CreateTemplateForm())
+    private val _createTemplateForm = mutableStateOf(CreateTemplateForm())
+    val createTemplateForm: State<CreateTemplateForm> = _createTemplateForm
+
+    private val _apiCallResult = Channel<ApiCallResult>()
+    val apiCallResult = _apiCallResult.receiveAsFlow()
 
     fun onEvent(emailTemplatesEvent: CreateEmailTemplatesEvent) {
         when (emailTemplatesEvent) {
             is CreateEmailTemplatesEvent.UpdateHtml -> {
-                createTemplateForm = createTemplateForm.copy(html = emailTemplatesEvent.html)
+                _createTemplateForm.value = _createTemplateForm.value.copy(html = emailTemplatesEvent.html)
             }
 
             is CreateEmailTemplatesEvent.UpdateName -> {
-                createTemplateForm = createTemplateForm.copy(name = emailTemplatesEvent.name)
+                _createTemplateForm.value = _createTemplateForm.value.copy(name = emailTemplatesEvent.name)
             }
 
             is CreateEmailTemplatesEvent.UpdateSubject -> {
-                createTemplateForm = createTemplateForm.copy(subject = emailTemplatesEvent.subject)
+                _createTemplateForm.value = _createTemplateForm.value.copy(subject = emailTemplatesEvent.subject)
             }
 
             is CreateEmailTemplatesEvent.UpdateText -> {
-                createTemplateForm = createTemplateForm.copy(text = emailTemplatesEvent.text)
+                _createTemplateForm.value = _createTemplateForm.value.copy(text = emailTemplatesEvent.text)
             }
 
             is CreateEmailTemplatesEvent.ChangeFormMode -> {
-                createTemplateForm = createTemplateForm.copy(isHTML = !createTemplateForm.isHTML)
+                _createTemplateForm.value = _createTemplateForm.value.copy(isHTML = !_createTemplateForm.value.isHTML)
             }
 
             is CreateEmailTemplatesEvent.AddTemplate -> {
@@ -56,6 +70,7 @@ class CreateEmailTemplateComponent(
             }
 
             is CreateEmailTemplatesEvent.AddOllamaEmail -> {
+                _createTemplateForm.value = _createTemplateForm.value.copy(responseNotBeingCreated = false)
                 getOllamaEmail()
             }
         }
@@ -67,10 +82,22 @@ class CreateEmailTemplateComponent(
         }
     }
 
-    private fun getOllamaEmail(){
+    private fun getOllamaEmail() {
         coroutineScope.launch {
-            val ollamaResponse = ollamaRepository.getEmail(createTemplateForm.subject)
-            print(ollamaResponse.data.toString())
+            val subject = _createTemplateForm.value.subject
+            val ollamaResponse = ollamaRepository.getEmail(subject)
+            println(ollamaResponse.data)
+            if (ollamaResponse.data != null) {
+                _createTemplateForm.value = _createTemplateForm.value.copy(html = ollamaResponse.data ?: "")
+            } else {
+                _apiCallResult.send(
+                    ApiCallResult(
+                        errorMessage = ollamaResponse.error,
+                        successful = false
+                    )
+                )
+            }
+            _createTemplateForm.value = _createTemplateForm.value.copy(responseNotBeingCreated = true)
         }
     }
 }

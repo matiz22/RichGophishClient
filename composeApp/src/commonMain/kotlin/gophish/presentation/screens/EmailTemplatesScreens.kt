@@ -33,12 +33,26 @@ fun EmailTemplatesScreens(
     ) { child ->
         when (val instance = child.instance) {
             is EmailTemplatesComponent.Child.CreateEmailScreen -> {
-                val createForm = instance.component.createTemplateForm
+                val createForm by instance.component.createTemplateForm
                 CreateEmailTemplateScreen(
                     form = createForm,
                     onEvent = instance.component::onEvent,
                     navigateBack = {
                         emailComponent.navigation.pop()
+                    },
+                    onPreview = { template ->
+                        openHTML(
+                            title = template.name,
+                            data = template.html,
+                            navigate = {
+                                configComponent.navigation.pushNew(
+                                    ConfigScreensConfiguration.HtmlViewerConfiguration(
+                                        title = template.name,
+                                        data = template.html
+                                    )
+                                )
+                            }
+                        )
                     }
                 )
             }

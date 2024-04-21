@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -23,88 +25,103 @@ fun CreateEmailTemplateScreen(
     modifier: Modifier = Modifier,
     form: CreateTemplateForm,
     onEvent: (CreateEmailTemplatesEvent) -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    onPreview: (CreateTemplateForm) -> Unit
 ) {
-    Column(modifier = Modifier.padding(8.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
+    LazyColumn(modifier = Modifier.padding(8.dp)) {
+        item {
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = AppRes.string.text_mode)
-                Switch(
-                    checked = form.isHTML,
-                    onCheckedChange = {
-                        onEvent(CreateEmailTemplatesEvent.ChangeFormMode)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(text = AppRes.string.text_mode)
+                    Switch(
+                        checked = form.isHTML,
+                        onCheckedChange = {
+                            onEvent(CreateEmailTemplatesEvent.ChangeFormMode)
+                        }
+                    )
+                    Text(text = AppRes.string.html_mode)
+                }
+                Row {
+                    if (form.isHTML) {
+                        Button(onClick = {
+                            onEvent(CreateEmailTemplatesEvent.AddOllamaEmail)
+                        }, enabled = form.responseNotBeingCreated) {
+                            Text(AppRes.string.generate_email)
+                        }
+                        OutlinedButton(onClick = {
+                            onPreview(form)
+                        }) {
+                            Text(AppRes.string.preview)
+                        }
                     }
-                )
-                Text(text = AppRes.string.html_mode)
-            }
-            if (form.isHTML) {
-                Button(onClick = {
-                    onEvent(CreateEmailTemplatesEvent.AddOllamaEmail)
-                }) {
-                    Text(AppRes.string.generate_email)
                 }
             }
         }
 
-        Column() {
-            InputField(
-                modifier = Modifier.fillMaxWidth(),
-                text = form.name,
-                onValueChange = {
-                    onEvent(CreateEmailTemplatesEvent.UpdateName(it))
-                },
-                hintText = AppRes.string.template_name,
-                errorMessage = form.nameError,
-                minLines = 20
-            )
-            InputField(
-                modifier = Modifier.fillMaxWidth(),
-                text = form.subject,
-                onValueChange = {
-                    onEvent(CreateEmailTemplatesEvent.UpdateSubject(it))
-                },
-                minLines = 20
-            )
-            if (form.isHTML) {
-                TextField(
-                    modifier = modifier.fillMaxWidth(),
-                    value = form.html,
-                    onValueChange = {
-                        onEvent(CreateEmailTemplatesEvent.UpdateHtml(it))
-                    },
-                    placeholder = { Text(AppRes.string.html_mode) },
-                    minLines = 20
-                )
-            } else {
+        item {
+            Column() {
                 InputField(
                     modifier = Modifier.fillMaxWidth(),
-                    text = form.text,
+                    text = form.name,
                     onValueChange = {
-                        onEvent(CreateEmailTemplatesEvent.UpdateText(it))
+                        onEvent(CreateEmailTemplatesEvent.UpdateName(it))
                     },
-                    minLines = 20
+                    hintText = AppRes.string.template_name,
+                    errorMessage = form.nameError,
                 )
+                InputField(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = form.subject,
+                    onValueChange = {
+                        onEvent(CreateEmailTemplatesEvent.UpdateSubject(it))
+                    },
+                    hintText = AppRes.string.email_hint
+                )
+                if (form.isHTML) {
+                    TextField(
+                        modifier = modifier.fillMaxWidth(),
+                        value = form.html,
+                        onValueChange = {
+                            onEvent(CreateEmailTemplatesEvent.UpdateHtml(it))
+                        },
+                        placeholder = { Text(AppRes.string.html_mode) },
+                        minLines = 20
+                    )
+                } else {
+                    TextField(
+                        modifier = modifier.fillMaxWidth(),
+                        value = form.text,
+                        onValueChange = {
+                            onEvent(CreateEmailTemplatesEvent.UpdateHtml(it))
+                        },
+                        placeholder = { Text(AppRes.string.text_hint) },
+                        minLines = 20
+                    )
+                }
             }
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(onClick = {
-                onEvent(CreateEmailTemplatesEvent.AddTemplate)
-            }) {
-                Text(text = AppRes.string.add_template)
-            }
-            Button(onClick = {
-                navigateBack()
-            }) {
-                Text(text = AppRes.string.cancel)
+
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(onClick = {
+                    onEvent(CreateEmailTemplatesEvent.AddTemplate)
+                }) {
+                    Text(text = AppRes.string.add_template)
+                }
+                Button(onClick = {
+                    navigateBack()
+                }) {
+                    Text(text = AppRes.string.cancel)
+                }
             }
         }
     }

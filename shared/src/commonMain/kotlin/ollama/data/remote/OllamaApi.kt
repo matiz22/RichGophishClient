@@ -44,11 +44,12 @@ class OllamaApi {
     }
 
     suspend fun getEmail(topic: String): DataOrError<OllamaResponse> {
+        val prompt  =SharedRes.string.email_prompt.format(topic)
         val request = ollamaRequester.post {
             setBody(
                 OllamaRequest(
                     model = BuildKonfig.OLLAMA_EMAIL_MODEL,
-                    prompt = SharedRes.string.email_prompt.format(topic),
+                    prompt = prompt,
                 )
             )
         }

@@ -1,7 +1,7 @@
 package gophish.domain.model
 
 data class CreateTemplateForm(
-    val isShownDialog: Boolean = false,
+    val responseNotBeingCreated: Boolean = true,
     val name: String = "",
     val nameError: String? = null,
     val subject: String = "",
