@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class GophishCallResult(
     val message: String,
     val success: Boolean,
-    val data: String
+    val data: String?
 )

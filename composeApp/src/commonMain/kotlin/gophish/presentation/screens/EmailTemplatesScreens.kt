@@ -13,6 +13,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stac
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
+import com.matiz22.richgophishclient.AppRes
 import config.presentation.components.ConfigComponent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
@@ -28,12 +29,37 @@ fun EmailTemplatesScreens(
     configComponent: ConfigComponent
 ) {
     val childStack by emailComponent.childStack.subscribeAsState()
+    val snackBarState = configComponent.snackbarHostState
+    val configNavigation = configComponent.navigation
+    val emailNavigation = emailComponent.navigation
+
     Children(
         stack = childStack, animation = stackAnimation(slide())
     ) { child ->
         when (val instance = child.instance) {
             is EmailTemplatesComponent.Child.CreateEmailScreen -> {
                 val createForm by instance.component.createTemplateForm
+                val apiCallResult = instance.component.apiCallResult
+                LaunchedEffect(apiCallResult) {
+                    apiCallResult.collect { apiCallResult ->
+                        if (apiCallResult.successful) {
+                            snackBarState.showSnackbar(
+                                message = AppRes.string.successful_operation
+                            )
+                            emailNavigation.pop()
+                        } else {
+                            if (apiCallResult.errorMessage != null) {
+                                snackBarState.showSnackbar(
+                                    message = apiCallResult.errorMessage!!
+                                )
+                            }else{
+                                snackBarState.showSnackbar(
+                                    message = AppRes.string.api_call_failed
+                                )
+                            }
+                        }
+                    }
+                }
                 CreateEmailTemplateScreen(
                     form = createForm,
                     onEvent = instance.component::onEvent,
