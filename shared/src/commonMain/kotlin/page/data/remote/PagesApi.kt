@@ -1,4 +1,4 @@
-package template.data.remote
+package page.data.remote
 
 import campaigns.data.remote.GophishHttpRequester
 import campaigns.domain.model.DataOrError
@@ -13,15 +13,15 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import io.ktor.http.path
-import template.domain.model.CreateTemplate
-import template.domain.model.Template
+import page.domain.model.CreatePage
+import page.domain.model.Page
 
-class TemplateApi(
+class PagesApi(
     private val gophishHttpRequester: GophishHttpRequester
 ) {
-    private val ROUTE = "api/templates/"
+    private val ROUTE = "api/pages/"
 
-    suspend fun getTemplates(): DataOrError<List<Template>> {
+    suspend fun getPages(): DataOrError<List<Page>> {
         val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
             url {
                 path(ROUTE)
@@ -29,33 +29,33 @@ class TemplateApi(
         }
         return if (request.status.isSuccess()) {
             println(request.bodyAsText())
-            DataOrError<List<Template>>(data = request.body())
+            DataOrError<List<Page>>(data = request.body())
         } else {
             val error: GophishCallResult = request.body()
-            DataOrError<List<Template>>(error = error.message)
+            DataOrError<List<Page>>(error = error.message)
         }
     }
 
-    suspend fun getTemplate(id: Long): DataOrError<Template> {
+    suspend fun getPage(id: Long): DataOrError<Page> {
         val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
             url {
                 path("$ROUTE$id")
             }
         }
         return if (request.status.isSuccess()) {
-            DataOrError<Template>(data = request.body())
+            DataOrError<Page>(data = request.body())
         } else {
             val error: GophishCallResult = request.body()
-            DataOrError<Template>(error = error.message)
+            DataOrError<Page>(error = error.message)
         }
     }
 
-    suspend fun createTemplate(createTemplate: CreateTemplate): ApiCallResult {
+    suspend fun createPage(createPage: CreatePage): ApiCallResult {
         val request = gophishHttpRequester.httpClient.post(gophishHttpRequester.host) {
             url {
                 path(ROUTE)
             }
-            setBody(createTemplate)
+            setBody(createPage)
         }
         return if (request.status.isSuccess()) {
             ApiCallResult(successful = true)
@@ -68,12 +68,12 @@ class TemplateApi(
         }
     }
 
-    suspend fun modifyTemplate(createTemplate: CreateTemplate): ApiCallResult {
+    suspend fun modifyPage(modifyPage: CreatePage): ApiCallResult {
         val request = gophishHttpRequester.httpClient.put(gophishHttpRequester.host) {
             url {
                 path(ROUTE)
             }
-            setBody(createTemplate)
+            setBody(modifyPage)
         }
         return if (request.status.isSuccess()) {
             ApiCallResult(successful = true)
@@ -86,7 +86,7 @@ class TemplateApi(
         }
     }
 
-    suspend fun deleteTemplate(id: Long): ApiCallResult {
+    suspend fun deletePage(id: Long): ApiCallResult {
         val request = gophishHttpRequester.httpClient.delete(gophishHttpRequester.host) {
             url {
                 path("$ROUTE$id")

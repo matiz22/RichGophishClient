@@ -31,5 +31,28 @@
         If you want include images rely on your known links or put placeholder file.
 
         Return only one Email in html</string>
+    <string name="page_prompt">Write me a phishing email in html for this topic: ${topic}
+        that are compatible with Gophish.
+        Start from &lt;html&gt; tag and default implementation of html. Add all necessary css to match desired topic.
+
+        Make fully detailed email for given topic. Include things like user information, images and everything make good example of topic. structure it and style to make it more realistic.
+
+
+        If you don't know contact us information make it fake.
+        It has to be most realistic as possible with a lot of text which sounds like real one.
+        Don't create any form inside html email.
+
+        Include Variables of targeted person.
+        Here is a list CHOOSE ONLY FROM THIS:
+        {{.FirstName}}
+        {{.LastName}}
+        {{.Position}}
+        Don't create own varialbes use only descripted here.
+
+        For all redirections put href to {{.URL}} and nothing more.
+
+        If you want include images rely on your known links or put placeholder file.
+
+        Return only one Email in html</string>
     <string name="email_prompt_error">Email prompt went wrong</string>
 </resources>

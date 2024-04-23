@@ -14,6 +14,7 @@ import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
 import gophish.presentation.components.CampaignDetailsComponent
 import gophish.presentation.components.EmailTemplatesComponent
+import gophish.presentation.components.PagesComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -97,6 +98,12 @@ class ConfigComponent(
                     data = config.data
                 )
             )
+
+            is ConfigScreensConfiguration.PagesConfiguration -> Child.PagesChild(
+                component = PagesComponent(
+                    context
+                )
+            )
         }
     }
 
@@ -105,6 +112,7 @@ class ConfigComponent(
         data class HomeOfConfigScreenChild(val component: HomeOfConfigComponent) : Child()
         data class CampaignDetailsChild(val component: CampaignDetailsComponent) : Child()
         data class EmailTemplatesChild(val component: EmailTemplatesComponent) : Child()
-        data class HtmlViewerChild(val component: HtmlViewerComponent): Child()
+        data class HtmlViewerChild(val component: HtmlViewerComponent) : Child()
+        data class PagesChild(val component: PagesComponent) : Child()
     }
 }

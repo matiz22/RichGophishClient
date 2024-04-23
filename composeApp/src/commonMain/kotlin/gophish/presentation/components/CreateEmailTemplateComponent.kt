@@ -1,12 +1,10 @@
 package gophish.presentation.components
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
-import gophish.domain.model.CreateTemplateForm
+import gophish.presentation.domain.CreateTemplateForm
 import gophish.presentation.events.CreateEmailTemplatesEvent
 import home.domain.model.ApiCallResult
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +13,6 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import ollama.domain.repository.OllamaRepository

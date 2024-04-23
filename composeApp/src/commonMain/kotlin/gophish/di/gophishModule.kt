@@ -6,6 +6,8 @@ import campaigns.domain.repository.CampaignRepository
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import page.data.repository.PageRepositoryImpl
+import page.domain.repository.PagesRepository
 import template.data.repository.TemplatesRepositoryImpl
 import template.domain.repository.TemplateRepository
 
@@ -22,6 +24,9 @@ fun gophishModule() = module {
         }
         scoped<TemplateRepository> { params ->
             TemplatesRepositoryImpl(get())
+        }
+        scoped<PagesRepository> {
+            PageRepositoryImpl(get())
         }
     }
 }

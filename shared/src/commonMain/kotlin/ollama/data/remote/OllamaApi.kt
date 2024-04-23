@@ -63,4 +63,24 @@ class OllamaApi {
             )
         }
     }
+    suspend fun getPage(topic: String): DataOrError<OllamaResponse> {
+        val prompt = SharedRes.string.page_prompt.format(topic)
+        val request = ollamaRequester.post {
+            setBody(
+                OllamaRequest(
+                    model = BuildKonfig.OLLAMA_PAGE_MODEL,
+                    prompt = prompt,
+                )
+            )
+        }
+        return if (request.status.isSuccess()) {
+            DataOrError<OllamaResponse>(
+                data = request.body()
+            )
+        } else {
+            DataOrError(
+                error = SharedRes.string.email_prompt_error
+            )
+        }
+    }
 }

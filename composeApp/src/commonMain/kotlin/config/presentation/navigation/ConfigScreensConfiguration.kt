@@ -11,12 +11,19 @@ sealed class ConfigScreensConfiguration {
     data class ListOfConfigsConfiguration(val user: User) : ConfigScreensConfiguration()
 
     @Serializable
-    data class HomeOfConfigConfiguration(val gophishConfig: GophishConfig) : ConfigScreensConfiguration()
+    data class HomeOfConfigConfiguration(val gophishConfig: GophishConfig) :
+        ConfigScreensConfiguration()
 
     @Serializable
     data class CampaignDetailsConfiguration(val campaign: Campaign) : ConfigScreensConfiguration()
+
     @Serializable
     data object EmailTemplateConfiguration : ConfigScreensConfiguration()
+
     @Serializable
-    data class HtmlViewerConfiguration(val title: String, val data:String): ConfigScreensConfiguration()
+    data class HtmlViewerConfiguration(val title: String, val data: String) :
+        ConfigScreensConfiguration()
+
+    @Serializable
+    data object PagesConfiguration : ConfigScreensConfiguration()
 }

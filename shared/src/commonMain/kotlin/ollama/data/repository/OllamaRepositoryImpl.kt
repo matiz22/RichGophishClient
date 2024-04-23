@@ -16,7 +16,17 @@ class OllamaRepositoryImpl : OllamaRepository {
         }
     }
 
-    private fun extractHtmlContent(inputString: String): String? {
+    override suspend fun getPage(topic: String): DataOrError<String> {
+        val dataFromOllama = ollamaApi.getPage(topic)
+        return if (dataFromOllama.data != null) {
+            val data = extractHtmlContent(dataFromOllama.data.response)
+            DataOrError(data = data)
+        } else {
+            DataOrError(error = dataFromOllama.error)
+        }
+    }
+
+    private fun extractHtmlContent(inputString: String): String {
         val startIndex = inputString.indexOfFirst { it == '<' }
         val endIndex = inputString.lastIndexOf("</html>")
         return inputString.substring(startIndex, endIndex) + "{{.Tracker}}</html>"

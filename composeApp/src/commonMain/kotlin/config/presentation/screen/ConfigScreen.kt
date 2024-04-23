@@ -23,6 +23,7 @@ import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.FloatingActionButtonState
 import gophish.presentation.screens.CampaignDetailsScreen
 import gophish.presentation.screens.EmailTemplatesScreens
+import gophish.presentation.screens.PagesScreens
 import root.presentation.composables.AppScaffold
 import root.presentation.screens.HtmlViewerScreen
 
@@ -172,6 +173,13 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                         val webViewState =
                             rememberWebViewStateWithHTMLData(data = instance.component.data)
                         HtmlViewerScreen(webViewState)
+                    }
+
+                    is ConfigComponent.Child.PagesChild -> {
+                        PagesScreens(
+                            pagesComponent = instance.component,
+                            configComponent = configComponent
+                        )
                     }
                 }
             }
