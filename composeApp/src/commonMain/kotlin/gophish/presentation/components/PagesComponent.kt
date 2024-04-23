@@ -23,13 +23,13 @@ class PagesComponent(
         context: ComponentContext
     ): Child {
         return when (config) {
-            is PagesConfiguration.PagesListConfiguration -> Child.PagesListScreen(
+            is PagesConfiguration.PagesListConfiguration -> Child.PagesListChild(
                 PagesListComponent(
                     componentContext = context
                 )
             )
 
-            is PagesConfiguration.CreatePageConfiguration -> Child.CreatePageScreen(
+            is PagesConfiguration.CreatePageConfiguration -> Child.CreatePageChild(
                 CreatePageComponent(
                     componentContext = context
                 )
@@ -38,8 +38,8 @@ class PagesComponent(
     }
 
     sealed class Child {
-        data class PagesListScreen(val component: PagesListComponent) : Child()
-        data class CreatePageScreen(val component: CreatePageComponent) : Child()
+        data class PagesListChild(val component: PagesListComponent) : Child()
+        data class CreatePageChild(val component: CreatePageComponent) : Child()
     }
 
 }

@@ -5,19 +5,18 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Smtp(
+data class CreateSmtp(
     @SerialName("from_address")
     val fromAddress: String,
     val headers: List<Header>,
     val host: String,
-    val id: Int,
     @SerialName("ignore_cert_errors")
     val ignoreCertErrors: Boolean,
     @SerialName("interface_type")
-    val interfaceType: String,
+    val interfaceType: String = "SMTP",
     @SerialName("modified_date")
     val modifiedDate: String,
     val name: String,
-    val password: String = "",
-    val username: String = ""
+    val password: String,
+    val username: String
 )

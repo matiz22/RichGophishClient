@@ -88,7 +88,7 @@ fun CreatePageScreen(
                     onValueChange = {
                         onEvent(CreatePageEvent.UpdateRedirectUrl(it))
                     },
-                    hintText = AppRes.string.email_hint,
+                    hintText = AppRes.string.redirect_url,
                     errorMessage = form.redirectUrlError
                 )
 

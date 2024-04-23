@@ -36,7 +36,7 @@ fun PagesScreens(
         stack = childStack, animation = stackAnimation(slide())
     ) { child ->
         when (val instance = child.instance) {
-            is PagesComponent.Child.CreatePageScreen -> {
+            is PagesComponent.Child.CreatePageChild -> {
                 val createForm by instance.component.createPageForm
                 val apiCallResult = instance.component.apiCallResult
                 LaunchedEffect(apiCallResult) {
@@ -82,7 +82,7 @@ fun PagesScreens(
                 )
             }
 
-            is PagesComponent.Child.PagesListScreen -> {
+            is PagesComponent.Child.PagesListChild -> {
                 val pages by instance.component.pages.collectAsState()
 
                 LaunchedEffect(Unit) {
