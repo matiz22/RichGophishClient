@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import campaigns.domain.model.DataOrError
 import gophish.presentation.composables.EmailTemplateCard
+import gophish.presentation.composables.PageCard
 import page.domain.model.Page
 import template.domain.model.Template
 
 @Composable
 fun PagesListScreen(
     pages: DataOrError<List<Page>>,
-    navigateToDetails: (Template) -> Unit,
+    navigateToDetails: (Page) -> Unit,
 ) {
     if (pages.data != null) {
         LazyVerticalGrid(
@@ -26,12 +27,12 @@ fun PagesListScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(pages.data!!) { template ->
-                EmailTemplateCard(
+            items(pages.data!!) { page ->
+                PageCard(
                     modifier = Modifier.width(500.dp),
-                    template = template,
+                    template = page,
                     onClick = {
-                        navigateToDetails(template)
+                        navigateToDetails(page)
                     }
                 )
             }

@@ -14,7 +14,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ollama.domain.repository.OllamaRepository
 import org.koin.core.component.KoinScopeComponent
+import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import page.domain.repository.PagesRepository
@@ -28,8 +32,10 @@ class CreatePageComponent(
             "ollamaComponents", named("ollamaScope")
         )
     }
+    private val ollamaRepository by inject<OllamaRepository>()
+
     private val pagesScope: Scope by lazy { getKoin().getScope("gophishComponents") }
-    val pagesRepository = pagesScope.get<PagesRepository>()
+    private val pagesRepository = pagesScope.get<PagesRepository>()
 
     private val _apiCallResult = Channel<ApiCallResult>()
     val apiCallResult = _apiCallResult.receiveAsFlow()
@@ -70,7 +76,46 @@ class CreatePageComponent(
                 _createPageForm.value =
                     _createPageForm.value.copy(redirectUrl = createPageEvent.redirectUrl)
             }
+
+            is CreatePageEvent.AddPage -> {
+                addEmailTemplate()
+            }
+
+            is CreatePageEvent.GeneratePage -> {
+                _createPageForm.value =
+                    _createPageForm.value.copy(responseNotBeingCreated = false)
+                getOllamaEmail()
+            }
         }
     }
 
+    private fun getOllamaEmail() {
+        coroutineScope.launch {
+            val subject = _createPageForm.value.name
+            val ollamaResponse = ollamaRepository.getEmail(subject)
+            if (ollamaResponse.data != null) {
+                _createPageForm.value =
+                    _createPageForm.value.copy(html = ollamaResponse.data ?: "")
+            } else {
+                _apiCallResult.send(
+                    ApiCallResult(
+                        errorMessage = ollamaResponse.error,
+                        successful = false
+                    )
+                )
+            }
+            _createPageForm.value =
+                _createPageForm.value.copy(responseNotBeingCreated = true)
+        }
+    }
+
+    private fun addEmailTemplate() {
+        coroutineScope.launch {
+            val result =
+                pagesRepository.createPage(createPageForm.value.toCreatePage())
+            withContext(Dispatchers.Main){
+                _apiCallResult.send(result)
+            }
+        }
+    }
 }

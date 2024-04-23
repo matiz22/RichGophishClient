@@ -71,7 +71,7 @@ fun HomeOfConfigScreen(
                 MenuItemPosition(
                     menuItem = MenuItem(
                         title = AppRes.string.option_landing_pages,
-                        action = { onEvent(HomeOfConfigEvent.ShowCampaigns) }
+                        action = { navigate(ConfigScreensConfiguration.PagesConfiguration) }
                     )
                 )
             }

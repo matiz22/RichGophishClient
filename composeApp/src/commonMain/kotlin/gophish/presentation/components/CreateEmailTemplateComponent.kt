@@ -15,6 +15,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ollama.domain.repository.OllamaRepository
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.inject
@@ -97,12 +98,14 @@ class CreateEmailTemplateComponent(
                 _createTemplateForm.value =
                     _createTemplateForm.value.copy(html = ollamaResponse.data ?: "")
             } else {
-                _apiCallResult.send(
-                    ApiCallResult(
-                        errorMessage = ollamaResponse.error,
-                        successful = false
+                withContext(Dispatchers.Main){
+                    _apiCallResult.send(
+                        ApiCallResult(
+                            errorMessage = ollamaResponse.error,
+                            successful = false
+                        )
                     )
-                )
+                }
             }
             _createTemplateForm.value =
                 _createTemplateForm.value.copy(responseNotBeingCreated = true)
@@ -113,7 +116,9 @@ class CreateEmailTemplateComponent(
         coroutineScope.launch {
             val result =
                 templateRepository.createTemplate(createTemplateForm.value.toCreateTemplate())
-            _apiCallResult.send(result)
+            withContext(Dispatchers.Main){
+                _apiCallResult.send(result)
+            }
         }
     }
 }

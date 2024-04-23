@@ -12,13 +12,12 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import auth.presentation.composables.InputField
 import com.matiz22.richgophishclient.AppRes
 import gophish.presentation.domain.CreatePageForm
-import gophish.presentation.domain.CreateTemplateForm
-import gophish.presentation.events.CreateEmailTemplatesEvent
 import gophish.presentation.events.CreatePageEvent
 
 @Composable
@@ -27,7 +26,7 @@ fun CreatePageScreen(
     form: CreatePageForm,
     onEvent: (CreatePageEvent) -> Unit,
     navigateBack: () -> Unit,
-    onPreview: (CreateTemplateForm) -> Unit
+    onPreview: (CreatePageForm) -> Unit
 ) {
     LazyColumn(modifier = Modifier.padding(8.dp)) {
         item {
@@ -35,30 +34,38 @@ fun CreatePageScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(text = AppRes.string.text_mode)
+                    Text(text = AppRes.string.capture_credentials)
                     Switch(
                         checked = form.captureCredentials,
                         onCheckedChange = {
-                            onEvent(CreateEmailTemplatesEvent.ChangeFormMode)
+                            onEvent(CreatePageEvent.UpdateCaptureCredential)
                         }
                     )
-                    Text(text = AppRes.string.html_mode)
+                    if (form.captureCredentials) {
+                        Text(text = AppRes.string.capture_password)
+                        Switch(
+                            checked = form.capturePassword,
+                            onCheckedChange = {
+                                onEvent(CreatePageEvent.UpdateCapturePassword)
+                            }
+                        )
+                    }
+
                 }
                 Row {
-                    if (form.isHTML) {
-                        Button(onClick = {
-                            onEvent(CreateEmailTemplatesEvent.AddOllamaEmail)
-                        }, enabled = form.responseNotBeingCreated) {
-                            Text(AppRes.string.generate_email)
-                        }
-                        OutlinedButton(onClick = {
-                            onPreview(form)
-                        }) {
-                            Text(AppRes.string.preview)
-                        }
+                    Button(onClick = {
+                        onEvent(CreatePageEvent.GeneratePage)
+                    }, enabled = form.responseNotBeingCreated) {
+                        Text(AppRes.string.generate_email)
+                    }
+                    OutlinedButton(onClick = {
+                        onPreview(form)
+                    }) {
+                        Text(AppRes.string.preview)
                     }
                 }
             }
@@ -70,40 +77,30 @@ fun CreatePageScreen(
                     modifier = Modifier.fillMaxWidth(),
                     text = form.name,
                     onValueChange = {
-                        onEvent(CreateEmailTemplatesEvent.UpdateName(it))
+                        onEvent(CreatePageEvent.UpdateName(it))
                     },
                     hintText = AppRes.string.template_name,
                     errorMessage = form.nameError,
                 )
                 InputField(
                     modifier = Modifier.fillMaxWidth(),
-                    text = form.subject,
+                    text = form.redirectUrl,
                     onValueChange = {
-                        onEvent(CreateEmailTemplatesEvent.UpdateSubject(it))
+                        onEvent(CreatePageEvent.UpdateRedirectUrl(it))
                     },
-                    hintText = AppRes.string.email_hint
+                    hintText = AppRes.string.email_hint,
+                    errorMessage = form.redirectUrlError
                 )
-                if (form.isHTML) {
-                    TextField(
-                        modifier = modifier.fillMaxWidth(),
-                        value = form.html,
-                        onValueChange = {
-                            onEvent(CreateEmailTemplatesEvent.UpdateHtml(it))
-                        },
-                        placeholder = { Text(AppRes.string.html_mode) },
-                        minLines = 20
-                    )
-                } else {
-                    TextField(
-                        modifier = modifier.fillMaxWidth(),
-                        value = form.text,
-                        onValueChange = {
-                            onEvent(CreateEmailTemplatesEvent.UpdateHtml(it))
-                        },
-                        placeholder = { Text(AppRes.string.text_hint) },
-                        minLines = 20
-                    )
-                }
+
+                TextField(
+                    modifier = modifier.fillMaxWidth(),
+                    value = form.html,
+                    onValueChange = {
+                        onEvent(CreatePageEvent.UpdateHtml(it))
+                    },
+                    placeholder = { Text(AppRes.string.html_mode) },
+                    minLines = 20
+                )
             }
         }
 
@@ -113,7 +110,7 @@ fun CreatePageScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(onClick = {
-                    onEvent(CreateEmailTemplatesEvent.AddTemplate)
+                    onEvent(CreatePageEvent.AddPage)
                 }) {
                     Text(text = AppRes.string.add_template)
                 }

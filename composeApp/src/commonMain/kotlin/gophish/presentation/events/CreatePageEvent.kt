@@ -6,4 +6,6 @@ sealed class CreatePageEvent {
     data class UpdateHtml(val html: String) : CreatePageEvent()
     data object UpdateCaptureCredential : CreatePageEvent()
     data object UpdateCapturePassword : CreatePageEvent()
+    data object GeneratePage : CreatePageEvent()
+    data object AddPage : CreatePageEvent()
 }

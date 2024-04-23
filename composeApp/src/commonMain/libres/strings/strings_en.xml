@@ -69,4 +69,8 @@
     <string name="preview">Preview</string>
     <string name="email_topic">Email topic:</string>
     <string name="text_hint">Text:</string>
+    <string name="capture_credentials">Capture Credentials</string>
+    <string name="capture_password">Capture Password</string>
+    <string name="generate_page">Generate Page</string>
+    <string name="redirect_url">Redirect Url:</string>
 </resources>
