@@ -11,10 +11,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
-import config.presentation.states.FloatingActionButtonState
+import config.presentation.states.IconButtonState
 import gophish.presentation.components.CampaignDetailsComponent
 import gophish.presentation.components.EmailTemplatesComponent
 import gophish.presentation.components.PagesComponent
+import gophish.presentation.components.UserGroupComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -42,8 +43,9 @@ class ConfigComponent(
         handleBackButton = true,
         childFactory = ::createChild
     )
-    var floatingActionButtonState by mutableStateOf<FloatingActionButtonState?>(null)
+    var floatingActionButtonState by mutableStateOf<IconButtonState?>(null)
     var snackbarHostState by mutableStateOf(SnackbarHostState())
+    var leadingIconButtonState by mutableStateOf<IconButtonState?>(null)
 
     fun onEvent(scaffoldEvents: ScaffoldEvents) {
         when (scaffoldEvents) {
@@ -55,6 +57,10 @@ class ConfigComponent(
 
             is ScaffoldEvents.UpdateFloatingActionButton -> {
                 floatingActionButtonState = scaffoldEvents.state
+            }
+
+            is ScaffoldEvents.UpdateLeadingIconButton -> {
+                leadingIconButtonState = scaffoldEvents.state
             }
         }
     }
@@ -104,6 +110,12 @@ class ConfigComponent(
                     context
                 )
             )
+
+            is ConfigScreensConfiguration.UserGroupConfiguration -> Child.UserGroupChild(
+                component = UserGroupComponent(
+                    componentContext = context
+                )
+            )
         }
     }
 
@@ -114,5 +126,6 @@ class ConfigComponent(
         data class EmailTemplatesChild(val component: EmailTemplatesComponent) : Child()
         data class HtmlViewerChild(val component: HtmlViewerComponent) : Child()
         data class PagesChild(val component: PagesComponent) : Child()
+        data class UserGroupChild(val component: UserGroupComponent) : Child()
     }
 }

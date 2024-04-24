@@ -70,6 +70,8 @@ class CreateUserGroupComponent(val componentContext: ComponentContext) :
             is CreateUserGroupEvent.AddUserGroup -> {
                 addUserGroup()
             }
+
+            is CreateUserGroupEvent.DeleteTarget -> TODO()
         }
     }
 

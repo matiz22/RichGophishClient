@@ -73,4 +73,8 @@
     <string name="capture_password">Capture Password</string>
     <string name="generate_page">Generate Page</string>
     <string name="redirect_url">Redirect Url:</string>
+    <string name="target_email">Email</string>
+    <string name="target_first_name">First Name</string>
+    <string name="target_last_name">Last Name</string>
+    <string name="target_position">Position</string>
 </resources>

@@ -20,10 +20,11 @@ import config.presentation.components.ConfigComponent
 import config.presentation.events.ListOfConfigsEvent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
-import config.presentation.states.FloatingActionButtonState
+import config.presentation.states.IconButtonState
 import gophish.presentation.screens.CampaignDetailsScreen
 import gophish.presentation.screens.EmailTemplatesScreens
 import gophish.presentation.screens.PagesScreens
+import gophish.presentation.screens.UserGroupScreen
 import root.presentation.composables.AppScaffold
 import root.presentation.screens.HtmlViewerScreen
 
@@ -34,11 +35,13 @@ fun ConfigScreen(configComponent: ConfigComponent) {
     val childStack by configComponent.childStack.subscribeAsState()
     val snackbarHostState = configComponent.snackbarHostState
     val floatingActionButtonState = configComponent.floatingActionButtonState
+    val leadingIconButtonState = configComponent.leadingIconButtonState
 
     AppScaffold(
         title = AppRes.string.home_page,
         snackbarHostState = snackbarHostState,
         floatingActionButtonState = floatingActionButtonState,
+        leadingIconButtonState = leadingIconButtonState,
         content = {
             Children(
                 stack = childStack, animation = stackAnimation(slide())
@@ -50,7 +53,7 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                         LaunchedEffect(Unit) {
                             configComponent.onEvent(
                                 ScaffoldEvents.UpdateFloatingActionButton(
-                                    FloatingActionButtonState(
+                                    IconButtonState(
                                         action = {
                                             instance.component.onEvent(ListOfConfigsEvent.HandleDialog())
                                         },
@@ -117,10 +120,16 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                         LaunchedEffect(Unit) {
                             configComponent.onEvent(
                                 ScaffoldEvents.UpdateFloatingActionButton(
-                                    FloatingActionButtonState(
-                                        action = {
-                                            configComponent.navigation.pop()
-                                        },
+                                    IconButtonState(
+                                        action = { TODO() },
+                                        icon = Icons.Default.Add
+                                    )
+                                )
+                            )
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateLeadingIconButton(
+                                    IconButtonState(
+                                        action = { configComponent.navigation.pop() },
                                         icon = Icons.Default.ArrowBack
                                     )
                                 )
@@ -152,6 +161,22 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                         val pageState = instance.component.pageState
                         val searchText by instance.component.searchText.collectAsState()
                         val pickedUserForDetails = instance.component.pickedUserForDetails
+
+                        LaunchedEffect(Unit) {
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateFloatingActionButton(
+                                    null
+                                )
+                            )
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateLeadingIconButton(
+                                    IconButtonState(
+                                        action = { configComponent.navigation.pop() },
+                                        icon = Icons.Default.ArrowBack
+                                    )
+                                )
+                            )
+                        }
                         CampaignDetailsScreen(
                             campaign = campaign,
                             campaignSummary = campaignSummary,
@@ -178,6 +203,13 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     is ConfigComponent.Child.PagesChild -> {
                         PagesScreens(
                             pagesComponent = instance.component,
+                            configComponent = configComponent
+                        )
+                    }
+
+                    is ConfigComponent.Child.UserGroupChild -> {
+                        UserGroupScreen(
+                            userGroupComponent = instance.component,
                             configComponent = configComponent
                         )
                     }

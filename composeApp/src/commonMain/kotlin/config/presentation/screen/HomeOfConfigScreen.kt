@@ -55,7 +55,7 @@ fun HomeOfConfigScreen(
                 MenuItemPosition(
                     menuItem = MenuItem(
                         title = AppRes.string.option_users_and_groups,
-                        action = { onEvent(HomeOfConfigEvent.ShowCampaigns) }
+                        action = { navigate(ConfigScreensConfiguration.UserGroupConfiguration) }
                     )
                 )
             }

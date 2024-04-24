@@ -2,6 +2,7 @@ package gophish.presentation.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,7 +18,7 @@ import com.matiz22.richgophishclient.AppRes
 import config.presentation.components.ConfigComponent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
-import config.presentation.states.FloatingActionButtonState
+import config.presentation.states.IconButtonState
 import gophish.presentation.components.EmailTemplatesComponent
 import gophish.presentation.navigation.EmailTemplateConfiguration
 import root.presentation.openHTML
@@ -38,6 +39,23 @@ fun EmailTemplatesScreens(
     ) { child ->
         when (val instance = child.instance) {
             is EmailTemplatesComponent.Child.CreateEmailScreen -> {
+                LaunchedEffect(Unit) {
+                    configComponent.onEvent(
+                        ScaffoldEvents.UpdateFloatingActionButton(
+                            null
+                        )
+                    )
+                    configComponent.onEvent(
+                        ScaffoldEvents.UpdateLeadingIconButton(
+                            IconButtonState(
+                                action = {
+                                    emailNavigation.pop()
+                                },
+                                icon = Icons.Default.ArrowBack
+                            )
+                        )
+                    )
+                }
                 val createForm by instance.component.createTemplateForm
                 val apiCallResult = instance.component.apiCallResult
                 LaunchedEffect(apiCallResult) {
@@ -52,7 +70,7 @@ fun EmailTemplatesScreens(
                                 snackBarState.showSnackbar(
                                     message = apiCallResult.errorMessage!!
                                 )
-                            }else{
+                            } else {
                                 snackBarState.showSnackbar(
                                     message = AppRes.string.api_call_failed
                                 )
@@ -89,11 +107,21 @@ fun EmailTemplatesScreens(
                 LaunchedEffect(Unit) {
                     configComponent.onEvent(
                         ScaffoldEvents.UpdateFloatingActionButton(
-                            FloatingActionButtonState(
+                            IconButtonState(
                                 action = {
-                                    emailComponent.navigation.pushNew(EmailTemplateConfiguration.CreateEmailTemplateConfiguration)
+                                    emailNavigation.pushNew(EmailTemplateConfiguration.CreateEmailTemplateConfiguration)
                                 },
                                 icon = Icons.Default.Add
+                            )
+                        )
+                    )
+                    configComponent.onEvent(
+                        ScaffoldEvents.UpdateLeadingIconButton(
+                            IconButtonState(
+                                action = {
+                                    configNavigation.pop()
+                                },
+                                icon = Icons.Default.ArrowBack
                             )
                         )
                     )

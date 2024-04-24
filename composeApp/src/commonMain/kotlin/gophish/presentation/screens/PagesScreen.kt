@@ -2,6 +2,7 @@ package gophish.presentation.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,7 +18,7 @@ import com.matiz22.richgophishclient.AppRes
 import config.presentation.components.ConfigComponent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
-import config.presentation.states.FloatingActionButtonState
+import config.presentation.states.IconButtonState
 import gophish.presentation.components.PagesComponent
 import gophish.presentation.navigation.PagesConfiguration
 import root.presentation.openHTML
@@ -31,6 +32,7 @@ fun PagesScreens(
     val childStack by pagesComponent.childStack.subscribeAsState()
     val snackBarState = configComponent.snackbarHostState
     val pagesNavigation = pagesComponent.navigation
+    val configNavigation = configComponent.navigation
 
     Children(
         stack = childStack, animation = stackAnimation(slide())
@@ -39,6 +41,23 @@ fun PagesScreens(
             is PagesComponent.Child.CreatePageChild -> {
                 val createForm by instance.component.createPageForm
                 val apiCallResult = instance.component.apiCallResult
+                LaunchedEffect(Unit) {
+                    configComponent.onEvent(
+                        ScaffoldEvents.UpdateFloatingActionButton(
+                            null
+                        )
+                    )
+                    configComponent.onEvent(
+                        ScaffoldEvents.UpdateLeadingIconButton(
+                            IconButtonState(
+                                action = {
+                                    pagesNavigation.pop()
+                                },
+                                icon = Icons.Default.ArrowBack
+                            )
+                        )
+                    )
+                }
                 LaunchedEffect(apiCallResult) {
                     apiCallResult.collect { apiCallResult ->
                         if (apiCallResult.successful) {
@@ -88,11 +107,21 @@ fun PagesScreens(
                 LaunchedEffect(Unit) {
                     configComponent.onEvent(
                         ScaffoldEvents.UpdateFloatingActionButton(
-                            FloatingActionButtonState(
+                            IconButtonState(
                                 action = {
                                     pagesNavigation.pushNew(PagesConfiguration.CreatePageConfiguration)
                                 },
                                 icon = Icons.Default.Add
+                            )
+                        )
+                    )
+                    configComponent.onEvent(
+                        ScaffoldEvents.UpdateLeadingIconButton(
+                            IconButtonState(
+                                action = {
+                                    configNavigation.pop()
+                                },
+                                icon = Icons.Default.ArrowBack
                             )
                         )
                     )

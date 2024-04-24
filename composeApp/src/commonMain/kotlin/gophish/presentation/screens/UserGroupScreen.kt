@@ -16,7 +16,7 @@ import com.arkivanov.decompose.router.stack.pushNew
 import com.matiz22.richgophishclient.AppRes
 import config.presentation.components.ConfigComponent
 import config.presentation.events.ScaffoldEvents
-import config.presentation.states.FloatingActionButtonState
+import config.presentation.states.IconButtonState
 import gophish.presentation.components.UserGroupComponent
 import gophish.presentation.events.UserGroupListEvent
 import gophish.presentation.navigation.UserGroupConfiguration
@@ -63,9 +63,6 @@ fun UserGroupScreen(
                     form = createForm,
                     onEvent = instance.component::onEvent,
                     createTargetForm = createTargetForm,
-                    navigateBack = {
-                        userGroupNavigation.pop()
-                    },
                 )
             }
 
@@ -76,7 +73,7 @@ fun UserGroupScreen(
                 LaunchedEffect(Unit) {
                     configComponent.onEvent(
                         ScaffoldEvents.UpdateFloatingActionButton(
-                            FloatingActionButtonState(
+                            IconButtonState(
                                 action = {
                                     userGroupNavigation.pushNew(UserGroupConfiguration.CreateUserGroupConfiguration)
                                 },
