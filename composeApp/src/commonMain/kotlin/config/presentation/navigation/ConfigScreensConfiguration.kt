@@ -28,4 +28,6 @@ sealed class ConfigScreensConfiguration {
     data object PagesConfiguration : ConfigScreensConfiguration()
     @Serializable
     data object UserGroupConfiguration : ConfigScreensConfiguration()
+    @Serializable
+    data object SmtpConfiguration : ConfigScreensConfiguration()
 }

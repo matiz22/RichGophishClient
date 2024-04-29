@@ -28,7 +28,6 @@ class PagesApi(
             }
         }
         return if (request.status.isSuccess()) {
-            println(request.bodyAsText())
             DataOrError<List<Page>>(data = request.body())
         } else {
             val error: GophishCallResult = request.body()

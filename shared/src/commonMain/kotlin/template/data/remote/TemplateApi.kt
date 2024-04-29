@@ -28,7 +28,6 @@ class TemplateApi(
             }
         }
         return if (request.status.isSuccess()) {
-            println(request.bodyAsText())
             DataOrError<List<Template>>(data = request.body())
         } else {
             val error: GophishCallResult = request.body()

@@ -18,9 +18,9 @@ import config.presentation.components.ConfigComponent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.states.IconButtonState
 import gophish.presentation.components.SmtpComponent
-import gophish.presentation.components.UserGroupComponent
+import gophish.presentation.events.SmtpListEvent
 import gophish.presentation.events.UserGroupListEvent
-import gophish.presentation.navigation.UserGroupConfiguration
+import gophish.presentation.navigation.SmtpConfiguration
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -38,7 +38,7 @@ fun SmtpScreen(
         when (val instance = child.instance) {
             is SmtpComponent.Child.CreateSmtpChild-> {
                 val createForm by instance.component.createSmtpForm
-                val createTargetForm by instance.component.createTargetForm
+                val headerForm by instance.component.createHeaderForm
                 val apiCallResult = instance.component.apiCallResult
                 LaunchedEffect(apiCallResult) {
                     apiCallResult.collect { apiCallResult ->
@@ -60,37 +60,37 @@ fun SmtpScreen(
                         }
                     }
                 }
-                CreateUserGroupScreen(
+                CreateSmtpScreen(
                     form = createForm,
                     onEvent = instance.component::onEvent,
-                    createTargetForm = createTargetForm,
+                    headerForm = headerForm,
                 )
             }
 
-            is UserGroupComponent.Child.UserGroupListChild -> {
-                val userGroups by instance.component.userGroups.collectAsState()
-                val pickedGroup = instance.component.pickedGroup
+            is SmtpComponent.Child.SmtpListChild -> {
+                val smtpList by instance.component.smptList.collectAsState()
+                val pickedSmtp = instance.component.pickedSmtp
 
                 LaunchedEffect(Unit) {
                     configComponent.onEvent(
                         ScaffoldEvents.UpdateFloatingActionButton(
                             IconButtonState(
                                 action = {
-                                    userGroupNavigation.pushNew(UserGroupConfiguration.CreateUserGroupConfiguration)
+                                    userGroupNavigation.pushNew(SmtpConfiguration.CreateSmtpConfiguration)
                                 },
                                 icon = Icons.Default.Add
                             )
                         )
                     )
                 }
-                UserGroupsListScreen(
-                    userGroups = userGroups,
-                    pickedGroup = pickedGroup,
-                    unPickGroup = {
-                        instance.component.onEvent(UserGroupListEvent.UnPickUserGroup)
+                SmtpListScreen(
+                    smtpList = smtpList,
+                    pickedSmtp= pickedSmtp,
+                    unPickSmtp = {
+                        instance.component.onEvent(SmtpListEvent.UnPickSmtp)
                     },
-                    navigateToDetails = { group ->
-                        instance.component.onEvent(UserGroupListEvent.PickUserGroup(group))
+                    navigateToDetails = { smtp ->
+                        instance.component.onEvent(SmtpListEvent.PickSmtp(smtp))
                     }
                 )
             }

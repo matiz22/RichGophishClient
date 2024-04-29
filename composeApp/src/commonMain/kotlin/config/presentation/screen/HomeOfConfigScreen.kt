@@ -79,7 +79,7 @@ fun HomeOfConfigScreen(
                 MenuItemPosition(
                     menuItem = MenuItem(
                         title = AppRes.string.option_sending_profiles,
-                        action = { onEvent(HomeOfConfigEvent.ShowCampaigns) }
+                        action = { navigate(ConfigScreensConfiguration.SmtpConfiguration) }
                     )
                 )
             }

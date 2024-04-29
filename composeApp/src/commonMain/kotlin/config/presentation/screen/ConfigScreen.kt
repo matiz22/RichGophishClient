@@ -24,6 +24,7 @@ import config.presentation.states.IconButtonState
 import gophish.presentation.screens.CampaignDetailsScreen
 import gophish.presentation.screens.EmailTemplatesScreens
 import gophish.presentation.screens.PagesScreens
+import gophish.presentation.screens.SmtpScreen
 import gophish.presentation.screens.UserGroupScreen
 import root.presentation.composables.AppScaffold
 import root.presentation.screens.HtmlViewerScreen
@@ -210,6 +211,13 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     is ConfigComponent.Child.UserGroupChild -> {
                         UserGroupScreen(
                             userGroupComponent = instance.component,
+                            configComponent = configComponent
+                        )
+                    }
+
+                    is ConfigComponent.Child.SmtpChild -> {
+                        SmtpScreen(
+                            smtpComponent = instance.component,
                             configComponent = configComponent
                         )
                     }

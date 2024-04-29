@@ -15,6 +15,7 @@ import config.presentation.states.IconButtonState
 import gophish.presentation.components.CampaignDetailsComponent
 import gophish.presentation.components.EmailTemplatesComponent
 import gophish.presentation.components.PagesComponent
+import gophish.presentation.components.SmtpComponent
 import gophish.presentation.components.UserGroupComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -116,6 +117,12 @@ class ConfigComponent(
                     componentContext = context
                 )
             )
+
+            is ConfigScreensConfiguration.SmtpConfiguration -> Child.SmtpChild(
+                component = SmtpComponent(
+                    componentContext = context
+                )
+            )
         }
     }
 
@@ -127,5 +134,6 @@ class ConfigComponent(
         data class HtmlViewerChild(val component: HtmlViewerComponent) : Child()
         data class PagesChild(val component: PagesComponent) : Child()
         data class UserGroupChild(val component: UserGroupComponent) : Child()
+        data class SmtpChild(val component: SmtpComponent) : Child()
     }
 }
