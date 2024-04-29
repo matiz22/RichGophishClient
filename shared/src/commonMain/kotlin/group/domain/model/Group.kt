@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Group(
     @SerialName("id")
-    val id: Int,
+    val id: Long,
     @SerialName("modified_date")
     val modifiedDate: String,
     @SerialName("name")

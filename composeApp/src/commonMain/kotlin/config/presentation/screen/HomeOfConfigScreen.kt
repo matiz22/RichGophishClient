@@ -14,10 +14,9 @@ import config.presentation.composables.MenuItemPosition
 import config.presentation.domain.MenuItem
 import config.presentation.events.HomeOfConfigEvent
 import config.presentation.navigation.ConfigScreensConfiguration
-import gophish.presentation.composables.ChooseCampaignDialog
-import gophish.presentation.composables.StatsCard
+import gophish.campaign.composables.ChooseCampaignDialog
+import gophish.campaign.composables.StatsCard
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeOfConfigScreen(
     campaigns: DataOrError<List<Campaign>>,
@@ -80,14 +79,6 @@ fun HomeOfConfigScreen(
                     menuItem = MenuItem(
                         title = AppRes.string.option_sending_profiles,
                         action = { navigate(ConfigScreensConfiguration.SmtpConfiguration) }
-                    )
-                )
-            }
-            item {
-                MenuItemPosition(
-                    menuItem = MenuItem(
-                        title = AppRes.string.option_user_management,
-                        action = { onEvent(HomeOfConfigEvent.ShowCampaigns) }
                     )
                 )
             }

@@ -2,6 +2,7 @@ package template.data.remote
 
 import campaigns.data.remote.GophishHttpRequester
 import campaigns.domain.model.DataOrError
+import com.matiz22.richgophishclient.shared.SharedRes
 import home.domain.model.ApiCallResult
 import home.domain.model.GophishCallResult
 import io.ktor.client.call.body
@@ -22,83 +23,103 @@ class TemplateApi(
     private val ROUTE = "api/templates/"
 
     suspend fun getTemplates(): DataOrError<List<Template>> {
-        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
-            url {
-                path(ROUTE)
+        return try {
+            val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
+                url {
+                    path(ROUTE)
+                }
             }
-        }
-        return if (request.status.isSuccess()) {
-            DataOrError<List<Template>>(data = request.body())
-        } else {
-            val error: GophishCallResult = request.body()
-            DataOrError<List<Template>>(error = error.message)
+            if (request.status.isSuccess()) {
+                DataOrError<List<Template>>(data = request.body())
+            } else {
+                val error: GophishCallResult = request.body()
+                DataOrError<List<Template>>(error = error.message)
+            }
+        } catch (e: Exception) {
+            DataOrError(error = SharedRes.string.connection_error)
         }
     }
 
     suspend fun getTemplate(id: Long): DataOrError<Template> {
-        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
-            url {
-                path("$ROUTE$id")
+        return try {
+            val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
+                url {
+                    path("$ROUTE$id")
+                }
             }
-        }
-        return if (request.status.isSuccess()) {
-            DataOrError<Template>(data = request.body())
-        } else {
-            val error: GophishCallResult = request.body()
-            DataOrError<Template>(error = error.message)
+            if (request.status.isSuccess()) {
+                DataOrError<Template>(data = request.body())
+            } else {
+                val error: GophishCallResult = request.body()
+                DataOrError<Template>(error = error.message)
+            }
+        } catch (e: Exception) {
+            DataOrError(error = SharedRes.string.connection_error)
         }
     }
 
     suspend fun createTemplate(createTemplate: CreateTemplate): ApiCallResult {
-        val request = gophishHttpRequester.httpClient.post(gophishHttpRequester.host) {
-            url {
-                path(ROUTE)
+        return try {
+            val request = gophishHttpRequester.httpClient.post(gophishHttpRequester.host) {
+                url {
+                    path(ROUTE)
+                }
+                setBody(createTemplate)
             }
-            setBody(createTemplate)
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            val error: GophishCallResult = request.body()
-            ApiCallResult(
-                successful = false,
-                errorMessage = error.message
-            )
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                val error: GophishCallResult = request.body()
+                ApiCallResult(
+                    successful = false,
+                    errorMessage = error.message
+                )
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 
     suspend fun modifyTemplate(createTemplate: CreateTemplate): ApiCallResult {
-        val request = gophishHttpRequester.httpClient.put(gophishHttpRequester.host) {
-            url {
-                path(ROUTE)
+        return try {
+            val request = gophishHttpRequester.httpClient.put(gophishHttpRequester.host) {
+                url {
+                    path(ROUTE)
+                }
+                setBody(createTemplate)
             }
-            setBody(createTemplate)
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            val error: GophishCallResult = request.body()
-            ApiCallResult(
-                successful = false,
-                errorMessage = error.message
-            )
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                val error: GophishCallResult = request.body()
+                ApiCallResult(
+                    successful = false,
+                    errorMessage = error.message
+                )
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 
     suspend fun deleteTemplate(id: Long): ApiCallResult {
-        val request = gophishHttpRequester.httpClient.delete(gophishHttpRequester.host) {
-            url {
-                path("$ROUTE$id")
+        return try {
+            val request = gophishHttpRequester.httpClient.delete(gophishHttpRequester.host) {
+                url {
+                    path("$ROUTE$id")
+                }
             }
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            val error: GophishCallResult = request.body()
-            ApiCallResult(
-                successful = false,
-                errorMessage = error.message
-            )
+            return if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                val error: GophishCallResult = request.body()
+                ApiCallResult(
+                    successful = false,
+                    errorMessage = error.message
+                )
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 }

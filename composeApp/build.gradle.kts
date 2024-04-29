@@ -13,7 +13,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "17"
             }
         }
     }
@@ -56,8 +56,8 @@ kotlin {
             implementation(libs.libres)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.essenty.lifecycle)
-            implementation("io.github.thechance101:chart:Beta-0.0.5")
-            api("io.github.kevinnzou:compose-webview-multiplatform:1.9.2")
+            implementation(libs.chart)
+            api(libs.compose.webview.multiplatform)
         }
     }
 }

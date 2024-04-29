@@ -2,6 +2,7 @@ package page.data.remote
 
 import campaigns.data.remote.GophishHttpRequester
 import campaigns.domain.model.DataOrError
+import com.matiz22.richgophishclient.shared.SharedRes
 import home.domain.model.ApiCallResult
 import home.domain.model.GophishCallResult
 import io.ktor.client.call.body
@@ -22,83 +23,100 @@ class PagesApi(
     private val ROUTE = "api/pages/"
 
     suspend fun getPages(): DataOrError<List<Page>> {
-        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
-            url {
-                path(ROUTE)
+        return try {
+            val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
+                url {
+                    path(ROUTE)
+                }
             }
-        }
-        return if (request.status.isSuccess()) {
-            DataOrError<List<Page>>(data = request.body())
-        } else {
-            val error: GophishCallResult = request.body()
-            DataOrError<List<Page>>(error = error.message)
+            if (request.status.isSuccess()) {
+                DataOrError<List<Page>>(data = request.body())
+            } else {
+                val error: GophishCallResult = request.body()
+                DataOrError<List<Page>>(error = error.message)
+            }
+        } catch (e: Exception) {
+            DataOrError(error = SharedRes.string.connection_error)
         }
     }
 
     suspend fun getPage(id: Long): DataOrError<Page> {
-        val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
-            url {
-                path("$ROUTE$id")
+        return try {
+            val request = gophishHttpRequester.httpClient.get(gophishHttpRequester.host) {
+                url {
+                    path("$ROUTE$id")
+                }
             }
-        }
-        return if (request.status.isSuccess()) {
-            DataOrError<Page>(data = request.body())
-        } else {
-            val error: GophishCallResult = request.body()
-            DataOrError<Page>(error = error.message)
+            if (request.status.isSuccess()) {
+                DataOrError<Page>(data = request.body())
+            } else {
+                val error: GophishCallResult = request.body()
+                DataOrError<Page>(error = error.message)
+            }
+        } catch (e: Exception) {
+            DataOrError(error = SharedRes.string.connection_error)
         }
     }
 
     suspend fun createPage(createPage: CreatePage): ApiCallResult {
-        val request = gophishHttpRequester.httpClient.post(gophishHttpRequester.host) {
-            url {
-                path(ROUTE)
+        return try {
+            val request = gophishHttpRequester.httpClient.post(gophishHttpRequester.host) {
+                url {
+                    path(ROUTE)
+                }
+                setBody(createPage)
             }
-            setBody(createPage)
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            val error: GophishCallResult = request.body()
-            ApiCallResult(
-                successful = false,
-                errorMessage = error.message
-            )
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                val error: GophishCallResult = request.body()
+                ApiCallResult(
+                    successful = false, errorMessage = error.message
+                )
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 
     suspend fun modifyPage(modifyPage: CreatePage): ApiCallResult {
-        val request = gophishHttpRequester.httpClient.put(gophishHttpRequester.host) {
-            url {
-                path(ROUTE)
+        return try {
+            val request = gophishHttpRequester.httpClient.put(gophishHttpRequester.host) {
+                url {
+                    path(ROUTE)
+                }
+                setBody(modifyPage)
             }
-            setBody(modifyPage)
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            val error: GophishCallResult = request.body()
-            ApiCallResult(
-                successful = false,
-                errorMessage = error.message
-            )
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                val error: GophishCallResult = request.body()
+                ApiCallResult(
+                    successful = false, errorMessage = error.message
+                )
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 
     suspend fun deletePage(id: Long): ApiCallResult {
-        val request = gophishHttpRequester.httpClient.delete(gophishHttpRequester.host) {
-            url {
-                path("$ROUTE$id")
+        return try {
+            val request = gophishHttpRequester.httpClient.delete(gophishHttpRequester.host) {
+                url {
+                    path("$ROUTE$id")
+                }
             }
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            val error: GophishCallResult = request.body()
-            ApiCallResult(
-                successful = false,
-                errorMessage = error.message
-            )
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                val error: GophishCallResult = request.body()
+                ApiCallResult(
+                    successful = false, errorMessage = error.message
+                )
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 }

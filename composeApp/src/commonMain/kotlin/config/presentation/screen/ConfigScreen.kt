@@ -21,11 +21,11 @@ import config.presentation.events.ListOfConfigsEvent
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.IconButtonState
-import gophish.presentation.screens.CampaignDetailsScreen
-import gophish.presentation.screens.EmailTemplatesScreens
-import gophish.presentation.screens.PagesScreens
-import gophish.presentation.screens.SmtpScreen
-import gophish.presentation.screens.UserGroupScreen
+import gophish.campaign.screens.CampaignDetailsScreen
+import gophish.email_templates.screens.EmailTemplatesScreens
+import gophish.page.screens.PagesScreens
+import gophish.smtp.screens.SmtpScreen
+import gophish.user_groups.screens.UserGroupScreen
 import root.presentation.composables.AppScaffold
 import root.presentation.screens.HtmlViewerScreen
 
@@ -39,7 +39,7 @@ fun ConfigScreen(configComponent: ConfigComponent) {
     val leadingIconButtonState = configComponent.leadingIconButtonState
 
     AppScaffold(
-        title = AppRes.string.home_page,
+        title = AppRes.string.app_name,
         snackbarHostState = snackbarHostState,
         floatingActionButtonState = floatingActionButtonState,
         leadingIconButtonState = leadingIconButtonState,

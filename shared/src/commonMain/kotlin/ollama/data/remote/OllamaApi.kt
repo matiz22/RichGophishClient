@@ -45,42 +45,51 @@ class OllamaApi {
 
     suspend fun getEmail(topic: String): DataOrError<OllamaResponse> {
         val prompt = SharedRes.string.email_prompt.format(topic)
-        val request = ollamaRequester.post {
-            setBody(
-                OllamaRequest(
-                    model = BuildKonfig.OLLAMA_EMAIL_MODEL,
-                    prompt = prompt,
+        return try {
+            val request = ollamaRequester.post {
+                setBody(
+                    OllamaRequest(
+                        model = BuildKonfig.OLLAMA_EMAIL_MODEL,
+                        prompt = prompt,
+                    )
                 )
-            )
-        }
-        return if (request.status.isSuccess()) {
-            DataOrError<OllamaResponse>(
-                data = request.body()
-            )
-        } else {
-            DataOrError(
-                error = SharedRes.string.email_prompt_error
-            )
+            }
+            if (request.status.isSuccess()) {
+                DataOrError<OllamaResponse>(
+                    data = request.body()
+                )
+            } else {
+                DataOrError(
+                    error = SharedRes.string.email_prompt_error
+                )
+            }
+        } catch (e: Exception) {
+            DataOrError(error = SharedRes.string.connection_error)
         }
     }
+
     suspend fun getPage(topic: String): DataOrError<OllamaResponse> {
         val prompt = SharedRes.string.page_prompt.format(topic)
-        val request = ollamaRequester.post {
-            setBody(
-                OllamaRequest(
-                    model = BuildKonfig.OLLAMA_PAGE_MODEL,
-                    prompt = prompt,
+        return try {
+            val request = ollamaRequester.post {
+                setBody(
+                    OllamaRequest(
+                        model = BuildKonfig.OLLAMA_PAGE_MODEL,
+                        prompt = prompt,
+                    )
                 )
-            )
-        }
-        return if (request.status.isSuccess()) {
-            DataOrError<OllamaResponse>(
-                data = request.body()
-            )
-        } else {
-            DataOrError(
-                error = SharedRes.string.email_prompt_error
-            )
+            }
+            if (request.status.isSuccess()) {
+                DataOrError<OllamaResponse>(
+                    data = request.body()
+                )
+            } else {
+                DataOrError(
+                    error = SharedRes.string.email_prompt_error
+                )
+            }
+        } catch (e: Exception) {
+            DataOrError(error = SharedRes.string.connection_error)
         }
     }
 }

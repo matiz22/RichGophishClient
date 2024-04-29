@@ -12,11 +12,11 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.IconButtonState
-import gophish.presentation.components.CampaignDetailsComponent
-import gophish.presentation.components.EmailTemplatesComponent
-import gophish.presentation.components.PagesComponent
-import gophish.presentation.components.SmtpComponent
-import gophish.presentation.components.UserGroupComponent
+import gophish.campaign.components.CampaignDetailsComponent
+import gophish.email_templates.components.EmailTemplatesComponent
+import gophish.page.components.PagesComponent
+import gophish.smtp.components.SmtpComponent
+import gophish.user_groups.components.UserGroupComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

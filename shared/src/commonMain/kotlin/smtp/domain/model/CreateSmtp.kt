@@ -14,8 +14,6 @@ data class CreateSmtp(
     val ignoreCertErrors: Boolean,
     @SerialName("interface_type")
     val interfaceType: String = "SMTP",
-    @SerialName("modified_date")
-    val modifiedDate: String,
     val name: String,
     val password: String,
     val username: String
