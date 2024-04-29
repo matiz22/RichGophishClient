@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">RichGophishClient</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="submit_button">Submit</string>
@@ -77,4 +78,19 @@
     <string name="target_first_name">First Name</string>
     <string name="target_last_name">Last Name</string>
     <string name="target_position">Position</string>
+    <string name="smtp_from_address">From address</string>
+    <string name="smtp_host">Host</string>
+    <string name="smtp_username">Username</string>
+    <string name="smtp_password">Password</string>
+    <string name="smtp_add_header">Add header</string>
+    <string name="smtp_add_profile">Add profile</string>
+    <string name="header_key">Header Key</string>
+    <string name="header_value">Header Value</string>
+    <string name="picked_smtp_from_address">From Address: ${address}</string>
+    <string name="picked_smtp_host">Host: ${host}</string>
+    <string name="picked_smtp_ignore_cert_errors">Ignore Certificate Errors: ${errors}</string>
+    <string name="picked_smtp_interface_type">Interface Type: ${type}</string>
+    <string name="picked_smtp_modified_date">Modified Date: ${date}</string>
+    <string name="picked_smtp_name">Name: ${name}</string>
+    <string name="picked_smtp_username">Username: ${username}</string>
 </resources>

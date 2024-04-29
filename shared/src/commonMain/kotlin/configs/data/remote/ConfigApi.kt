@@ -22,46 +22,62 @@ class ConfigApi(private val mainClient: HttpClient) {
     private val ROUTE = "/configs"
 
     suspend fun fetchConfigs(id: Long): ConfigsOrError {
-        val request = mainClient.post("${ROUTE}/user") {
-            setBody(ConfigUserIdRequest(id))
-        }
-        return if (request.status.isSuccess()) {
-            ConfigsOrError(configs = request.body())
-        } else {
-            ConfigsOrError(error = request.bodyAsText())
+        return try {
+            val request = mainClient.post("${ROUTE}/user") {
+                setBody(ConfigUserIdRequest(id))
+            }
+            if (request.status.isSuccess()) {
+                ConfigsOrError(configs = request.body())
+            } else {
+                ConfigsOrError(error = request.bodyAsText())
+            }
+        } catch (e: Exception) {
+            ConfigsOrError(error = SharedRes.string.connection_error)
         }
     }
 
     suspend fun deleteConfig(id: Long): ApiCallResult {
-        val request = mainClient.delete(ROUTE) {
-            setBody(id)
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            ApiCallResult(successful = false, errorMessage = SharedRes.string.deletion_error)
+        return try {
+            val request = mainClient.delete(ROUTE) {
+                setBody(id)
+            }
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                ApiCallResult(successful = false, errorMessage = SharedRes.string.deletion_error)
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 
     suspend fun createConfig(createGophishConfig: CreateGophishConfig): ApiCallResult {
-        val request = mainClient.post("${ROUTE}/post") {
-            setBody(createGophishConfig)
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            ApiCallResult(successful = false, errorMessage = SharedRes.string.creation_error)
+        return try {
+            val request = mainClient.post("${ROUTE}/post") {
+                setBody(createGophishConfig)
+            }
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                ApiCallResult(successful = false, errorMessage = SharedRes.string.creation_error)
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 
     suspend fun editConfig(editGophishConfig: EditGophishConfig): ApiCallResult {
-        val request = mainClient.put("${ROUTE}/edit") {
-            setBody(editGophishConfig)
-        }
-        return if (request.status.isSuccess()) {
-            ApiCallResult(successful = true)
-        } else {
-            ApiCallResult(successful = false, errorMessage = SharedRes.string.editing_error)
+        return try {
+            val request = mainClient.put("${ROUTE}/edit") {
+                setBody(editGophishConfig)
+            }
+            if (request.status.isSuccess()) {
+                ApiCallResult(successful = true)
+            } else {
+                ApiCallResult(successful = false, errorMessage = SharedRes.string.editing_error)
+            }
+        } catch (e: Exception) {
+            ApiCallResult(successful = false, errorMessage = SharedRes.string.connection_error)
         }
     }
 }

@@ -10,7 +10,7 @@ data class Smtp(
     val fromAddress: String,
     val headers: List<Header>,
     val host: String,
-    val id: Int,
+    val id: Long,
     @SerialName("ignore_cert_errors")
     val ignoreCertErrors: Boolean,
     @SerialName("interface_type")

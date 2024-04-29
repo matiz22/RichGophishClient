@@ -3,7 +3,7 @@ package ui.prev
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
 import campaigns.domain.model.CampaignStats
-import gophish.presentation.composables.StatsCard
+import gophish.campaign.composables.StatsCard
 
 @Preview
 @Composable

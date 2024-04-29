@@ -1,4 +1,6 @@
 [versions]
+chart = "Beta-0.0.5"
+composeWebviewMultiplatform = "1.9.2"
 decompose = "2.2.2-compose-experimental"
 dotenvKotlin = "6.4.1"
 exposedCore = "0.41.1"
@@ -35,6 +37,8 @@ libres = "1.2.2"
 
 
 [libraries]
+chart = { module = "io.github.thechance101:chart", version.ref = "chart" }
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebviewMultiplatform" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-jetbrains = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "extensionsComposeJetbrains" }
 dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenvKotlin" }
