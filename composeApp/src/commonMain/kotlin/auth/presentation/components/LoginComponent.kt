@@ -10,11 +10,14 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import home.di.UserKoinComponent
 import home.di.ValidatorsComponent
+import home.domain.model.ApiCallResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
@@ -30,6 +33,9 @@ class LoginComponent(
     private val validatePassword = ValidatorsComponent().passwordValidator
 
     private val userRepository = UserKoinComponent().userRepository
+
+    private val _apiCallResult = Channel<ApiCallResult>()
+    val apiCallResult = _apiCallResult.receiveAsFlow()
 
     var authFormState by mutableStateOf(AuthFormState())
 
@@ -82,6 +88,12 @@ class LoginComponent(
                 } else {
                     authFormState =
                         authFormState.copy(otherErrors = result.error ?: "Something went wrong")
+                    _apiCallResult.send(
+                        ApiCallResult(
+                            successful = false,
+                            errorMessage = result.error
+                        )
+                    )
                 }
             }
         }
