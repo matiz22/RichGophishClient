@@ -111,9 +111,21 @@ compose.desktop {
             jvmArgs(
                 "-Dapple.awt.application.appearance=system"
             )
+            macOS {
+                iconFile.set(project.file("src/commonMain/libres/images/logo.svg"))
+            }
+            windows {
+                iconFile.set(project.file("src/commonMain/libres/images/logo.svg"))
+            }
+            linux {
+                iconFile.set(project.file("src/commonMain/libres/images/logo.svg"))
+            }
         }
         jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
-        jvmArgs("--add-opens", "java.desktop/java.awt.peer=ALL-UNNAMED") // recommended but not necessary
+        jvmArgs(
+            "--add-opens",
+            "java.desktop/java.awt.peer=ALL-UNNAMED"
+        ) // recommended but not necessary
 
         if (System.getProperty("os.name").contains("Mac")) {
             jvmArgs("--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED")
