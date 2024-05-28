@@ -3,8 +3,10 @@ package auth.presentation.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import auth.presentation.composables.InputField
 import auth.presentation.events.AuthEvent
 import com.matiz22.richgophishclient.AppRes
+import io.github.skeptick.libres.compose.painterResource
 
 @Composable
 fun LoginScreen(
@@ -31,6 +34,14 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         contentPadding = PaddingValues(16.dp)
     ) {
+
+        item {
+            Icon(
+                modifier = Modifier.size(200.dp),
+                painter = painterResource(AppRes.image.logo),
+                contentDescription = null
+            )
+        }
 
         item {
             InputField(
