@@ -18,3 +18,4 @@ captures
 /.env
 /composeApp/cache/
 /composeApp/kcef-bundle/
+/composeApp/release/
