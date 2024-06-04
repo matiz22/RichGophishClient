@@ -20,7 +20,7 @@ fun AuthScreens(authComponent: AuthComponent) {
         snackbarHost = {
             SnackbarHost(hostState = authComponent.snackbarHostState)
         }
-    ){
+    ) {
         Children(
             stack = childStack,
             animation = stackAnimation(slide())

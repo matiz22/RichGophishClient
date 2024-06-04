@@ -34,7 +34,7 @@ fun CreateUserGroupScreen(
                 onValueChange = {
                     onEvent(CreateUserGroupEvent.UpdateName(it))
                 },
-                hintText = AppRes.string.name_hint
+                hintText = AppRes.string.group_hint
             )
         }
 
@@ -42,15 +42,10 @@ fun CreateUserGroupScreen(
             Row(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                OutlinedButton(onClick = {
-                    onEvent(CreateUserGroupEvent.SubmitTarget)
-                }) {
-                    Text(text = AppRes.string.smtp_add_header)
-                }
                 Button(onClick = {
                     onEvent(CreateUserGroupEvent.AddUserGroup)
                 }) {
-                    Text(text = AppRes.string.smtp_add_profile)
+                    Text(text = AppRes.string.group_add_group)
                 }
             }
         }
@@ -72,6 +67,14 @@ fun CreateUserGroupScreen(
                     onEvent(CreateUserGroupEvent.UpdatePosition(it))
                 },
             )
+        }
+
+        item {
+            OutlinedButton(onClick = {
+                onEvent(CreateUserGroupEvent.SubmitTarget)
+            }) {
+                Text(text = AppRes.string.group_add_to_the_group)
+            }
         }
 
         items(form.targets) { target ->

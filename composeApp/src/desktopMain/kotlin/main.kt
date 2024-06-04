@@ -72,6 +72,7 @@ fun main() {
             }
         }
         Window(
+            title = "Rgc",
             onCloseRequest = ::exitApplication
         ) {
             App(root = root)

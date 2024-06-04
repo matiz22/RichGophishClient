@@ -10,7 +10,9 @@ import com.multiplatform.webview.web.rememberWebViewStateWithHTMLData
 
 @Composable
 fun ApplicationScope.HtmlViewerWindow(windowState: HtmlViewerWindowState) {
-    Window(onCloseRequest = {windowState.close()}) {
+    Window(
+        title = "Rgc",
+        onCloseRequest = { windowState.close() }) {
         HtmlViewer(windowState.data)
     }
 }

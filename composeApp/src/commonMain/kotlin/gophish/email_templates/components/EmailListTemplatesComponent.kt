@@ -28,11 +28,7 @@ class EmailListTemplatesComponent(
     )
     val templates = _templates.asStateFlow()
 
-    init {
-        updateTemplates()
-    }
-
-    private fun updateTemplates() {
+    fun updateTemplates() {
         coroutineScope.launch {
             _templates.emit(templateRepository.getTemplates())
         }

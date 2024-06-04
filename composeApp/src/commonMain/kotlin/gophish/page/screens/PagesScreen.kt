@@ -105,6 +105,7 @@ fun PagesScreens(
                 val pages by instance.component.pages.collectAsState()
 
                 LaunchedEffect(Unit) {
+                    instance.component.updatePages()
                     configComponent.onEvent(
                         ScaffoldEvents.UpdateFloatingActionButton(
                             IconButtonState(

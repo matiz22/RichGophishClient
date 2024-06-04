@@ -43,7 +43,7 @@ class HomeOfConfigComponent(
         getKoin().createScope("gophishComponents", named("gophishScope"))
     }
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private val campaignRepository: CampaignRepository by inject{
+    private val campaignRepository: CampaignRepository by inject {
         parameterSetOf(config.url, config.apiKey)
     }
     private val _campaigns = MutableStateFlow<DataOrError<List<Campaign>>>(DataOrError())
@@ -64,9 +64,6 @@ class HomeOfConfigComponent(
             scope.close()
             coroutineScope.cancel()
         }
-        coroutineScope.launch {
-            updateCampaigns()
-        }
     }
 
     fun onEvent(homeOfConfigEvent: HomeOfConfigEvent) {
@@ -86,21 +83,29 @@ class HomeOfConfigComponent(
 
             is HomeOfConfigEvent.PickCampaign -> {
                 coroutineScope.launch {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         _pickedCampaignChannel.send(homeOfConfigEvent.campaign)
                     }
                 }
 
             }
+
             is HomeOfConfigEvent.ShowCampaigns -> {
                 pickingCampaign = true
             }
         }
     }
 
-    private fun updateCampaigns() {
+    fun updateCampaigns() {
         coroutineScope.launch {
-            _campaigns.emit(campaignRepository.getCampaigns())
+            val result = campaignRepository.getCampaigns()
+            if (result.data != null) {
+                _campaigns.emit(result)
+            } else {
+                _apiCallResult.send(ApiCallResult(successful = false, errorMessage = result.error))
+                return@launch
+            }
+            stats = null
             campaigns.value.data?.forEach { campaign ->
                 val summary = campaignRepository.getCampaignSummary(campaign.id)
                 if (summary.data != null) {

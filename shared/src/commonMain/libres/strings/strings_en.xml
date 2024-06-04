@@ -8,9 +8,8 @@
     <string name="wrong_url_pattern">Wrong Url pattern</string>
     <string name="name_length_error">Name cannot be empty</string>
     <string name="api_key_length_error">Name cannot be empty</string>
-    <string name="email_prompt">Write me a phishing email in html for this topic: ${topic}
-        that are compatible with Gophish.
-        Start from &lt;html&gt; tag and default implementation of html. Add all necessary css to match desired topic.
+    <string name="email_prompt">Write me a phishing email in html for this topic: ${topic}.
+        Start from &lt;html&gt; tag and default implementation of html. Write css matching desired topic.
 
         Make fully detailed email for given topic. Include things like user information, images and everything make good example of topic. structure it and style to make it more realistic.
 
@@ -24,17 +23,16 @@
         {{.FirstName}}
         {{.LastName}}
         {{.Position}}
-        Don't create own varialbes use only descripted here.
+        Don't create own variables use only provided here.
 
         For all redirections put href to {{.URL}} and nothing more.
 
         If you want include images rely on your known links or put placeholder file.
 
-        Return only one Email in html</string>
-    <string name="page_prompt">Write me a landing page for phishing campaign. use html for this topic: ${topic}
-        that are compatible with Gophish.
+        Return only one Email in html. Put css in style tag.</string>
+    <string name="page_prompt">Write me a landing page. use html for this topic: ${topic}.
 
-        Start from &lt;html&gt; tag and default implementation of html. Add all necessary css to match desired topic.
+        Start from &lt;html&gt; tag and default implementation of html. Always generate css matching desired topic.
 
         Make fully detailed email for given topic. Include things like user information, images and everything make good example of topic. structure it and style to make it more realistic.
 
@@ -47,7 +45,7 @@
 
         If you want include images rely on your known links or put placeholder file.
 
-        Return only one Page in html</string>
+        Return only one Page in html. Put css in style tag.</string>
     <string name="email_prompt_error">Email prompt went wrong</string>
     <string name="connection_error">Server is not accessible</string>
 </resources>

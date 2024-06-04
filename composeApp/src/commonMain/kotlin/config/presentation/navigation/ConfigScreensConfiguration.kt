@@ -8,6 +8,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class ConfigScreensConfiguration {
     @Serializable
+    data object CreateCampaignConfiguration : ConfigScreensConfiguration()
+
+    @Serializable
     data class ListOfConfigsConfiguration(val user: User) : ConfigScreensConfiguration()
 
     @Serializable
@@ -26,8 +29,10 @@ sealed class ConfigScreensConfiguration {
 
     @Serializable
     data object PagesConfiguration : ConfigScreensConfiguration()
+
     @Serializable
     data object UserGroupConfiguration : ConfigScreensConfiguration()
+
     @Serializable
     data object SmtpConfiguration : ConfigScreensConfiguration()
 }

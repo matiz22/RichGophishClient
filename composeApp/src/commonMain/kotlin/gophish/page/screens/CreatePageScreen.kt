@@ -60,7 +60,7 @@ fun CreatePageScreen(
                     Button(onClick = {
                         onEvent(CreatePageEvent.GeneratePage)
                     }, enabled = form.responseNotBeingCreated) {
-                        Text(AppRes.string.generate_email)
+                        Text(AppRes.string.landing_page_generate_page)
                     }
                     OutlinedButton(onClick = {
                         onPreview(form)
@@ -79,7 +79,7 @@ fun CreatePageScreen(
                     onValueChange = {
                         onEvent(CreatePageEvent.UpdateName(it))
                     },
-                    hintText = AppRes.string.template_name,
+                    hintText = AppRes.string.landing_page_name_of_page_hint,
                     errorMessage = form.nameError,
                 )
                 InputField(
@@ -91,7 +91,7 @@ fun CreatePageScreen(
                     hintText = AppRes.string.redirect_url,
                     errorMessage = form.redirectUrlError
                 )
-
+                Text(text = AppRes.string.landing_page_hint)
                 TextField(
                     modifier = modifier.fillMaxWidth(),
                     value = form.html,

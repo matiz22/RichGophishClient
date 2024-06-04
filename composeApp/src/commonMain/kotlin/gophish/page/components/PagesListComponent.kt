@@ -29,11 +29,7 @@ class PagesListComponent(
     )
     val pages = _pages.asStateFlow()
 
-    init {
-        updatePages()
-    }
-
-    private fun updatePages() {
+    fun updatePages() {
         coroutineScope.launch {
             _pages.emit(pagesRepository.getPages())
         }

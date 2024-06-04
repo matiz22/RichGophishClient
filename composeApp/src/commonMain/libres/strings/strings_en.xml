@@ -60,7 +60,7 @@
     <string name="passed_email">Email: ${email}</string>
     <string name="passed_password">Password: ${password}</string>
     <string name="show_passed_credential">Show passed credentials</string>
-    <string name="template_name">Template Name:</string>
+    <string name="template_name">Name of template</string>
     <string name="template_envelope_sender">Envelope sender:</string>
     <string name="template_modified_date">Last modification:</string>
     <string name="html_mode">HTML</string>
@@ -93,4 +93,18 @@
     <string name="picked_smtp_modified_date">Modified Date: ${date}</string>
     <string name="picked_smtp_name">Name: ${name}</string>
     <string name="picked_smtp_username">Username: ${username}</string>
+    <string name="group_add_group">Add group</string>
+    <string name="group_hint">Name of the group</string>
+    <string name="group_add_to_the_group">Add to the group</string>
+    <string name="template_subject_hint">Email subject (enter subject for ai generated emails)</string>
+    <string name="verification_hint">Ensure you verify {{.Tracker}} after the &lt;body&gt; tag. The email can contain {{.URL}} if there is a landing page, along with {{.Email}}, {{.FirstName}}, {{.Position}} ,and {{.Last.Name}}. If there is more tags please delete them.</string>
+    <string name="landing_page_hint">Verify the landing page. The landing page should contain a form with a submit button. Replace images with your own images.</string>
+    <string name="landing_page_generate_page">Generate page</string>
+    <string name="landing_page_name_of_page_hint">Name of the page(name is used for ai generation topic)</string>"
+    <string name="campaign_hint">Campaign name</string>
+    <string name="campaign_hint_template">Campaign name</string>
+    <string name="campaign_hint_page">Pick landing page</string>
+    <string name="campaign_hint_url">Type desired url</string>
+    <string name="campaign_hint_smtp">Pick smtp profile</string>
+    <string name="campaign_hint_groups">Pick target groups</string>
 </resources>

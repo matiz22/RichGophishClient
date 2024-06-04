@@ -13,6 +13,7 @@ import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.IconButtonState
 import gophish.campaign.components.CampaignDetailsComponent
+import gophish.campaign.components.CreateCampaignComponent
 import gophish.email_templates.components.EmailTemplatesComponent
 import gophish.page.components.PagesComponent
 import gophish.smtp.components.SmtpComponent
@@ -123,11 +124,18 @@ class ConfigComponent(
                     componentContext = context
                 )
             )
+
+            is ConfigScreensConfiguration.CreateCampaignConfiguration -> Child.CreateCampaignChild(
+                component = CreateCampaignComponent(
+                    componentContext = context
+                )
+            )
         }
     }
 
     sealed class Child {
         data class ListOfConfigsScreenChild(val component: ListOfConfigsComponent) : Child()
+        data class CreateCampaignChild(val component: CreateCampaignComponent) : Child()
         data class HomeOfConfigScreenChild(val component: HomeOfConfigComponent) : Child()
         data class CampaignDetailsChild(val component: CampaignDetailsComponent) : Child()
         data class EmailTemplatesChild(val component: EmailTemplatesComponent) : Child()

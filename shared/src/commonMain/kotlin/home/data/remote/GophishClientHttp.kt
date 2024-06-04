@@ -12,6 +12,7 @@ import kotlinx.serialization.json.Json
 fun provideGophishHttpClient(apiKey: String) = HttpClient {
     install(ContentNegotiation) {
         json(Json {
+            encodeDefaults = true
             ignoreUnknownKeys = true
         })
     }

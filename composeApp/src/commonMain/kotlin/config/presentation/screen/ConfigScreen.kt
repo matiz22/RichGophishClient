@@ -22,6 +22,7 @@ import config.presentation.events.ScaffoldEvents
 import config.presentation.navigation.ConfigScreensConfiguration
 import config.presentation.states.IconButtonState
 import gophish.campaign.screens.CampaignDetailsScreen
+import gophish.campaign.screens.CreateCampaignScreen
 import gophish.email_templates.screens.EmailTemplatesScreens
 import gophish.page.screens.PagesScreens
 import gophish.smtp.screens.SmtpScreen
@@ -119,10 +120,15 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                             }
                         }
                         LaunchedEffect(Unit) {
+                            instance.component.updateCampaigns()
                             configComponent.onEvent(
                                 ScaffoldEvents.UpdateFloatingActionButton(
                                     IconButtonState(
-                                        action = { TODO() },
+                                        action = {
+                                            configComponent.navigation.pushNew(
+                                                ConfigScreensConfiguration.CreateCampaignConfiguration
+                                            )
+                                        },
                                         icon = Icons.Default.Add
                                     )
                                 )
@@ -178,6 +184,7 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                                 )
                             )
                         }
+
                         CampaignDetailsScreen(
                             campaign = campaign,
                             campaignSummary = campaignSummary,
@@ -198,7 +205,22 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                     is ConfigComponent.Child.HtmlViewerChild -> {
                         val webViewState =
                             rememberWebViewStateWithHTMLData(data = instance.component.data)
-                        HtmlViewerScreen(webViewState)
+                        LaunchedEffect(Unit) {
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateFloatingActionButton(
+                                    null
+                                )
+                            )
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateLeadingIconButton(
+                                    IconButtonState(
+                                        action = { configComponent.navigation.pop() },
+                                        icon = Icons.Default.ArrowBack
+                                    )
+                                )
+                            )
+                        }
+                        HtmlViewerScreen(instance.component.title, webViewState)
                     }
 
                     is ConfigComponent.Child.PagesChild -> {
@@ -221,11 +243,61 @@ fun ConfigScreen(configComponent: ConfigComponent) {
                             configComponent = configComponent
                         )
                     }
+
+                    is ConfigComponent.Child.CreateCampaignChild -> {
+                        val form = instance.component.campaignFormState
+                        val pages by instance.component.pagesNames.collectAsState()
+                        val smtps by instance.component.smtpsNames.collectAsState()
+                        val groups by instance.component.groupsNames.collectAsState()
+                        val templates by instance.component.templatesNames.collectAsState()
+                        val apiCallResult = instance.component.apiCallResult
+
+                        LaunchedEffect(apiCallResult) {
+                            apiCallResult.collect { result ->
+                                if (result.successful) {
+                                    configComponent.onEvent(
+                                        ScaffoldEvents.ShowSnackBar(
+                                            message = AppRes.string.successful_operation
+                                        )
+                                    )
+                                    configComponent.navigation.pop()
+
+                                } else {
+                                    if (result.errorMessage != null) configComponent.onEvent(
+                                        ScaffoldEvents.ShowSnackBar(message = result.errorMessage!!)
+                                    )
+                                }
+                            }
+                        }
+
+                        LaunchedEffect(Unit) {
+                            instance.component.getAvailableResources()
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateFloatingActionButton(
+                                    null
+                                )
+                            )
+                            configComponent.onEvent(
+                                ScaffoldEvents.UpdateLeadingIconButton(
+                                    IconButtonState(
+                                        action = { configComponent.navigation.pop() },
+                                        icon = Icons.Default.ArrowBack
+                                    )
+                                )
+                            )
+                        }
+
+                        CreateCampaignScreen(
+                            form = form,
+                            pages = pages,
+                            groups = groups,
+                            templates = templates,
+                            smtps = smtps ,
+                            onEvent = instance.component::onEvent
+                        )
+                    }
                 }
             }
         }
     )
 }
-
-
-

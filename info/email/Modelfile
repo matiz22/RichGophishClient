@@ -1,4 +1,4 @@
-FROM ./
+FROM dolphincoder
 
 
 TEMPLATE """{{ if .System }}<|im_start|>system

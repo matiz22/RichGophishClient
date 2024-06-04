@@ -103,7 +103,7 @@ fun EmailTemplatesScreens(
 
             is EmailTemplatesComponent.Child.EmailListScreen -> {
                 val templates by instance.component.templates.collectAsState()
-
+                instance.component.updateTemplates()
                 LaunchedEffect(Unit) {
                     configComponent.onEvent(
                         ScaffoldEvents.UpdateFloatingActionButton(

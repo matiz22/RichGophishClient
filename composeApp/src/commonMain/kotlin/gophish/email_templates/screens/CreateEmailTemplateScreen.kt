@@ -81,8 +81,9 @@ fun CreateEmailTemplateScreen(
                     onValueChange = {
                         onEvent(CreateEmailTemplatesEvent.UpdateSubject(it))
                     },
-                    hintText = AppRes.string.email_hint
+                    hintText = AppRes.string.template_subject_hint
                 )
+                Text(text = AppRes.string.verification_hint)
                 if (form.isHTML) {
                     TextField(
                         modifier = modifier.fillMaxWidth(),
