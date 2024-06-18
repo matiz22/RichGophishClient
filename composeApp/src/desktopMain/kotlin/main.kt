@@ -38,9 +38,12 @@ fun main() {
 
         LaunchedEffect(Unit) {
             withContext(Dispatchers.IO) {
+                val userHome = System.getProperty("user.home")
+                val cacheDir = File(userHome, ".kcef/cache").absolutePath
+                val installDir = File(userHome, ".kcef/kcef-bundle")
                 KCEF.init(builder = {
-                    release("jbr-release-17.0.10b1087.23")
-                    installDir(File("kcef-bundle"))
+                    //release("jbr-release-17.0.10b1087.23")
+                    installDir(installDir)
                     progress {
                         onDownloading {
                             downloading = max(it, 0F)
@@ -50,7 +53,7 @@ fun main() {
                         }
                     }
                     settings {
-                        cachePath = File("cache").absolutePath
+                        cachePath = cacheDir
                     }
                 }, onError = {
                     it?.printStackTrace()
